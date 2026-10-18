@@ -1,0 +1,28 @@
+{
+  "policy": {
+    "allowHtmlScraping": false,
+    "allowPersonalData": false,
+    "requiredProvenance": true,
+    "note": "공식 사이트 원문을 우선하며 WAF, CAPTCHA 또는 이용제한을 우회하지 않습니다."
+  },
+  "sources": [
+    {
+      "name": "대한민국 법원경매정보",
+      "url": "https://www.courtauction.go.kr/",
+      "role": "사건·물건·기일·법원 3대 서류 원문 확인",
+      "collection": "reviewed-feed-or-manual"
+    },
+    {
+      "name": "찾기쉬운 생활법령정보",
+      "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&cciNo=2&cnpClsNo=1&csmSeq=306&popMenu=ov",
+      "role": "경매 정보 수집과 서류 공시 기준 확인",
+      "collection": "reference-only"
+    },
+    {
+      "name": "대법원 인터넷등기소",
+      "url": "https://www.iros.go.kr/",
+      "role": "최신 부동산 등기기록 확인",
+      "collection": "user-open-only"
+    }
+  ]
+}
