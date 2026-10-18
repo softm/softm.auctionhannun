@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#123f33" />
+    <meta name="description" content="법원경매 물건을 지도에서 찾고 3대 핵심서류와 권리분석 체크리스트를 한눈에 관리하세요." />
+    <link rel="canonical" href="https://softm.github.io/softm.auctionhannun/" />
+    <title>경매한눈 | 법원경매 검토 체크리스트</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#resultsSheet">검색 결과로 바로가기</a>
+
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
+      <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M7 4.5h10v15l-5-3-5 3Z"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1.2 1-1.2 1.9M12 17h.01"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11Z"/><path d="M13.5 3.5v4h4M9.5 12h5M9.5 15.5h5"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8"/><path d="M17 13v6H5V7h6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.2 4L19 6.5"/></symbol>
+      <symbol id="i-location" viewBox="0 0 24 24"><path d="M12 21s7-5.3 7-12a7 7 0 1 0-14 0c0 6.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 19 6v5.2c0 4.4-2.8 7.8-7 9.3-4.2-1.5-7-4.9-7-9.3V6Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    </svg>
+
+    <main class="app-shell">
+      <section class="map-stage" aria-label="경매 물건 위치 지도">
+        <div class="map-canvas" id="mapCanvas">
+          <svg class="map-art" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="mapTitle mapDesc">
+            <title id="mapTitle">경매 물건 탐색 지도</title>
+            <desc id="mapDesc">기능 확인용 지도 위에 예시 경매 물건 위치 네 곳을 표시합니다.</desc>
+            <rect width="1400" height="900" fill="#e8eee9"/>
+            <g class="districts">
+              <path d="M-60 80 230 15l225 120-92 187-289 35Z"/>
+              <path d="m455 135 278-70 184 164-105 190-285-47-164-50Z"/>
+              <path d="m917 229 255-115 250 88-38 258-280 27-292-68Z"/>
+              <path d="m74 357 289-35 164 50-18 247-335 50-199-129Z"/>
+              <path d="m527 372 285 47 98 220-186 206-215-226Z"/>
+              <path d="m812 419 292 68 280-27 69 269-323 170-220-260Z"/>
+            </g>
+            <g class="water"><path d="M-40 585c195-88 310-64 475-6 150 53 282 75 463 4 170-67 297-77 550-6v82c-225-65-351-54-513 9-195 76-347 49-520-11-154-53-257-70-455 20Z"/></g>
+            <g class="roads major"><path d="M-20 195 1420 705"/><path d="M242-40 1082 940"/><path d="M1120-40 735 940"/><path d="M-40 470 1440 332"/></g>
+            <g class="roads minor"><path d="M102 55 356 898"/><path d="M598-15 410 905"/><path d="M865-20 1350 830"/><path d="M-10 736 1370 93"/><path d="M-10 298 1300 835"/></g>
+            <g class="labels">
+              <text x="175" y="230">서울중앙지방법원</text>
+              <text x="560" y="300">수원지방법원</text>
+              <text x="985" y="350">인천지방법원</text>
+              <text x="380" y="725">의정부지방법원</text>
+            </g>
+          </svg>
+          <div class="map-pins" id="mapPins" aria-label="지도 물건 위치"></div>
+        </div>
+
+        <header class="topbar">
+          <button class="brand" id="brandButton" type="button" aria-label="경매한눈 홈">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 40 40"><path d="M7 9.5 20 4l13 5.5v20L20 36 7 29.5Z"/><path d="m7 9.5 13 6 13-6M20 15.5V36"/><path d="m14 23 4 4 8-9"/></svg>
+            </span>
+            <span>경매<b>한눈</b><small>COURT AUCTION</small></span>
+          </button>
+          <div class="top-actions">
+            <button class="round-button add-case-button" id="addCaseButton" type="button" aria-label="사건 직접 추가">
+              <svg><use href="#i-plus"/></svg>
+            </button>
+            <button class="round-button" id="favoritesButton" type="button" aria-label="관심 물건만 보기">
+              <svg><use href="#i-bookmark"/></svg>
+              <span class="badge" id="favoriteCount">0</span>
+            </button>
+            <button class="round-button" id="helpButton" type="button" aria-label="이용 안내">
+              <svg><use href="#i-help"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="search-wrap">
+          <form class="search-box" id="searchForm" role="search">
+            <svg><use href="#i-search"/></svg>
+            <label class="sr-only" for="searchInput">주소, 사건번호 또는 법원 검색</label>
+            <input id="searchInput" type="search" autocomplete="off" placeholder="주소·사건번호·법원 검색" />
+            <button type="submit">검색</button>
+          </form>
+          <div class="source-chip"><span></span> 공식 원문 확인 중심 · 브라우저에만 저장</div>
+        </div>
+
+        <div class="map-tools" aria-label="지도 조작">
+          <button id="zoomIn" type="button" aria-label="지도 확대">＋</button>
+          <button id="zoomOut" type="button" aria-label="지도 축소">−</button>
+          <button id="resetMap" type="button" aria-label="지도 위치 초기화"><svg><use href="#i-location"/></svg></button>
+        </div>
+
+        <div class="map-caption">
+          <span>검토 물건 <b id="mapResultCount">4</b></span>
+          <small id="datasetStatus">자료 출처를 확인하고 있습니다</small>
+        </div>
+      </section>
+
+      <section class="results-sheet" id="resultsSheet" aria-labelledby="resultsTitle">
+        <button class="sheet-handle" id="sheetHandle" type="button" aria-label="검색 결과 패널 접기" aria-expanded="true"></button>
+        <div class="sheet-heading">
+          <div>
+            <span class="eyebrow">법원경매 검토 워크스페이스</span>
+            <h1 id="resultsTitle">입찰 전, 서류부터 한눈에</h1>
+          </div>
+          <button class="desktop-add" id="desktopAddCase" type="button"><svg><use href="#i-plus"/></svg> 사건 추가</button>
+        </div>
+        <div class="filter-row" id="filterRow" aria-label="물건 유형 필터">
+          <button class="active" type="button" data-filter="all">전체</button>
+          <button type="button" data-filter="apartment">아파트</button>
+          <button type="button" data-filter="land">토지</button>
+          <button type="button" data-filter="commercial">상가</button>
+          <button type="button" data-filter="favorite">관심 물건</button>
+        </div>
+        <div class="result-meta">
+          <p><b id="resultCount">4</b>개의 검토 물건</p>
+          <button type="button" id="clearSearch" hidden>검색 초기화</button>
+        </div>
+        <div class="case-list" id="caseList"></div>
+        <p class="sample-disclaimer"><span>i</span><span id="datasetNotice">수집 자료를 불러오는 중입니다. 최신 상태와 서류 원문은 대한민국 법원경매정보에서 확인하세요.</span></p>
+      </section>
+
+      <section class="detail-sheet" id="detailSheet" aria-labelledby="detailTitle" aria-hidden="true">
+        <button class="detail-handle" type="button" tabindex="-1" aria-hidden="true"></button>
+        <div class="detail-top">
+          <span class="status-pill" id="detailType">아파트</span>
+          <div class="detail-actions">
+            <button id="officialQuickOpen" class="official-button" type="button"><svg><use href="#i-shield"/></svg><span>공식 조회</span></button>
+            <button id="detailFavorite" type="button" aria-label="관심 물건 저장"><svg><use href="#i-bookmark"/></svg></button>
+            <button id="detailClose" type="button" aria-label="상세 닫기"><svg><use href="#i-close"/></svg></button>
+          </div>
+        </div>
+        <div class="detail-title-row">
+          <div>
+            <span id="detailCourt">서울중앙지방법원</span>
+            <h2 id="detailTitle">서울 강남구 업무시설</h2>
+            <p id="detailCaseNumber">2026타경100001 · 물건 1</p>
+          </div>
+          <button id="copyCase" type="button" aria-label="사건번호와 주소 복사"><svg><use href="#i-copy"/></svg></button>
+        </div>
+        <div class="price-grid" id="priceGrid"></div>
+        <nav class="detail-tabs" id="detailTabs" role="tablist" aria-label="경매 물건 상세">
+          <button class="active" type="button" role="tab" aria-selected="true" data-tab="summary">핵심</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="documents">3대 서류</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="rights">권리체크</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="notes">현장메모</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="official">공식연결</button>
+        </nav>
+        <div class="detail-content" id="detailContent"></div>
+      </section>
+    </main>
+
+    <dialog class="app-dialog" id="addCaseDialog" aria-labelledby="addCaseTitle">
+      <form id="addCaseForm" method="dialog">
+        <div class="dialog-head">
+          <div><span class="eyebrow">브라우저에만 저장</span><h2 id="addCaseTitle">검토할 사건 추가</h2></div>
+          <button type="button" data-close-dialog="addCaseDialog" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
+        </div>
+        <p class="dialog-intro">공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.</p>
+        <label>담당 법원<input name="court" required placeholder="예: 서울중앙지방법원" /></label>
+        <label>사건번호<input name="caseNumber" required placeholder="예: 2026타경12345" /></label>
+        <label>소재지<input name="address" required placeholder="지번 또는 도로명 주소" /></label>
+        <div class="form-row">
+          <label>물건 유형<select name="type"><option value="apartment">아파트</option><option value="land">토지</option><option value="commercial">상가</option><option value="other">기타</option></select></label>
+          <label>매각기일<input name="saleDate" type="date" /></label>
+        </div>
+        <button class="dialog-submit" value="submit" type="submit">검토 목록에 추가</button>
+      </form>
+    </dialog>
+
+    <dialog class="app-dialog help-dialog" id="helpDialog" aria-labelledby="helpTitle">
+      <div class="dialog-head">
+        <div><span class="eyebrow">공식자료 우선</span><h2 id="helpTitle">경매한눈 이용 안내</h2></div>
+        <button type="button" data-close-dialog="helpDialog" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <ol class="flow-list">
+        <li><b>물건 찾기</b><span>법원경매정보에서 사건번호와 매각기일을 확인합니다.</span></li>
+        <li><b>3대 서류 확인</b><span>매각물건명세서, 현황조사보고서, 감정평가서 원문을 읽습니다.</span></li>
+        <li><b>공부·현장 대조</b><span>등기기록과 공적 장부를 확인하고 현장 점유관계를 다시 살핍니다.</span></li>
+        <li><b>입찰 당일 재확인</b><span>취하·변경·연기 여부를 공식 사이트 또는 법원 경매계에서 확인합니다.</span></li>
+      </ol>
+      <div class="official-note"><svg><use href="#i-clock"/></svg><p><b>서류 공시 시점</b><span>세 서류는 매각기일마다 그 1주일 전까지 법원 비치 또는 전자 공시됩니다. 기간입찰은 입찰기간 시작일을 기준으로 합니다.</span></p></div>
+      <a class="dialog-link" href="https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&amp;cciNo=2&amp;cnpClsNo=1&amp;csmSeq=306&amp;popMenu=ov" target="_blank" rel="noopener noreferrer">찾기쉬운 생활법령 원문 보기 <svg><use href="#i-external"/></svg></a>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
