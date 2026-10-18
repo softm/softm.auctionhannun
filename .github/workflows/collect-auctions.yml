@@ -1,0 +1,43 @@
+name: Collect reviewed auction data
+
+on:
+  schedule:
+    - cron: "20 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auction-data-collection
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Normalize reviewed feed
+        run: npm run collect
+        env:
+          AUCTION_FEED_URL: ${{ vars.AUCTION_FEED_URL }}
+      - run: npm run check
+      - name: Commit verified data change
+        shell: bash
+        run: |
+          if git diff --quiet -- data/auctions.json; then
+            echo "변경된 경매 자료가 없습니다."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/auctions.json
+          git commit -m "$(TZ=Asia/Seoul date +%Y%m%d)_data_경매정보자동갱신"
+          git push
