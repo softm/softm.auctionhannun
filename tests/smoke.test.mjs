@@ -20,17 +20,16 @@ test("공식 법원 연결과 브라우저 저장 기능이 선언된다", async
   assert.match(app, /localStorage/);
   assert.match(app, /userAdded/);
   assert.match(app, /입찰 당일 상태 재확인/);
-  assert.match(app, /\.\/data\/auctions\.json/);
+  assert.match(app, /loadCatalog/);
+  assert.doesNotMatch(app, /fallbackCases|item\.pos/);
 });
 
 test("GitHub Actions 수집·배포 흐름이 선언된다", async () => {
   const collect = await readFile(new URL(".github/workflows/collect-auctions.yml", root), "utf8");
   const deploy = await readFile(new URL(".github/workflows/deploy-pages.yml", root), "utf8");
   assert.match(collect, /AUCTION_FEED_URL/);
-  assert.match(collect, /git add data\/auctions\.json/);
+  assert.match(collect, /commit-data/);
   assert.match(collect, /feature\/data-refresh/);
-  assert.match(collect, /release\/data/);
-  assert.match(collect, /--base develop/);
   assert.match(collect, /--base main/);
   assert.match(deploy, /actions\/deploy-pages@v4/);
 });
