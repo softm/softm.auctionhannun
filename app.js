@@ -1,3 +1,5 @@
+import { filterAndSortCases, regionOf, reviewMetrics } from "./auction-utils.js";
+
 const COURT_URL = "https://www.courtauction.go.kr/";
 const EASYLAW_URL = "https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&cciNo=2&cnpClsNo=1&csmSeq=306&popMenu=ov";
 const IROS_URL = "https://www.iros.go.kr/";
@@ -79,6 +81,10 @@ const state = {
   verified: storage.get("verified", {}),
   query: "",
   filter: "all",
+  region: "all",
+  court: "all",
+  sort: "date",
+  view: "search",
   selectedId: null,
   activeTab: "summary",
   zoom: 1
@@ -137,13 +143,35 @@ function daysUntil(date) {
 }
 
 function filteredCases() {
-  const normalized = state.query.trim().toLowerCase();
-  return allCases().filter(item => {
-    const matchesFilter = state.filter === "all"
-      || (state.filter === "favorite" ? state.favorites.has(item.id) : item.type === state.filter);
-    const haystack = `${item.title} ${item.address} ${item.court} ${item.caseNumber}`.toLowerCase();
-    return matchesFilter && (!normalized || haystack.includes(normalized));
-  });
+  return filterAndSortCases(allCases(), state);
+}
+
+function renderMetrics() {
+  const metrics = reviewMetrics(allCases(), state.favorites, state.checks);
+  $("#totalCases").textContent = metrics.total;
+  $("#savedCases").textContent = metrics.saved;
+  $("#addedCases").textContent = metrics.added;
+  $("#checkedDocuments").textContent = `${metrics.checked}/${metrics.documents}`;
+}
+
+function renderFilterOptions() {
+  const items = allCases();
+  for (const [id, values, label, key] of [
+    ["#regionFilter", items.map(regionOf), "전체 지역", "region"],
+    ["#courtFilter", items.map(item => item.court), "전체 법원", "court"]
+  ]) {
+    $(id).innerHTML = `<option value="all">${label}</option>` + [...new Set(values)].filter(Boolean).sort().map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    $(id).value = state[key];
+  }
+}
+
+function propertyIllustration(type) {
+  const building = type === "land"
+    ? '<path d="m20 110 56-32 62 28-57 35Z" fill="#d0dfc8"/><path d="m24 97 54-30 61 26-56 32Z" fill="#e7edce"/><path d="M44 86v-28m-10 2 10-21 10 21Z" fill="#92b39a"/><path d="M121 101V72m-10 3 10-22 10 22Z" fill="#92b39a"/><path d="m55 82 26 14 31-17M81 96v26"/>'
+    : type === "commercial"
+      ? '<path d="M26 65h105v67H26Z" fill="#fafcfd"/><path d="m22 65 56-28 58 28Z" fill="#bed0dd"/><path d="M37 84h29v48H37Zm43 0h40v28H80Z" fill="#d2e3e8"/><path d="M78 84v28h44V84M101 84v28"/><path d="M27 71h104v10H27Z" fill="#7faea7"/>'
+      : '<path d="M34 44h59v93H34Z" fill="#f4f8fa"/><path d="m93 44 28 15v78H93Z" fill="#b9ccd9"/><path d="m34 44 27-15 60 30-28-15Z" fill="#d6e2e9"/><path d="M46 58h12v12H46Zm23 0h12v12H69ZM46 83h12v12H46Zm23 0h12v12H69ZM46 108h12v12H46Zm23 0h12v29H69Z" fill="#b3cfd3"/><path d="M103 68v57M112 72v53"/>';
+  return `<svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="127" cy="30" r="13" fill="#ffffff88" stroke="none"/><path d="M15 138h130"/>${building}</svg>`;
 }
 
 function renderPins(cases) {
@@ -165,15 +193,22 @@ function renderCases() {
     const meta = typeMeta[item.type] || typeMeta.other;
     const selected = state.selectedId === item.id ? " selected" : "";
     const favorite = state.favorites.has(item.id);
-    return `<article class="case-card${selected}" tabindex="0" role="button" data-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">
-      <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="due">${daysUntil(item.saleDate)} · ${dateLabel(item.saleDate)}</span></div>
-      <h2>${escapeHtml(item.title)}</h2>
-      <p class="case-id">${escapeHtml(item.court)} · ${escapeHtml(item.caseNumber)}</p>
-      <div class="price-row"><div><span>감정가</span><b>${escapeHtml(item.appraisal || "직접 확인")}</b></div><div><span>최저가</span><b>${escapeHtml(item.minimum || "직접 확인")}</b></div></div>
-      <button class="bookmark-mini${favorite ? " active" : ""}" type="button" data-favorite-id="${escapeHtml(item.id)}" aria-label="${favorite ? "관심 물건에서 삭제" : "관심 물건에 추가"}">${icon("bookmark")}</button>
+    const sample = !item.userAdded && (item.demo === true || state.dataset.demo !== false);
+    return `<article class="case-card${selected}" aria-label="${escapeHtml(item.title)}">
+      <div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}<small>유형 일러스트 · 실제 사진 아님</small></div>
+      <div class="case-body">
+        <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="sample-tag">${item.userAdded ? "직접 등록" : sample ? "예시 물건" : "수집 자료"}</span><span class="due">${daysUntil(item.saleDate)}</span></div>
+        <h3><button class="case-title" type="button" data-case-id="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button></h3>
+        <p class="case-id">${escapeHtml(item.court)} · ${escapeHtml(item.caseNumber)}</p>
+        <p class="case-address">${escapeHtml(item.address)} · ${escapeHtml(item.area || "면적 확인 필요")}</p>
+        <div class="price-row"><div><span>감정가</span><b>${escapeHtml(item.appraisal || "직접 확인")}</b></div><div><span>최저매각가격</span><b>${escapeHtml(item.minimum || "직접 확인")}</b></div></div>
+        <div class="case-bottom"><span>${dateLabel(item.saleDate)} · 원문 확인 필요</span><button class="case-open" type="button" data-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">검토하기 ${icon("arrow")}</button></div>
+      </div>
+      <button class="bookmark-mini${favorite ? " active" : ""}" type="button" data-favorite-id="${escapeHtml(item.id)}" aria-pressed="${favorite}" aria-label="${escapeHtml(item.title)} ${favorite ? "관심 물건에서 삭제" : "관심 물건에 추가"}">${icon("bookmark")}</button>
     </article>`;
   }).join("") : `<div class="empty-state">조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요.</div>`;
   updateFavoriteBadge();
+  renderMetrics();
 }
 
 function getSelected() {
@@ -189,13 +224,29 @@ function selectCase(id) {
   renderDetail();
   $("#detailSheet").classList.add("open");
   $("#detailSheet").setAttribute("aria-hidden", "false");
+  $("#detailSheet").inert = false;
+  $("#detailBackdrop").hidden = false;
+  document.body.classList.add("detail-open");
+  setBackgroundInert(true);
+  $("#detailSheet").scrollTop = 0;
+  $("#detailClose").focus();
+}
+
+function setBackgroundInert(inert) {
+  $$(".topbar, .search-panel, .filter-panel, .mobile-filters, .skip-link, .results-sheet, .map-stage, .bottom-nav, .workspace-footer").forEach(element => { element.inert = inert; });
 }
 
 function closeDetail() {
+  const returnId = state.selectedId;
   $("#detailSheet").classList.remove("open");
   $("#detailSheet").setAttribute("aria-hidden", "true");
+  $("#detailSheet").inert = true;
+  $("#detailBackdrop").hidden = true;
+  document.body.classList.remove("detail-open");
+  setBackgroundInert(false);
   state.selectedId = null;
   renderCases();
+  $$(".case-title").find(button => button.dataset.caseId === returnId)?.focus({ preventScroll: true });
 }
 
 function renderDetail() {
@@ -217,6 +268,9 @@ function renderDetail() {
     const active = button.dataset.tab === state.activeTab;
     button.classList.toggle("active", active);
     button.setAttribute("aria-selected", String(active));
+    button.tabIndex = active ? 0 : -1;
+    button.id = `tab-${button.dataset.tab}`;
+    button.setAttribute("aria-controls", "detailContent");
   });
   renderActiveTab();
 }
@@ -226,11 +280,14 @@ function renderActiveTab() {
   if (!item) return;
   const renderers = { summary: renderSummary, documents: renderDocuments, rights: renderRights, notes: renderNotes, official: renderOfficial };
   $("#detailContent").innerHTML = renderers[state.activeTab](item);
+  $("#detailContent").setAttribute("role", "tabpanel");
+  $("#detailContent").setAttribute("aria-labelledby", `tab-${state.activeTab}`);
 }
 
 function renderSummary(item) {
   const lastVerified = state.verified[item.id];
-  return `<div class="demo-banner">${icon("help")}<span>${item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : "화면 기능 확인용 예시 물건입니다. 실제 사건·가격·기일 정보가 아닙니다."}</span></div>
+  const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.demo === true || state.dataset.demo !== false ? "화면 기능 확인용 예시 물건입니다. 실제 사건·가격·기일 정보가 아닙니다." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
+  return `<div class="demo-banner">${icon("help")}<span>${notice}</span></div>
     <section class="summary-card">
       <h3>물건 검토 기준정보</h3>
       <dl class="fact-list">
@@ -350,6 +407,9 @@ function addCase(form) {
   $("#addCaseDialog").close();
   state.filter = "all";
   state.query = "";
+  state.region = "all";
+  state.court = "all";
+  renderFilterOptions();
   syncFilters();
   renderCases();
   selectCase(item.id);
@@ -369,19 +429,54 @@ function deleteSelectedCase() {
   storage.set("checks", state.checks);
   storage.set("notes", state.notes);
   storage.set("verified", state.verified);
+  renderFilterOptions();
   closeDetail();
   showToast("추가한 사건을 삭제했습니다.");
 }
 
 function syncFilters() {
-  $$("#filterRow button").forEach(button => button.classList.toggle("active", button.dataset.filter === state.filter));
+  $$("#filterRow button").forEach(button => {
+    const active = button.dataset.filter === state.filter;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  $("#favoritesButton").setAttribute("aria-pressed", String(state.filter === "favorite"));
   $("#searchInput").value = state.query;
+  $("#regionFilter").value = state.region;
+  $("#courtFilter").value = state.court;
+  $("#sortOrder").value = state.sort;
+  const conditions = [state.region !== "all", state.court !== "all", state.sort !== "date"].filter(Boolean).length;
+  $("#filtersToggle").innerHTML = `지역·법원·정렬 조건${conditions ? ` · ${conditions}개 적용` : ""} ${icon(document.body.classList.contains("filters-open") ? "close" : "plus")}`;
+  const current = state.view === "map" ? "map" : state.filter === "favorite" ? "favorite" : "search";
+  $$('[data-nav]').forEach(button => {
+    button.classList.toggle("active", button.dataset.nav === current);
+    if (button.dataset.nav === current) button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  });
+}
+
+function setView(view) {
+  state.view = view;
+  document.body.classList.toggle("map-view", view === "map");
+  $("#mapToggle").setAttribute("aria-pressed", String(view === "map"));
+  $("#mapToggle").innerHTML = `${icon(view === "map" ? "list" : "map")}<span>${view === "map" ? "목록 보기" : "지도 보기"}</span>`;
+  syncFilters();
+}
+
+function resetFilters() {
+  state.filter = "all";
+  state.query = "";
+  state.region = "all";
+  state.court = "all";
+  state.sort = "date";
+  syncFilters();
+  renderCases();
 }
 
 function setTab(tab) {
   state.activeTab = tab;
   renderDetail();
-  $("#detailContent").scrollIntoView({ block: "nearest" });
+  $("#detailContent").scrollIntoView({ block: "start" });
 }
 
 $("#caseList").addEventListener("click", event => {
@@ -389,13 +484,6 @@ $("#caseList").addEventListener("click", event => {
   if (favorite) { event.stopPropagation(); toggleFavorite(favorite.dataset.favoriteId); return; }
   const card = event.target.closest("[data-case-id]");
   if (card) selectCase(card.dataset.caseId);
-});
-
-$("#caseList").addEventListener("keydown", event => {
-  if ((event.key === "Enter" || event.key === " ") && event.target.matches(".case-card")) {
-    event.preventDefault();
-    selectCase(event.target.dataset.caseId);
-  }
 });
 
 $("#mapPins").addEventListener("click", event => {
@@ -414,9 +502,10 @@ $("#filterRow").addEventListener("click", event => {
 $("#searchForm").addEventListener("submit", event => {
   event.preventDefault();
   state.query = $("#searchInput").value.trim();
+  syncFilters();
   renderCases();
-  const first = filteredCases()[0];
-  if (first) selectCase(first.id); else showToast("일치하는 검토 물건이 없습니다.");
+  $("#resultsSheet").scrollIntoView({ block: "start" });
+  if (!filteredCases().length) showToast("일치하는 검토 물건이 없습니다.");
 });
 
 $("#searchInput").addEventListener("input", event => {
@@ -436,20 +525,37 @@ $("#favoritesButton").addEventListener("click", () => {
 });
 
 $("#brandButton").addEventListener("click", () => {
-  state.filter = "all";
-  state.query = "";
-  syncFilters();
+  resetFilters();
+  setView("search");
   closeDetail();
-  $("#resultsSheet").classList.remove("collapsed");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-$("#sheetHandle").addEventListener("click", event => {
-  const sheet = $("#resultsSheet");
-  sheet.classList.toggle("collapsed");
-  event.currentTarget.setAttribute("aria-expanded", String(!sheet.classList.contains("collapsed")));
+$("#resetFilters").addEventListener("click", resetFilters);
+$("#filtersToggle").addEventListener("click", event => {
+  const open = document.body.classList.toggle("filters-open");
+  event.currentTarget.setAttribute("aria-expanded", String(open));
+  syncFilters();
 });
+for (const [id, key] of [["#regionFilter", "region"], ["#courtFilter", "court"], ["#sortOrder", "sort"]]) {
+  $(id).addEventListener("change", event => { state[key] = event.target.value; syncFilters(); renderCases(); });
+}
+$("#mapToggle").addEventListener("click", () => {
+  setView(state.view === "map" ? "search" : "map");
+  $(state.view === "map" ? "#mapStage" : "#resultsSheet").scrollIntoView({ block: "start" });
+});
+$$('[data-nav]').forEach(button => button.addEventListener("click", () => {
+  const view = button.dataset.nav;
+  if (view === "help") { openDialog("#helpDialog"); return; }
+  if (view === "favorite") { state.filter = "favorite"; state.query = ""; state.region = "all"; state.court = "all"; }
+  if (view === "search") state.filter = "all";
+  setView(view === "map" ? "map" : "search");
+  renderCases();
+  $(view === "map" ? "#mapStage" : view === "favorite" ? "#resultsSheet" : ".search-panel").scrollIntoView({ block: "start" });
+}));
 
 $("#detailClose").addEventListener("click", closeDetail);
+$("#detailBackdrop").addEventListener("click", closeDetail);
 $("#detailFavorite").addEventListener("click", () => state.selectedId && toggleFavorite(state.selectedId));
 $("#officialQuickOpen").addEventListener("click", () => openOfficial());
 $("#copyCase").addEventListener("click", async () => {
@@ -463,6 +569,15 @@ $("#detailTabs").addEventListener("click", event => {
   const button = event.target.closest("[data-tab]");
   if (button) setTab(button.dataset.tab);
 });
+$("#detailTabs").addEventListener("keydown", event => {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const tabs = $$("#detailTabs button");
+  const index = tabs.findIndex(button => button.dataset.tab === state.activeTab);
+  const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+  setTab(tabs[next].dataset.tab);
+  tabs[next].focus();
+});
 
 $("#detailContent").addEventListener("change", event => {
   const input = event.target.closest("[data-check-key]");
@@ -471,6 +586,8 @@ $("#detailContent").addEventListener("change", event => {
   state.checks[state.selectedId][input.dataset.checkKey] = input.checked;
   storage.set("checks", state.checks);
   renderActiveTab();
+  renderMetrics();
+  $$('[data-check-key]').find(candidate => candidate.dataset.checkKey === input.dataset.checkKey)?.focus();
 });
 
 $("#detailContent").addEventListener("click", event => {
@@ -499,7 +616,6 @@ $("#addCaseForm").addEventListener("submit", event => {
 
 function openDialog(id) { $(id).showModal(); }
 $("#addCaseButton").addEventListener("click", () => openDialog("#addCaseDialog"));
-$("#desktopAddCase").addEventListener("click", () => openDialog("#addCaseDialog"));
 $("#helpButton").addEventListener("click", () => openDialog("#helpDialog"));
 $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => $(`#${button.dataset.closeDialog}`).close()));
 $$('dialog').forEach(dialog => dialog.addEventListener("click", event => {
@@ -523,10 +639,18 @@ $("#resetMap").addEventListener("click", () => {
 
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && $("#detailSheet").classList.contains("open") && !$('dialog[open]')) closeDetail();
+  if (event.key === "Tab" && $("#detailSheet").classList.contains("open")) {
+    const focusable = $$('button:not([disabled]), a[href], input, textarea, select, [tabindex="0"]', $("#detailSheet")).filter(element => element.tabIndex >= 0 && element.getClientRects().length);
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+  }
 });
 
 async function bootstrap() {
   await loadCollectedCases();
+  renderFilterOptions();
   syncFilters();
   renderCases();
 }
