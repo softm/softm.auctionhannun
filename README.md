@@ -19,9 +19,9 @@ Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입�
 
 2026-10-19 로컬 수집 결과: 온비드 7,512입찰건 / 물건관리번호 기준 4,466물건. 범위는 전국 압류재산·매각·수의계약 불가, 입찰기간 검색 10월 19~26일입니다. 전체 온비드 물건 수가 아닙니다. 법원경매 공급원은 아직 미연결(0건)입니다. 기존 예시 4건은 테스트 전용으로 이동했으며 오류 시 예시로 대체하지 않습니다. 최신 상태·대상 범위·공고 원문은 공식 사이트에서 다시 확인해야 합니다.
 
-상세 구조와 실제 연동·미연동 구분은 [수집·지도 연동 현황](docs/INTEGRATION.md)을 확인하세요. 로컬 구현 완료와 운영 배포 완료는 별개입니다.
+상세 구조와 실제 연동·미연동 구분은 [수집·지도 연동 현황](docs/INTEGRATION.md)을 확인하세요. 2026-10-19 [GitHub Pages 배포](https://github.com/softm/softm.auctionhannun/actions/runs/39232000163)가 성공했고 [운영 사이트](https://softm.github.io/softm.auctionhannun/)에서 7,512입찰건·네이버 지도·주소 변환·지적도를 확인했습니다. Play Console 제출은 별개입니다.
 
-지도 검증 상태: NAVER 지도·주소 변환·지적도와 VWorld 주소 검색을 확인했습니다. VWorld의 `INCORRECT_KEY`는 사용자가 지정한 토지한눈의 브라우저 키와 실제 호스트명 형식을 적용하여 수정했습니다. localhost:3000에서 실제 온비드 물건(와촌리 1084-4)의 PNU 일치 경계 표시까지 확인했습니다. 운영 도메인에서는 배포 후 별도 확인하며, 한 물건의 성공을 전체 필지의 정상 조회로 일반화하지 않습니다.
+지도 검증 상태: 사용자 지시에 따라 토지한눈의 VWorld 브라우저 키와 실제 호스트명 형식을 적용했습니다. localhost:3000에서 실제 온비드 물건(와촌리 1084-4)의 PNU 일치 경계 표시까지 성공했지만, 운영 Pages에서 같은 경계 요청은 `INCORRECT_KEY`로 거부되었습니다. 따라서 **운영 VWorld 경계 조회는 미해결**이며 키의 등록 서비스 URL·데이터 API 권한 확인이 필요합니다. 네이버 지도·주소 변환·지적도와 VWorld 주소 후보 검색은 운영에서도 확인했습니다.
 
 ## 자료수집과 배포 흐름
 
@@ -35,7 +35,7 @@ Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입�
   → GitHub Pages 배포
 ```
 
-- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 수집 후 `main` 기반 데이터 검토 PR 생성. 자동 병합하지 않음. `ONBID_SERVICE_KEY` 등록 완료(2026-10-19), 이 워크플로가 `main`에 반영된 뒤 예약 실행됨
+- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 수집 후 `main` 기반 데이터 검토 PR 생성. 자동 병합하지 않음. `ONBID_SERVICE_KEY` 등록 및 첫 수동 실행 성공(2026-10-19). 최신 7,499입찰건 / 4,455물건은 [데이터 갱신 PR #3](https://github.com/softm/softm.auctionhannun/pull/3)에서 검토 후 반영하며, 현재 운영 스냅샷과 다릅니다.
 - `.github/workflows/deploy-pages.yml`: `main` 변경 시 검사·빌드 후 GitHub Pages 배포
 - `.github/workflows/android-ci.yml`: Android 변경 시 API 36 린트와 debug APK 빌드
 - 온비드는 GitHub Secret `ONBID_SERVICE_KEY`가 필요합니다. 키는 브라우저나 저장소에 넣지 않습니다.
