@@ -1,6 +1,6 @@
 # 경매한눈 수집·지도 연동 현황
 
-확인일: 2026-10-19. [Pages 배포](https://github.com/softm/softm.auctionhannun/actions/runs/39232000163)와 운영 화면 검증을 완료했습니다. VWorld 운영 경계 인증은 미해결이며 Play Console 제출은 수행하지 않았습니다.
+확인일: 2026-10-19. 최초 Pages 배포와 기존 주소에서의 운영 화면 검증 후, [VWorld 전용 키 수정 배포](https://github.com/softm/softm.auctionhannun/actions/runs/39235978516)까지 완료했습니다. 새 등록 도메인의 HTTPS 인증서 발급과 운영 경계 검증은 아직 완료되지 않았습니다. Play Console 제출은 수행하지 않았습니다.
 
 ## 실제 구현
 
@@ -55,7 +55,9 @@
 
 ## 지도와 사용자 정보
 
-- `map-config.js`는 기존 사용자 서비스의 공개 브라우저 식별자만 포함합니다. REST Secret은 없습니다. 토지이용한눈 키로 실제 물건 경계를 조회할 때 `INCORRECT_KEY`가 발생했습니다. 사용자 지시에 따라 별도 프로젝트 `softm.tojihannun/app.js`의 브라우저 키와 `location.hostname` 형식을 적용했고, localhost:3000에서 동일 실제 물건의 PNU 일치 Polygon 표시를 확인했습니다. 그러나 배포된 `softm.github.io/softm.auctionhannun/`의 같은 경계 요청은 `INCORRECT_KEY`로 거부되어 **운영 경계 조회는 미해결**입니다. 참조 서비스 도메인을 가장하지 않고 실제 접속 호스트명만 보냅니다. 콘솔의 등록 목록은 로그인 전이라 확인하지 못했으며, 해당 키의 등록 서비스 URL·데이터 API 권한 확인이 필요합니다.
+- `map-config.js`는 공개 브라우저 식별자만 포함하며 REST Secret은 없습니다. 사용자 로그인 후 VWorld 콘솔에서 별도로 발급된 **경매한눈 전용 키**, 웹사이트 유형, 등록 서비스 URL `https://auctionhannun.designboard.net`, 검색·2D데이터 API 선택을 확인했습니다. 전용 키의 발급일은 2026-10-19, 개발키 만료일은 2027-04-19입니다. 기존 토지한눈·토지이용한눈 키의 설정은 수정하지 않았고 운영키 신청도 하지 않았습니다.
+- 요청의 `domain`은 실제 `location.origin`입니다. 등록 운영 origin 이외의 외부 주소는 API 호출 전에 명확한 안내로 차단합니다. 다른 서비스 도메인이나 Referer를 가장하지 않습니다. localhost는 개발 미리보기용 호출만 허용하지만, 현재 전용 키의 로컬 경계 응답은 `INCORRECT_KEY`였으므로 로컬 성공으로 기록하지 않습니다.
+- GitHub Pages의 맞춤 도메인도 `auctionhannun.designboard.net`으로 설정되어 있음을 확인했습니다. 공개 DNS(Cloudflare·Google)는 `softm.github.io`를 반환했습니다. 권한 DNS의 일시적으로 다른 응답도 관찰했으며 후속 비재귀 조회에서는 두 서버가 같은 CNAME을 반환했습니다. GitHub 자체 검사는 `NotServedByPagesError`를 표시했고, 재검사 후 TLS `Certificate Requested`(1/3) 상태로 발급이 시작됐습니다. HTTPS 접속은 당시 `ERR_CERT_COMMON_NAME_INVALID`로 차단되어 **새 운영 도메인의 실제 필지 경계는 검증 대기**입니다. DNS 레코드 삭제·도메인 재등록·브라우저 보안 경고 우회는 수행하지 않았습니다.
 - 지도는 사용자 요청 시 로드합니다. 주소/필지 확인 버튼을 누르면 해당 소재지 또는 PNU만 지도 제공자에게 전달합니다. 사건번호·메모·체크리스트는 전송하지 않습니다. 기기 GPS를 요청하지 않습니다.
 - 주소 조회는 한 번에 최대 40건, 동시 4건, 성공 결과만 7일 캐시로 사용합니다. 주소 후보가 여러 개이거나 국내 좌표가 아니면 표시하지 않습니다.
 - 좌표 없는 물건도 목록에서 제거하지 않습니다. 마커는 최대 500개로 제한하고 그 사실을 표시합니다. 목록은 40건씩 더 보기로 렌더링합니다.
@@ -63,11 +65,11 @@
 
 ## 검증과 남은 일
 
-`npm run check`, `npm run build`. `/tests/map-browser.html`은 로컬 실연동 확인 전용으로 배포에서 제외됩니다. 실제 온비드 `2020-11444-007`의 세종시 와촌리 1084-4는 토지한눈 설정 반영 후 VWorld 주소 후보 `3611036031110840004`, 동일 PNU 토지이음 링크, Polygon 경계 표시까지 확인했습니다. 실제 접속 호스트명만 요청하는 회귀 테스트도 추가했습니다. 성공 사례 하나로 모든 필지의 정상 조회를 판단하지 않습니다.
+`npm run check` 27개 테스트 통과, `npm run build` 성공. `/tests/map-browser.html`은 로컬 실연동 확인 전용으로 배포에서 제외됩니다. 이전 토지한눈 키로는 실제 온비드 `2020-11444-007`의 세종시 와촌리 1084-4에 대해 주소 후보 `3611036031110840004`, 동일 PNU 토지이음 링크, 로컬 Polygon 표시를 확인했지만 이를 새 전용 키의 성공으로 간주하지 않습니다. 전용 키 변경 후에는 실제 origin 전달 및 다른 서비스·HTTP 운영 주소·유사 도메인 거부 회귀 테스트를 적용했습니다.
 
 동일 실제 물건의 NAVER 주소 좌표·마커·지적도 표시, 법원 0건/공매 분리 필터, 목록 40→80건 더 보기를 로컬 브라우저에서 확인했습니다. Pages에서도 전체 7,512입찰건, 상세 JSON 로딩, NAVER 주소 변환·지도·지적도, VWorld 후보·동일 PNU 토지이음 링크를 확인했습니다. 운영 VWorld 경계 요청의 인증 오류는 별도로 기록합니다. 모바일 전용 크기 설정은 이번 도구에서 실제 뷰포트에 반영되지 않아 데스크톱 검증으로만 기록합니다. 모바일 실기기 검증은 별도로 필요합니다.
 
-남은 일: VWorld 콘솔에서 경매한눈 운영 URL에 맞는 키 설정 확인, 데이터 갱신 PR 검토, 법원경매의 이용 가능한 별도 공급 경로 확보, 등기 통계 서비스별 키 신청(필요한 통계만), 지도 SDK가 포함된 실제 배포 기준으로 Play 데이터 보안 재검토. 현재 Play 심사 제출은 하지 않았습니다.
+남은 일: GitHub의 도메인 검증·TLS 발급 완료 후 HTTPS 강제 및 새 운영 주소의 NAVER/VWorld 실연동 검증, 개발키 만료 전 연장 또는 운영키 전환, 데이터 갱신 PR 검토, 법원경매의 이용 가능한 별도 공급 경로 확보, 등기 통계 서비스별 키 신청(필요한 통계만), 지도 SDK가 포함된 실제 배포 기준으로 Play 데이터 보안 재검토. 현재 Play 심사 제출은 하지 않았습니다.
 
 ## 공식 근거
 
@@ -78,3 +80,4 @@
 - [NAVER 지도 지적도 공식 예제](https://navermaps.github.io/maps.js.ncp/docs/tutorial-2-cadastral.example.html).
 - [VWorld 공식 API 예제](https://github.com/V-world/V-world_API_sample).
 - [VWorld 공식 FAQ](https://www.vworld.kr/v4po_brdfaq_s001.do?bodIde=52): 웹사이트 유형의 키는 등록 서비스 URL과 domain 파라미터를 맞춰 사용하도록 안내합니다.
+- [GitHub Pages HTTPS 안내](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https): 도메인 DNS 검사 후 인증서 발급 절차가 진행됩니다. Actions 배포에서는 CNAME 파일이 필수가 아니므로 이를 임의로 추가하지 않았습니다([맞춤 도메인 문제 해결](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/troubleshooting-custom-domains-and-github-pages)).
