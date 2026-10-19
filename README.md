@@ -27,12 +27,33 @@
   → GitHub Pages 배포
 ```
 
-- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 자료 정규화 및 변경분 커밋
+- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 승인된 자료를 정규화하고 `feature/data-refresh-* → develop → release/data-* → main` 순서로 병합
 - `.github/workflows/deploy-pages.yml`: `main` 변경 시 검사·빌드 후 GitHub Pages 배포
+- `.github/workflows/android-ci.yml`: Android 변경 시 API 36 린트와 debug APK 빌드
 - 외부 피드를 연결하려면 저장소 변수 `AUCTION_FEED_URL`에 HTTPS JSON 주소를 등록합니다.
 - 변수가 없으면 `data/inbox.json`의 검수 데이터를 사용합니다.
+- 피드는 자동 배포 전에 `metadata.reviewed=true`로 검수 승인을 명시해야 합니다.
 - 공식 법원 사이트 HTML을 직접 크롤링하거나 CAPTCHA·WAF를 우회하지 않습니다.
 - 소유자·임차인 성명, 연락처, 주민등록번호 등 개인정보는 수집 대상이 아닙니다.
+
+## Android / Google Play
+
+- 프로젝트: `android/`
+- 패키지: `softm.realestate.auctionhannun`
+- 기기 표시명: `경매한눈`
+- 버전: `1.0.0 (1)`
+- SDK: minSdk 24 / targetSdk 36 / compileSdk 36
+- 개인정보처리방침: `https://softm.github.io/softm.auctionhannun/privacy.html`
+- Play 등록 문구와 데이터 보안 기준: `android/store/`
+
+로컬 `android/signing.properties`는 Git에서 제외됩니다. 서명 설정이 있는 환경에서 다음 명령으로 Play 업로드용 AAB를 생성합니다.
+
+```bash
+cd android
+./gradlew lintRelease bundleRelease
+```
+
+산출물: `android/app/build/outputs/bundle/release/app-release.aab`
 
 ## 실행
 
