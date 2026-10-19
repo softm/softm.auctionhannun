@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 500" role="img" aria-labelledby="title desc">
+  <title id="title">경매한눈 Google Play 피처 그래픽</title>
+  <desc id="desc">지도와 서류 확인을 상징하는 경매한눈 브랜드 이미지</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0d352c"/><stop offset="1" stop-color="#1c6b56"/>
+    </linearGradient>
+    <linearGradient id="card" x1="178" y1="82" x2="430" y2="428" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/><stop offset="1" stop-color="#e9f4ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#06261f" flood-opacity=".4"/></filter>
+  </defs>
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <g opacity=".12" fill="none" stroke="#d7eee5" stroke-width="3">
+    <path d="M-40 105C150 55 270 170 455 120S785 22 1080 128"/>
+    <path d="M-40 252C145 178 318 326 515 254S820 152 1080 266"/>
+    <path d="M-40 420C168 338 302 470 520 394S830 318 1080 410"/>
+    <path d="M130-40 42 560M340-40l92 600M736-40 612 560M950-40 844 560"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="116" y="70" width="330" height="360" rx="54" fill="url(#card)"/>
+    <path d="M207 130h104l55 55v180H207z" fill="#123f33"/>
+    <path d="M311 130v55h55" fill="#28735f"/>
+    <path d="M243 219h85M243 254h60" fill="none" stroke="#96c4b4" stroke-width="15" stroke-linecap="round"/>
+    <path d="m232 317 31 31 72-85" fill="none" stroke="#39d59f" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g fill="#fff">
+    <text x="520" y="198" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="68" font-weight="800" letter-spacing="-4">경매한눈</text>
+    <text x="524" y="252" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="700" fill="#bfe4d7">COURT AUCTION CHECKLIST</text>
+    <text x="524" y="326" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="30" font-weight="600">3대 서류부터 권리·현장 확인까지</text>
+    <text x="524" y="370" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" fill="#d6ebe4">입찰 전 확인 항목을 사건별로 관리하세요</text>
+  </g>
+</svg>
