@@ -1,0 +1,100 @@
+const repo = "https://api.github.com/repos/softm/softm.auctionhannun";
+export const datasets = [{ name: "온비드 공매", base: "./data/onbid" }, { name: "법원 경매", base: "./data" }];
+export function number(value) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value.toLocaleString("ko-KR") : "—";
+}
+export function date(value) {
+  if (!value || !Number.isFinite(new Date(value).getTime())) return "—";
+  return new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(value));
+}
+export function collectionRow(name, manifest, status) {
+  if (!manifest || !Number.isInteger(manifest.itemCount) || manifest.itemCount < 0 || manifest.demo !== false) return [name, "확인 불가", "—", "확인 불가", "—", "배포 매니페스트 확인 필요"];
+  const sameSnapshot = status?.lastSuccessAt === manifest.collectedAt && status?.state === "ready" && status.itemCount === manifest.itemCount;
+  const verified = sameSnapshot && Number.isInteger(status.expectedCount) && status.expectedCount > 0 && status.itemCount <= status.expectedCount;
+  const labels = { ready: "정상", unconfigured: "공급원 미연결", failed: "실패 · 이전 정상 자료 유지", error: "실패 · 이전 정상 자료 유지" };
+  return [name, number(manifest.itemCount), number(manifest.distinctProperties), verified ? `${number(status.itemCount)} / ${number(status.expectedCount)}건 (${Math.floor(status.itemCount / status.expectedCount * 1000) / 10}%)` : "— (비교 대상 없음)", date(manifest.collectedAt), `${labels[status?.state] || "상태 확인 필요"}${status?.attemptedAt ? ` · ${date(status.attemptedAt)}` : ""}`];
+}
+async function json(url) {
+  const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12000) });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+function rows(id, values) {
+  document.getElementById(id).replaceChildren(...values.map(cells => {
+    const tr = document.createElement("tr");
+    cells.forEach((value, index) => {
+      const cell = document.createElement(index ? "td" : "th");
+      if (!index) cell.scope = "row";
+      if (value instanceof Node) cell.append(value); else cell.textContent = value;
+      tr.append(cell);
+    });
+    return tr;
+  }));
+}
+function link(label, path) {
+  const a = document.createElement("a");
+  a.textContent = label;
+  a.href = `https://github.com/softm/softm.auctionhannun/${path}`;
+  return a;
+}
+async function loadPublished() {
+  const results = await Promise.all(datasets.map(async ({ name, base }) => {
+    const [manifest, status] = await Promise.allSettled([json(`${base}/manifest.json`), json(`${base}/collection-status.json`)]);
+    return { name, manifest: manifest.status === "fulfilled" ? manifest.value : null, status: status.status === "fulfilled" ? status.value : null };
+  }));
+  rows("collectionRows", results.map(x => collectionRow(x.name, x.manifest, x.status)));
+  const [onbid, court] = results.map(x => x.manifest?.demo === false ? x.manifest : null);
+  document.getElementById("onbidCount").textContent = number(onbid?.itemCount);
+  document.getElementById("propertyCount").textContent = number(onbid?.distinctProperties);
+  document.getElementById("courtCount").textContent = number(court?.itemCount);
+  document.getElementById("scope").textContent = results.map(x => `${x.name} 수집 범위: ${x.manifest?.coverage || "확인 불가"}`).join("\n");
+  const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+  document.getElementById("notice").textContent = `${local ? "로컬 미리보기 자료 기준 (운영 배포본과 다를 수 있음)" : "현재 사이트에서 제공 중인 자료 기준"} · 확인 ${date(new Date())} KST${results.some(x => !x.manifest || !x.status) ? " · 일부 자료를 불러오지 못했습니다. 새로고침해 주세요." : ""}`;
+}
+async function loadRuns() {
+  try {
+    const data = await json(`${repo}/actions/workflows/collect-auctions.yml/runs?per_page=6`);
+    if (!Array.isArray(data.workflow_runs)) throw new Error("invalid runs");
+    const labels = { success: "성공 (배포 완료 의미 아님)", failure: "실패", cancelled: "취소", skipped: "건너뜀", timed_out: "시간 초과", in_progress: "실행 중", queued: "대기 중", waiting: "대기 중" };
+    rows("runRows", data.workflow_runs.length ? data.workflow_runs.map(run => [link(`#${Number(run.run_number)} 수집 실행`, `actions/runs/${Number(run.id)}`), date(run.run_started_at || run.created_at), ({ schedule: "정기 예약", workflow_dispatch: "수동 실행" })[run.event] || run.event, labels[run.conclusion || run.status] || "확인 필요"]) : [["실행 내역 없음", "—", "—", "—"]]);
+    return true;
+  } catch {
+    rows("runRows", [["조회 실패", "—", "—", "GitHub API 제한 또는 네트워크 오류. 전체 실행 보기에서 확인해 주세요."]]);
+    return false;
+  }
+}
+async function loadPulls() {
+  const target = document.getElementById("pulls");
+  try {
+    const pulls = await json(`${repo}/pulls?state=open&base=main&per_page=100`);
+    if (!Array.isArray(pulls)) throw new Error("invalid pulls");
+    const pending = pulls.filter(pr => pr.head?.ref?.startsWith("feature/data-refresh-") && pr.head?.repo?.full_name === "softm/softm.auctionhannun");
+    target.replaceChildren(...pending.map(pr => {
+      const item = document.createElement("div");
+      item.className = "pr-item";
+      item.append(link(`#${Number(pr.number)} ${pr.title}`, `pull/${Number(pr.number)}`), document.createTextNode(` · 검토·병합 대기 · 생성 ${date(pr.created_at)} KST`));
+      return item;
+    }));
+    if (!pending.length) target.textContent = "조회한 열린 PR 중 수집 PR 없음. 운영 반영 완료 여부는 위 배포 자료 시각과 Pages 배포 결과를 확인하세요.";
+    if (pulls.length === 100) target.append(document.createTextNode("최근 열린 PR 100개 기준입니다. 전체 목록은 GitHub에서 확인하세요."));
+    return true;
+  } catch {
+    target.textContent = "PR 조회 실패 · 반영 대기 여부를 확인할 수 없습니다. ";
+    target.append(link("GitHub PR 목록 확인 ↗", "pulls"));
+    return false;
+  }
+}
+async function refresh() {
+  const button = document.getElementById("refresh");
+  if (button.disabled) return;
+  button.disabled = true;
+  try {
+    const [, runsOk, pullsOk] = await Promise.all([loadPublished(), loadRuns(), loadPulls()]);
+    document.getElementById("remoteNote").textContent = `${runsOk && pullsOk ? "GitHub 공개 실행·PR 조회 완료" : "GitHub 일부 조회 실패 · 현재 제공 자료와 구분해서 확인하세요"} · ${date(new Date())} KST · 화면이 열려 있는 동안 90초마다 확인합니다. 이 버튼은 수집을 실행하지 않습니다.`;
+  } finally { button.disabled = false; }
+}
+if (typeof document !== "undefined") {
+  document.getElementById("refresh").addEventListener("click", refresh);
+  refresh();
+  setInterval(() => { if (!document.hidden) refresh(); }, 90000);
+}

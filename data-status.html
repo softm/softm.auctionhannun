@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="경매한눈 데이터 수집 현황: 출처별 건수, 수집 범위, 자동 수집 일정과 운영 반영 상태를 확인하세요.">
+  <title>데이터 수집 현황 | 경매한눈</title>
+  <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./data-status.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <header><a class="brand" href="./index.html">경매<span>한눈</span></a><a href="./index.html">물건 검색으로 돌아가기 →</a></header>
+  <main id="main">
+    <section class="intro">
+      <div><p class="eyebrow">DATA COLLECTION STATUS</p><h1>데이터 수집 현황</h1><p>어디서, 무엇을, 얼마나 수집했는지.<br>현재 제공 중인 자료와 수집 실행 결과를 나누어 보여드립니다.</p></div>
+      <button id="refresh" type="button">현황 새로고침</button>
+    </section>
+    <p id="notice" role="status" aria-live="polite">데이터를 확인하고 있습니다.</p>
+    <noscript><p>건수와 실행 현황을 확인하려면 JavaScript를 켜 주세요. 아래의 수집 정책과 출처는 그대로 볼 수 있습니다.</p></noscript>
+    <div class="metrics" aria-label="현재 제공 데이터 요약">
+      <article><span>온비드 입찰건</span><strong id="onbidCount">—</strong><small>조건·회차별 기록</small></article>
+      <article><span>온비드 고유 물건</span><strong id="propertyCount">—</strong><small>물건 관리번호 중복 제외</small></article>
+      <article><span>법원 경매</span><strong id="courtCount">—</strong><small>예시·직접 등록 제외</small></article>
+      <article><span>정기 수집 예약</span><strong>06:20</strong><small>매일 · 한국시간 / 실행 지연 가능</small></article>
+    </div>
+    <section><div class="section-head"><div><p class="eyebrow">현재 제공 자료</p><h2>수집 구분별 건수</h2></div><p>이 페이지와 함께 제공되는 정적 데이터 기준</p></div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="수집 구분별 건수 표"><table><thead><tr><th scope="col">수집 구분</th><th scope="col">입찰건</th><th scope="col">고유 물건</th><th scope="col">수집 검증</th><th scope="col">최근 정상 수집 (KST)</th><th scope="col">최근 시도 상태</th></tr></thead><tbody id="collectionRows"><tr><td colspan="6">확인 중…</td></tr></tbody></table></div>
+      <p class="note">입찰건과 고유 물건은 더하지 않습니다. 같은 물건이 입찰 조건·회차별로 여러 건 존재할 수 있습니다. 검증 비율은 해당 검색 조건의 API 예상 건수 대비 비율이며, 전국 전체 경매·공매의 수집률이 아닙니다.</p>
+      <div id="scope" class="callout">현재 수집 범위를 확인하고 있습니다.</div>
+    </section>
+    <section><p class="eyebrow">WHERE · WHAT · HOW · WHEN</p><h2>출처·수집 방식·시점</h2>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="데이터 출처와 수집 방식 표"><table class="wide"><thead><tr><th scope="col">구분 / 어디서</th><th scope="col">무엇을</th><th scope="col">어떻게</th><th scope="col">언제</th><th scope="col">건수 집계 기준·상태</th></tr></thead><tbody>
+        <tr><th scope="row"><a href="https://www.data.go.kr/data/15157207/openapi.do">온비드 공식 API</a></th><td>물건번호, 소재지, 용도, 가격, 입찰 조건·기간</td><td><code>OnbidRlstListSrvc2/getRlstCltrList2</code><br>비공개 인증키로 페이지별 수집</td><td>매일 06:20 예약 + 수동 실행</td><td>입찰건과 고유 물건을 별도 집계. 실제 수치는 위 표 참조</td></tr>
+        <tr><th scope="row"><a href="https://www.courtauction.go.kr/">법원 경매정보</a></th><td>사건번호, 물건내역, 매각기일, 최저매각가격 등 연결 대상</td><td>승인된 공급원·검토된 파일을 읽는 수집기 구현. 직접 사이트 조회 차단</td><td>공급원 설정 시 정기 작업에서 실행</td><td>현재 연결 여부와 실제 건수는 위 표 참조. 예시 자료 제외</td></tr>
+        <tr><th scope="row"><a href="https://data.iros.go.kr/rp/oa/openOapiIntro.do">인터넷등기소</a></th><td>등기 관련 통계 등 검토 대상</td><td>현재 수집기 미연결</td><td>실행 일정 없음</td><td>수집 0건. 개별 경매 물건의 공급원으로 사용하지 않음</td></tr>
+        <tr><th scope="row">NAVER Maps</th><td>지도 배경, 주소 좌표, 지적도 레이어</td><td>지도 SDK·주소 변환 기능</td><td>사용자가 지도 조회 시</td><td>요청 시 조회. 경매 수집 건수에 합산하지 않음</td></tr>
+        <tr><th scope="row"><a href="https://www.vworld.kr/">VWorld</a></th><td>주소 후보, 선택한 필지의 경계</td><td>검색·공간정보 API, 전용 웹 키 사용</td><td>주소 후보 선택·필지 조회 시</td><td>누적 건수 미집계. 전용 키 적용 후 운영 환경 검증 필요 (2026-10-19 점검 기준)</td></tr>
+        <tr><th scope="row"><a href="https://www.eum.go.kr/">토지이음</a></th><td>선택 필지의 토지이용계획 원문</td><td>필지번호를 이용한 원문 페이지 연결</td><td>사용자가 원문 보기 선택 시</td><td>원문 링크 제공. 데이터 수집이 아님</td></tr>
+      </tbody></table></div>
+    </section>
+    <section><div class="section-head"><div><p class="eyebrow">GITHUB ACTIONS</p><h2>최근 자동·수동 수집 실행</h2></div><a href="https://github.com/softm/softm.auctionhannun/actions/workflows/collect-auctions.yml">전체 실행 보기 ↗</a></div>
+      <p>실행 성공과 서비스 반영은 다릅니다. 수집 결과는 검토용 PR로 생성되며 병합 후 Pages 배포가 성공해야 반영됩니다.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="최근 수집 실행 표"><table><thead><tr><th scope="col">실행</th><th scope="col">시작 (KST)</th><th scope="col">방식</th><th scope="col">결과</th></tr></thead><tbody id="runRows"><tr><td colspan="4">공개 실행 내역 확인 중…</td></tr></tbody></table></div>
+      <h3>운영 반영 대기 중인 수집 PR</h3><div id="pulls">공개 PR 확인 중…</div><p class="note" id="remoteNote">GitHub 공개 API로 조회합니다. 인증 제한·네트워크 오류 시 현재 제공 데이터는 계속 표시합니다.</p>
+    </section>
+    <section><p class="eyebrow">COLLECTION → PUBLICATION</p><h2>자동 갱신 정책과 반영 순서</h2>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="자동 갱신 정책 표"><table><thead><tr><th scope="col">단계</th><th scope="col">시점·장소</th><th scope="col">처리·검증 기준</th></tr></thead><tbody>
+        <tr><th scope="row">1. 수집 시작</th><td>GitHub Actions, 매일 06:20 KST 예약</td><td>온비드는 실행일 기준 7일 검색 구간. 법원은 공급원 설정 시만 실행. 예약 실행은 지연될 수 있음</td></tr>
+        <tr><th scope="row">2. 조회·검증</th><td>수집 실행 중</td><td>API 전체 페이지 조회, 예상 건수·실제 건수·중복 ID 확인. 비공개 키는 Actions Secret에서 사용</td></tr>
+        <tr><th scope="row">3. 가공·저장</th><td>검증 후</td><td>목록용 압축 파일·물건별 상세 JSON·매니페스트 생성. 실패 시 마지막 정상 자료 유지</td></tr>
+        <tr><th scope="row">4. 변경 PR</th><td>데이터 또는 상태 변경 시 자동 생성</td><td>변경 검토 대기. 수집 실행 성공만으로 운영 데이터가 교체되지는 않음</td></tr>
+        <tr><th scope="row">5. 서비스 반영</th><td>PR 병합 후 Pages 배포 성공 시</td><td>웹·앱이 배포된 목록을 읽고 상세 선택 시 해당 JSON 추가 조회</td></tr>
+      </tbody></table></div>
+    </section>
+    <section><h2>사용자 행위와 API 연계</h2><div class="table-wrap" tabindex="0" role="region" aria-label="사용자 행위별 연계 표"><table><thead><tr><th scope="col">사용자 행위</th><th scope="col">처리·연계</th><th scope="col">저장·집계</th></tr></thead><tbody>
+      <tr><th scope="row">목록 검색·필터</th><td>Pages의 수집 목록 조회</td><td>사용자별 온비드 API 호출 없음</td></tr>
+      <tr><th scope="row">물건 상세 열기</th><td>물건별 상세 JSON 추가 로딩</td><td>배포된 정적 데이터</td></tr>
+      <tr><th scope="row">지도·지적도 보기</th><td>NAVER Maps 주소 변환·지도·지적도 레이어</td><td>지도 조회는 수집 물건 수에 포함하지 않음</td></tr>
+      <tr><th scope="row">필지 경계 확인</th><td>주소 후보 확인 후 VWorld 필지 경계 요청</td><td>선택한 필지 기준 조회</td></tr>
+      <tr><th scope="row">토지이용계획 보기</th><td>토지이음 원문으로 이동</td><td>원문 링크, 일괄 수집 아님</td></tr>
+      <tr><th scope="row">직접 등록·관심 물건·메모</th><td>브라우저 로컬 저장</td><td>서버 동기화 없음. 이 페이지 수집 건수에서 제외</td></tr>
+    </tbody></table></div></section>
+  </main>
+  <footer>경매한눈 · 공공자료 기반 독립 서비스 <a href="./privacy.html">개인정보처리방침</a></footer>
+  <script type="module" src="./data-status.js"></script>
+</body>
+</html>
