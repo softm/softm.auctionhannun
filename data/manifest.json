@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "demo": false,
+  "reviewed": true,
+  "sourceType": "unconfigured",
+  "sourceUrl": "https://www.courtauction.go.kr/",
+  "coverage": "공급원 미연결",
+  "snapshotId": "",
+  "collectedAt": null,
+  "itemCount": 0,
+  "contentHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "status": "empty",
+  "catalogFile": "catalog/4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945.json.gz",
+  "catalogHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+}

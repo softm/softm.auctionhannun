@@ -10,7 +10,35 @@
       "name": "대한민국 법원경매정보",
       "url": "https://www.courtauction.go.kr/",
       "role": "사건·물건·기일·법원 3대 서류 원문 확인",
-      "collection": "reviewed-feed-or-manual"
+      "collection": "reviewed-feed-or-manual",
+      "status": "unconfigured-direct-access-blocked"
+    },
+    {
+      "name": "한국자산관리공사 온비드",
+      "url": "https://www.data.go.kr/data/15157207/openapi.do",
+      "role": "압류재산 매각 입찰 목록. 법원경매와 별도 구분",
+      "collection": "official-api",
+      "status": "local-verified",
+      "coverage": "압류재산·매각·수의계약 불가, 기본 향후 7일 입찰기간 검색"
+    },
+    {
+      "name": "등기정보광장",
+      "url": "https://data.iros.go.kr/rp/oa/openOapiIntro.do",
+      "role": "등기현황 통계. 개별 경매 목록·등기부 원문 아님",
+      "collection": "not-connected-service-key-required"
+    },
+    {
+      "name": "NAVER Maps",
+      "url": "https://navermaps.github.io/maps.js.ncp/",
+      "role": "사용자 요청 시 지도·주소 좌표 확인·지적도",
+      "collection": "browser-sdk-on-demand"
+    },
+    {
+      "name": "VWorld / 토지이음",
+      "url": "https://www.vworld.kr/",
+      "role": "주소 후보·PNU 일치 필지 경계와 동일 PNU 토지이음 원문 연결",
+      "collection": "browser-api-on-demand-and-official-link",
+      "status": "address-search-verified-boundary-key-rejected"
     },
     {
       "name": "찾기쉬운 생활법령정보",

@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "demo": false,
+    "reviewed": false,
+    "redistributionAllowed": false,
+    "datasetKind": "court-auction",
+    "sourceType": "approved-file",
+    "sourceUrl": "https://www.courtauction.go.kr/",
+    "coverage": "실제 제공 지역·기간을 입력하세요",
+    "snapshotId": "원본 추출 버전을 입력하세요",
+    "expectedCount": 0
+  },
+  "items": []
+}
