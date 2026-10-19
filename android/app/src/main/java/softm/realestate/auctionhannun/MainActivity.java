@@ -26,7 +26,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    private static final String HOME = "https://softm.github.io/softm.auctionhannun/";
+    private static final String HOME = "https://softm.github.io/softm.auctionhannun/?app=1.0.1";
     private static final String TRUSTED_HOST = "softm.github.io";
     private static final String TRUSTED_PATH = "/softm.auctionhannun/";
 
@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(0xfff4f7f5);
+        root.setBackgroundColor(0xfff7f9fc);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
             view.setPadding(
                 insets.getSystemWindowInsetLeft(),
@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
         });
 
         progress = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        progress.setProgressTintList(android.content.res.ColorStateList.valueOf(0xff16805f));
+        progress.setProgressTintList(android.content.res.ColorStateList.valueOf(0xff0f766e));
         root.addView(progress, new LinearLayout.LayoutParams(-1, 6));
 
         error = new LinearLayout(this);
@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setMediaPlaybackRequiresUserGesture(true);
-        settings.setUserAgentString(settings.getUserAgentString() + " AuctionhannunAndroid/1");
+        settings.setUserAgentString(settings.getUserAgentString() + " AuctionhannunAndroid/2");
 
         CookieManager.getInstance().setAcceptThirdPartyCookies(web, false);
         web.setWebViewClient(new WebViewClient() {
