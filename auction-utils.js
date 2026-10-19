@@ -9,12 +9,12 @@ export function minimumAmount(value) {
 
 export const regionOf = item => String(item.address || "").trim().split(/\s+/)[0];
 
-export function filterAndSortCases(items, { query = "", filter = "all", region = "all", court = "all", sort = "date", favorites = new Set() } = {}) {
+export function filterAndSortCases(items, { query = "", filter = "all", region = "all", court = "all", kind = "all", sort = "date", favorites = new Set() } = {}) {
   const normalized = query.trim().toLowerCase();
   const matches = items.filter(item => {
     const typeMatch = filter === "all" || (filter === "favorite" ? favorites.has(item.id) : item.type === filter);
     const text = `${item.title} ${item.address} ${item.court} ${item.caseNumber}`.toLowerCase();
-    return typeMatch && (region === "all" || regionOf(item) === region)
+    return typeMatch && (kind === "all" || (item.auctionKind || "court") === kind) && (region === "all" || regionOf(item) === region)
       && (court === "all" || item.court === court) && (!normalized || text.includes(normalized));
   });
   if (sort === "recent") return matches;
@@ -25,12 +25,11 @@ export function filterAndSortCases(items, { query = "", filter = "all", region =
 }
 
 export function reviewMetrics(items, favorites, checks) {
-  const keys = ["doc:sale-spec", "doc:field-report", "doc:appraisal"];
   return {
     total: items.length,
     saved: items.filter(item => favorites.has(item.id)).length,
     added: items.filter(item => item.userAdded).length,
-    checked: items.reduce((count, item) => count + keys.filter(key => checks[item.id]?.[key]).length, 0),
-    documents: items.length * keys.length
+    checked: items.reduce((count, item) => count + (item.auctionKind === "onbid" ? ["doc:onbid-notice", "doc:onbid-property", "doc:onbid-appraisal"] : ["doc:sale-spec", "doc:field-report", "doc:appraisal"]).filter(key => checks[item.id]?.[key]).length, 0),
+    documents: items.length * 3
   };
 }

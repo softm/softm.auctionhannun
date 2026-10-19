@@ -72,7 +72,7 @@
           <button type="button" data-filter="favorite" aria-pressed="false"><svg><use href="#i-bookmark"/></svg>관심 물건</button>
         </div>
         <div class="workspace-stats" aria-label="내 검토 현황">
-          <div><span>검토 물건</span><strong id="totalCases">0</strong><small>예시 포함</small></div>
+          <div><span>검토 입찰건</span><strong id="totalCases">0</strong><small>수집 + 직접 추가</small></div>
           <div><span>관심 물건</span><strong id="savedCases">0</strong><small>나의 저장 목록</small></div>
           <div><span>직접 추가</span><strong id="addedCases">0</strong><small>내가 등록한 사건</small></div>
           <div><span>서류 확인</span><strong id="checkedDocuments">0/0</strong><small>개인 확인 기록</small></div>
@@ -82,41 +82,18 @@
       <button class="mobile-filters" id="filtersToggle" type="button" aria-controls="filtersPanel" aria-expanded="false">지역·법원·정렬 조건 <svg><use href="#i-plus"/></svg></button>
       <section class="filter-panel" id="filtersPanel" aria-label="검색 조건">
         <label>소재지<select id="regionFilter"><option value="all">전체 지역</option></select></label>
-        <label>담당 법원<select id="courtFilter"><option value="all">전체 법원</option></select></label>
+        <label>정보 구분<select id="kindFilter"><option value="all">법원경매 + 온비드 공매</option><option value="court">법원경매</option><option value="onbid">온비드 공매</option></select></label>
+        <label>법원·기관<select id="courtFilter"><option value="all">전체 법원·기관</option></select></label>
         <label>정렬<select id="sortOrder"><option value="date">매각기일 빠른순</option><option value="minimum">최저가 낮은순</option><option value="recent">직접 등록 우선</option></select></label>
         <button class="reset-filters" id="resetFilters" type="button">조건 초기화</button>
         <p><svg><use href="#i-shield"/></svg> 로그인 없이, 이 기기에만 저장</p>
       </section>
 
     <main class="app-shell">
-      <section class="map-stage" id="mapStage" aria-label="경매 물건 탐색 예시 지도">
-        <div class="map-heading"><span><svg><use href="#i-map"/></svg>지도에서 탐색</span><small>위치·축척은 실제와 다릅니다</small></div>
-        <div class="map-canvas" id="mapCanvas">
-          <svg class="map-art" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="mapTitle mapDesc">
-            <title id="mapTitle">경매 물건 탐색 지도</title>
-            <desc id="mapDesc">기능 확인용 지도 위에 예시 경매 물건 위치 네 곳을 표시합니다.</desc>
-            <rect width="1400" height="900" fill="#e8eee9"/>
-            <g class="districts">
-              <path d="M-60 80 230 15l225 120-92 187-289 35Z"/>
-              <path d="m455 135 278-70 184 164-105 190-285-47-164-50Z"/>
-              <path d="m917 229 255-115 250 88-38 258-280 27-292-68Z"/>
-              <path d="m74 357 289-35 164 50-18 247-335 50-199-129Z"/>
-              <path d="m527 372 285 47 98 220-186 206-215-226Z"/>
-              <path d="m812 419 292 68 280-27 69 269-323 170-220-260Z"/>
-            </g>
-            <g class="water"><path d="M-40 585c195-88 310-64 475-6 150 53 282 75 463 4 170-67 297-77 550-6v82c-225-65-351-54-513 9-195 76-347 49-520-11-154-53-257-70-455 20Z"/></g>
-            <g class="roads major"><path d="M-20 195 1420 705"/><path d="M242-40 1082 940"/><path d="M1120-40 735 940"/><path d="M-40 470 1440 332"/></g>
-            <g class="roads minor"><path d="M102 55 356 898"/><path d="M598-15 410 905"/><path d="M865-20 1350 830"/><path d="M-10 736 1370 93"/><path d="M-10 298 1300 835"/></g>
-            <g class="labels">
-              <text x="175" y="230">서울중앙지방법원</text>
-              <text x="560" y="300">수원지방법원</text>
-              <text x="985" y="350">인천지방법원</text>
-              <text x="380" y="725">의정부지방법원</text>
-            </g>
-          </svg>
-          <div class="map-pins" id="mapPins" aria-label="지도 물건 위치"></div>
-        </div>
-
+      <section class="map-stage" id="mapStage" aria-label="네이버 경매 물건 지도">
+        <div class="map-heading"><span><svg><use href="#i-map"/></svg>지도에서 탐색</span><button type="button" id="cadastralToggle" aria-pressed="false" disabled>지적도</button></div>
+        <div class="map-frame"><div class="map-canvas" id="mapCanvas" aria-label="네이버 지도"></div></div>
+        <div class="map-placeholder" id="mapPlaceholder"><strong>실제 좌표로 확인하는 물건 위치</strong><p>네이버 지도를 불러옵니다.<br/>기기 GPS 위치는 사용하지 않습니다.</p><button type="button" id="enableMap">네이버 지도 켜기</button></div>
         <div class="map-tools" aria-label="지도 조작">
           <button id="zoomIn" type="button" aria-label="지도 확대">＋</button>
           <button id="zoomOut" type="button" aria-label="지도 축소">−</button>
@@ -124,14 +101,15 @@
         </div>
 
         <div class="map-caption">
-          <span>검토 물건 <b id="mapResultCount">4</b></span>
-          <small>예시 배치도 · 실제 위치 안내 아님</small>
+          <div><span>확인된 좌표 <b id="mapResultCount">0</b></span><small id="mapMissingCount">목록 0건 · 좌표 미확인 0건</small></div>
+          <button id="locateList" type="button">목록 주소 확인</button>
         </div>
+        <p class="map-status" id="mapStatus" role="status">주소 확인 시 최대 40건의 소재지를 네이버에 전송합니다.</p>
       </section>
 
       <section class="results-sheet" id="resultsSheet" aria-labelledby="resultsTitle">
         <div class="sheet-heading">
-          <div><span class="eyebrow">PROPERTY LIST</span><h2 id="resultsTitle">검토 물건 <b id="resultCount">0</b></h2></div>
+          <div><span class="eyebrow">PROPERTY LIST</span><h2 id="resultsTitle">검토 입찰건 <b id="resultCount">0</b></h2></div>
           <button class="view-toggle" id="mapToggle" type="button" aria-controls="mapStage" aria-pressed="false"><svg><use href="#i-map"/></svg><span>지도 보기</span></button>
         </div>
         <div class="result-meta">
@@ -139,7 +117,9 @@
           <button type="button" id="clearSearch" hidden>검색 초기화</button>
         </div>
         <p class="sample-disclaimer"><span>i</span><span id="datasetNotice">수집 자료를 불러오는 중입니다. 최신 상태와 서류 원문은 대한민국 법원경매정보에서 확인하세요.</span></p>
+        <p class="collection-health" id="collectionHealth" role="status">수집 상태 확인 중</p>
         <div class="case-list" id="caseList" aria-live="polite"></div>
+        <button class="load-more" id="loadMore" type="button" hidden>다음 물건 보기</button>
       </section>
 
       <div class="detail-backdrop" id="detailBackdrop" hidden></div>
@@ -192,7 +172,7 @@
         <label>사건번호<input name="caseNumber" required placeholder="예: 2026타경12345" /></label>
         <label>소재지<input name="address" required placeholder="지번 또는 도로명 주소" /></label>
         <div class="form-row">
-          <label>물건 유형<select name="type"><option value="apartment">아파트</option><option value="land">토지</option><option value="commercial">상가</option><option value="other">기타</option></select></label>
+          <label>물건 유형<select name="type"><option value="apartment">아파트·주거</option><option value="land">토지·임야</option><option value="commercial">상가·업무</option><option value="other">기타</option></select></label>
           <label>매각기일<input name="saleDate" type="date" /></label>
         </div>
         <button class="dialog-submit" value="submit" type="submit">검토 목록에 추가</button>

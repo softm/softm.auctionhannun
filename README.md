@@ -1,6 +1,6 @@
 # 경매한눈
 
-Google Stitch의 경매한눈 프롭테크 디자인을 적용한 부동산 법원경매 검토 도구입니다. 네이비·틸 색상, 검색·필터, 카드형 목록과 모바일 하단 메뉴를 사용합니다.
+Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입니다. 법원경매와 온비드 공매를 구분하고, 실제 수집 자료의 출처·범위·마지막 수집 상태를 표시합니다.
 
 - GitHub 저장소: `softm/softm.auctionhannun`
 - 운영 주소: `https://softm.github.io/softm.auctionhannun/`
@@ -14,26 +14,33 @@ Google Stitch의 경매한눈 프롭테크 디자인을 적용한 부동산 법�
 - 대한민국 법원경매정보, 인터넷등기소, 정부24, 찾기쉬운 생활법령 공식 연결
 - 모바일 카드 목록·지도 전환·전체 화면 상세와 데스크톱 목록/지도 2단 반응형 UI
 - 실제 저장된 관심 물건·직접 추가 사건·서류 확인 기록으로 계산하는 검토 현황
+- 온비드 공식 API 목록, 별도의 공매 공고·명세·평가 체크리스트
+- 네이버 실제 지도·주소 좌표 확인·지적도, VWorld 필지 후보와 PNU 일치 경계, 토지이음 원문 연결
 
-법원경매정보의 안정적인 공개 API를 전제로 하지 않습니다. 화면에 포함된 네 건은 기능 확인용 예시이며 실제 입찰 정보가 아닙니다. 사건의 최신 상태와 원문 서류는 공식 사이트에서 반드시 다시 확인해야 합니다.
+2026-10-19 로컬 수집 결과: 온비드 7,512입찰건 / 물건관리번호 기준 4,466물건. 범위는 전국 압류재산·매각·수의계약 불가, 입찰기간 검색 10월 19~26일입니다. 전체 온비드 물건 수가 아닙니다. 법원경매 공급원은 아직 미연결(0건)입니다. 기존 예시 4건은 테스트 전용으로 이동했으며 오류 시 예시로 대체하지 않습니다. 최신 상태·대상 범위·공고 원문은 공식 사이트에서 다시 확인해야 합니다.
+
+상세 구조와 실제 연동·미연동 구분은 [수집·지도 연동 현황](docs/INTEGRATION.md)을 확인하세요. 로컬 구현 완료와 운영 배포 완료는 별개입니다.
+
+지도 검증 상태: NAVER 지도·주소 변환·지적도와 VWorld 주소 검색을 확인했습니다. VWorld의 `INCORRECT_KEY`는 사용자가 지정한 토지한눈의 브라우저 키와 실제 호스트명 형식을 적용하여 수정했습니다. localhost:3000에서 실제 온비드 물건(와촌리 1084-4)의 PNU 일치 경계 표시까지 확인했습니다. 운영 도메인에서는 배포 후 별도 확인하며, 한 물건의 성공을 전체 필지의 정상 조회로 일반화하지 않습니다.
 
 ## 자료수집과 배포 흐름
 
 ```text
-검수 입력 또는 허용된 HTTPS JSON 피드
-  → scripts/collect-auctions.mjs
-  → 개인정보 패턴·필수값·출처 검증
-  → data/auctions.json
+승인 법원 JSON 피드 → collect-auctions.mjs → data/
+온비드 공식 API     → collect-onbid.mjs    → data/onbid/
+  → 비공개 원본 gzip / 체크포인트
+  → 출처·필수값·전체 페이지·개인정보 패턴 검증
+  → 검색 gzip + 개별 상세 JSON + manifest / 수집 상태
   → 테스트·정적 빌드
   → GitHub Pages 배포
 ```
 
-- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 승인된 자료를 정규화하고 `feature/data-refresh-* → develop → release/data-* → main` 순서로 병합
+- `.github/workflows/collect-auctions.yml`: 매일 오전 6시 20분(한국시간) 수집 후 `main` 기반 데이터 검토 PR 생성. 자동 병합하지 않음. `ONBID_SERVICE_KEY` 등록 완료(2026-10-19), 이 워크플로가 `main`에 반영된 뒤 예약 실행됨
 - `.github/workflows/deploy-pages.yml`: `main` 변경 시 검사·빌드 후 GitHub Pages 배포
 - `.github/workflows/android-ci.yml`: Android 변경 시 API 36 린트와 debug APK 빌드
-- 외부 피드를 연결하려면 저장소 변수 `AUCTION_FEED_URL`에 HTTPS JSON 주소를 등록합니다.
-- 변수가 없으면 `data/inbox.json`의 검수 데이터를 사용합니다.
-- 피드는 자동 배포 전에 `metadata.reviewed=true`로 검수 승인을 명시해야 합니다.
+- 온비드는 GitHub Secret `ONBID_SERVICE_KEY`가 필요합니다. 키는 브라우저나 저장소에 넣지 않습니다.
+- 승인 법원 피드는 `AUCTION_FEED_URL`(Secret 권장), 필요 시 `AUCTION_FEED_TOKEN`을 등록합니다. 미설정 시 예시를 자동 수집하지 않습니다.
+- 검수 파일은 `npm run collect -- --input /절대/경로/검수.json`으로 명시적으로 지정합니다. 구조·승인 조건은 [자료 관리](data/README.md)를 따릅니다.
 - 공식 법원 사이트 HTML을 직접 크롤링하거나 CAPTCHA·WAF를 우회하지 않습니다.
 - 소유자·임차인 성명, 연락처, 주민등록번호 등 개인정보는 수집 대상이 아닙니다.
 
@@ -56,7 +63,7 @@ cd android
 
 산출물: `android/app/build/outputs/bundle/release/app-release.aab`
 
-앱은 운영 GitHub Pages를 표시하므로 웹 디자인을 먼저 Pages에 배포·검증한 뒤 새 AAB를 업로드합니다. 이 버전은 기존 `auctionhannun:*` 저장 키와 데이터 구조를 유지합니다. Play Console에서 기존 1.0.0 대신 1.0.1을 선택하고 새 화면 캡처로 스토어 이미지를 교체해야 합니다.
+앱은 운영 GitHub Pages를 표시합니다. 변경 내용을 Pages에 배포·검증하고 지도 SDK의 실제 데이터 처리를 기준으로 Play 데이터 보안 항목을 재검토해야 합니다. 기존 `auctionhannun:*` 저장 키를 유지합니다. 이 작업에서는 Play Console 제출이나 출시를 수행하지 않았습니다.
 
 ## 실행
 
@@ -64,7 +71,9 @@ cd android
 npm start
 ```
 
-`http://127.0.0.1:4187`을 엽니다.
+`http://localhost:3000`을 엽니다. 네이버 지도에 등록된 로컬 출처입니다. `file://`로 열면 모듈·자료를 정상적으로 읽을 수 없습니다.
+
+Node.js 24 기준, 승인된 온비드 키를 환경변수로 설정한 뒤 `npm run collect:onbid`를 실행합니다. 기본 향후 7일이며 `ONBID_HORIZON_DAYS`는 1~31일입니다. `.env.example`은 설정 이름만 제공하며 실제 키는 커밋하지 않습니다.
 
 ## 검증
 

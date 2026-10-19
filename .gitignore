@@ -1,6 +1,9 @@
 .DS_Store
 dist/
 node_modules/
+source-data/
+data/inbox.json
+*.tmp
 *.log
 .env
 .env.*
