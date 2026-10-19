@@ -1,4 +1,4 @@
-name: Collect reviewed auction data
+name: Collect reviewed auction data with GitFlow
 
 on:
   schedule:
@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  actions: write
 
 concurrency:
   group: auction-data-collection
@@ -18,26 +20,53 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: develop
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Normalize reviewed feed
+      - name: Normalize approved feed
         run: npm run collect
         env:
           AUCTION_FEED_URL: ${{ vars.AUCTION_FEED_URL }}
       - run: npm run check
-      - name: Commit verified data change
+      - name: Detect verified data change
+        id: change
         shell: bash
         run: |
           if git diff --quiet -- data/auctions.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "변경된 경매 자료가 없습니다."
-            exit 0
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Feature to develop to release to main
+        if: steps.change.outputs.changed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          KST_DATE="$(TZ=Asia/Seoul date +%Y%m%d)"
+          STAMP="$(TZ=Asia/Seoul date +%Y%m%d-%H%M%S)"
+          FEATURE_BRANCH="feature/data-refresh-${STAMP}-${GITHUB_RUN_ID}"
+          RELEASE_BRANCH="release/data-${STAMP}-${GITHUB_RUN_ID}"
+          COMMIT_TITLE="${KST_DATE}_data_경매정보자동갱신"
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$FEATURE_BRANCH"
           git add data/auctions.json
-          git commit -m "$(TZ=Asia/Seoul date +%Y%m%d)_data_경매정보자동갱신"
-          git push
+          git commit -m "$COMMIT_TITLE"
+          git push origin "$FEATURE_BRANCH"
+
+          FEATURE_PR="$(gh pr create --base develop --head "$FEATURE_BRANCH" --title "$COMMIT_TITLE" --body "검수 승인된 JSON 피드를 정규화·검증한 자동 갱신입니다.")"
+          gh pr merge "$FEATURE_PR" --squash --delete-branch --subject "$COMMIT_TITLE" --body "GitFlow feature → develop 자동 병합"
+
+          git fetch origin develop
+          git switch -c "$RELEASE_BRANCH" origin/develop
+          git push origin "$RELEASE_BRANCH"
+          RELEASE_PR="$(gh pr create --base main --head "$RELEASE_BRANCH" --title "$COMMIT_TITLE" --body "검증된 경매정보를 운영 브랜치에 배포합니다.")"
+          gh pr merge "$RELEASE_PR" --squash --delete-branch --subject "$COMMIT_TITLE" --body "GitFlow release → main 자동 병합"
+          gh workflow run deploy-pages.yml --ref main

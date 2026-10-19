@@ -120,7 +120,8 @@ a { color: inherit; }
 .case-card .bookmark-mini.active { color: #d89826; }
 .case-card .bookmark-mini.active svg { fill: #f2ba43; }
 .sample-disclaimer { display: flex; align-items: flex-start; gap: 8px; margin: 9px 1px 0; color: #75847f; font-size: 10px; line-height: 1.5; }
-.sample-disclaimer span { display: grid; place-items: center; flex: 0 0 16px; width: 16px; height: 16px; border-radius: 50%; background: #dce7e1; color: var(--green-dark); font-family: serif; font-weight: 900; }
+.sample-disclaimer span:first-child { display: grid; place-items: center; flex: 0 0 16px; width: 16px; height: 16px; border-radius: 50%; background: #dce7e1; color: var(--green-dark); font-family: serif; font-weight: 900; }
+.sample-disclaimer span:last-child { flex: 1 1 auto; min-width: 0; }
 .empty-state { flex: 1 0 100%; padding: 24px; border: 1px dashed #c9d8d1; border-radius: 17px; color: #647770; text-align: center; font-size: 13px; }
 
 .detail-sheet { z-index: 45; max-height: min(86dvh, 790px); padding: 7px 22px calc(22px + env(safe-area-inset-bottom)); visibility: hidden; opacity: 0; transform: translate(-50%, 106%); transition: transform .34s cubic-bezier(.2,.8,.2,1), opacity .2s, visibility 0s linear .34s; backdrop-filter: none; }

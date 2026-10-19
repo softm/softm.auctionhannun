@@ -65,6 +65,7 @@ export function normalizeItem(item, index) {
 
 export function normalizeDataset(input, previous = null, now = new Date()) {
   if (!input || !Array.isArray(input.items)) throw new Error("items 배열이 필요합니다.");
+  if (input.metadata?.reviewed !== true) throw new Error("검수 승인된 데이터(metadata.reviewed=true)만 반영할 수 있습니다.");
   const items = input.items.map(normalizeItem);
   const ids = new Set();
   for (const item of items) {
@@ -77,6 +78,7 @@ export function normalizeDataset(input, previous = null, now = new Date()) {
   const metadata = {
     schemaVersion: 1,
     demo: input.metadata?.demo !== false,
+    reviewed: true,
     sourceType: clean(input.metadata?.sourceType, 60) || "reviewed-json",
     sourceUrl: validateSourceUrl(input.metadata?.sourceUrl || items[0]?.sourceUrl),
     collectedAt: unchanged && previous.metadata.collectedAt ? previous.metadata.collectedAt : now.toISOString(),

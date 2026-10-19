@@ -28,5 +28,9 @@ test("GitHub Actions 수집·배포 흐름이 선언된다", async () => {
   const deploy = await readFile(new URL(".github/workflows/deploy-pages.yml", root), "utf8");
   assert.match(collect, /AUCTION_FEED_URL/);
   assert.match(collect, /git add data\/auctions\.json/);
+  assert.match(collect, /feature\/data-refresh/);
+  assert.match(collect, /release\/data/);
+  assert.match(collect, /--base develop/);
+  assert.match(collect, /--base main/);
   assert.match(deploy, /actions\/deploy-pages@v4/);
 });

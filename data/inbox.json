@@ -2,6 +2,7 @@
   "metadata": {
     "schemaVersion": 1,
     "demo": true,
+    "reviewed": true,
     "sourceType": "reviewed-seed",
     "sourceUrl": "https://www.courtauction.go.kr/"
   },
