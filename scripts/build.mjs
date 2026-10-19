@@ -9,6 +9,7 @@ await Promise.all([
   cp("manifest.webmanifest", "dist/manifest.webmanifest"),
   cp("styles.css", "dist/styles.css"),
   cp("app.js", "dist/app.js"),
+  cp("auction-utils.js", "dist/auction-utils.js"),
   cp("assets/app-icon.svg", "dist/assets/app-icon.svg"),
   cp("data/auctions.json", "dist/data/auctions.json"),
   cp("robots.txt", "dist/robots.txt"),
