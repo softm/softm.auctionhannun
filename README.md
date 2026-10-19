@@ -3,7 +3,7 @@
 Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입니다. 법원경매와 온비드 공매를 구분하고, 실제 수집 자료의 출처·범위·마지막 수집 상태를 표시합니다.
 
 - GitHub 저장소: `softm/softm.auctionhannun`
-- 운영 주소: `https://softm.github.io/softm.auctionhannun/`
+- 등록 운영 주소: `https://auctionhannun.designboard.net/` (2026-10-19 HTTPS 인증서 발급 진행 중)
 
 ## 제공 기능
 
@@ -21,7 +21,7 @@ Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입�
 
 상세 구조와 실제 연동·미연동 구분은 [수집·지도 연동 현황](docs/INTEGRATION.md)을 확인하세요. 2026-10-19 [GitHub Pages 배포](https://github.com/softm/softm.auctionhannun/actions/runs/39232000163)가 성공했고 [운영 사이트](https://softm.github.io/softm.auctionhannun/)에서 7,512입찰건·네이버 지도·주소 변환·지적도를 확인했습니다. Play Console 제출은 별개입니다.
 
-지도 검증 상태: 사용자 지시에 따라 토지한눈의 VWorld 브라우저 키와 실제 호스트명 형식을 적용했습니다. localhost:3000에서 실제 온비드 물건(와촌리 1084-4)의 PNU 일치 경계 표시까지 성공했지만, 운영 Pages에서 같은 경계 요청은 `INCORRECT_KEY`로 거부되었습니다. 따라서 **운영 VWorld 경계 조회는 미해결**이며 키의 등록 서비스 URL·데이터 API 권한 확인이 필요합니다. 네이버 지도·주소 변환·지적도와 VWorld 주소 후보 검색은 운영에서도 확인했습니다.
+지도 검증 상태: 로그인된 VWorld 콘솔에서 별도로 발급된 경매한눈 전용 키와 등록 URL `https://auctionhannun.designboard.net`, 검색·2D데이터 API 선택을 확인했습니다. 전용 키와 실제 `location.origin`을 적용했으며 등록되지 않은 외부 주소의 호출은 차단합니다. 개발키 만료일은 2027-04-19입니다. [수정 배포](https://github.com/softm/softm.auctionhannun/actions/runs/39235978516)는 성공했으나, 새 운영 도메인의 GitHub HTTPS 인증서가 발급 중이므로 **운영 필지 경계 성공은 아직 검증하지 못했습니다.** 로컬의 경계 요청도 이 전용 키로는 인증이 거부됐습니다. 기존 토지한눈·토지이용한눈의 키나 설정은 변경하지 않았습니다.
 
 ## 자료수집과 배포 흐름
 
