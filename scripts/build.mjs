@@ -10,6 +10,7 @@ await mkdir("dist/assets", { recursive: true });
 await Promise.all([
   cp("index.html", "dist/index.html"),
   cp("privacy.html", "dist/privacy.html"),
+  ...["data-status.html", "data-status.css", "data-status.js"].map(file => cp(file, `dist/${file}`)),
   cp("manifest.webmanifest", "dist/manifest.webmanifest"),
   cp("styles.css", "dist/styles.css"),
   cp("app.js", "dist/app.js"),
