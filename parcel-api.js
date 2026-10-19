@@ -4,15 +4,19 @@ import { validPnu, parcelCandidates, polygonPaths, parcelError } from "./parcel-
 let sequence = 0;
 const pending = new Map();
 
-// Match Tojihannun's hostname format; never impersonate its registered hostname.
+// VWorld's registered website URL includes the scheme. Send only the real origin.
 export function parcelRequestUrl(path, params, clientLocation = location) {
   if (!/^https?:$/.test(clientLocation.protocol)) throw new Error("필지 조회는 HTTP 미리보기에서 사용해 주세요.");
+  const localPreview = ["localhost", "127.0.0.1", "[::1]"].includes(clientLocation.hostname);
+  if (!localPreview && clientLocation.origin !== mapConfig.vworldServiceOrigin) {
+    throw new Error(`VWorld 필지 조회는 등록된 운영 주소(${mapConfig.vworldServiceOrigin})에서 사용해 주세요.`);
+  }
   const url = new URL(path, "https://api.vworld.kr");
-  url.search = new URLSearchParams({ ...params, key: mapConfig.vworldKey, domain: clientLocation.hostname });
+  url.search = new URLSearchParams({ ...params, key: mapConfig.vworldKey, domain: clientLocation.origin });
   return url;
 }
 
-// VWorld's supported JSONP transport; actual hostname only, never a forged domain.
+// VWorld's supported JSONP transport; actual origin only, never a forged domain.
 function request(path, params, signal) {
   if (!/^https?:$/.test(location.protocol)) return Promise.reject(new Error("필지 조회는 HTTP 미리보기에서 사용해 주세요."));
   if (signal?.aborted) return Promise.reject(new DOMException("취소됨", "AbortError"));
