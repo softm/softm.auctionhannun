@@ -1,9 +1,9 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-19T08:31:55.262Z",
-  "lastSuccessAt": "2026-10-19T08:31:55.262Z",
-  "itemCount": 7512,
-  "expectedCount": 7512,
-  "completedPages": 16,
+  "attemptedAt": "2026-10-19T09:42:30.517Z",
+  "lastSuccessAt": "2026-10-19T09:42:30.517Z",
+  "itemCount": 7499,
+  "expectedCount": 7499,
+  "completedPages": 15,
   "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-19~2026-10-26 / 공매조건·마감일별 입찰건"
 }
