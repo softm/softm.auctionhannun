@@ -146,10 +146,10 @@ function filteredCases() {
 
 function renderMetrics() {
   const metrics = reviewMetrics(allCases(), state.favorites, state.checks);
-  $("#totalCases").textContent = metrics.total;
-  $("#savedCases").textContent = metrics.saved;
-  $("#addedCases").textContent = metrics.added;
-  $("#checkedDocuments").textContent = `${metrics.checked}/${metrics.documents}`;
+  $("#totalCases").textContent = metrics.total.toLocaleString("ko-KR");
+  $("#savedCases").textContent = metrics.saved.toLocaleString("ko-KR");
+  $("#addedCases").textContent = metrics.added.toLocaleString("ko-KR");
+  $("#checkedDocuments").textContent = `${metrics.checked.toLocaleString("ko-KR")} / ${metrics.documents.toLocaleString("ko-KR")}`;
 }
 
 function renderFilterOptions() {
