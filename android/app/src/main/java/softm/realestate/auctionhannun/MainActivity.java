@@ -27,9 +27,9 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    private static final String HOME = "https://softm.github.io/softm.auctionhannun/?app=1.0.1";
-    private static final String TRUSTED_HOST = "softm.github.io";
-    private static final String TRUSTED_PATH = "/softm.auctionhannun/";
+    private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.1";
+    private static final String TRUSTED_HOST = "auctionhannun.designboard.net";
+    private static final String TRUSTED_PATH = "/";
 
     private WebView web;
     private ProgressBar progress;

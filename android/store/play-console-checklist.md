@@ -6,7 +6,7 @@
 - 앱 / 무료
 - 카테고리: 도구
 - 광고 포함: 예 (현재 웹 AdFit, 다음 Android 릴리스는 AdMob 배너)
-- 개인정보처리방침: `https://softm.github.io/softm.auctionhannun/privacy.html`
+- 개인정보처리방침: `https://auctionhannun.designboard.net/privacy.html`
 - 대상 연령: 만 18세 이상
 - 정부기관 앱: 아니요, 정부·법원 비제휴 독립 서비스
 - 금융 기능: 투자·대출·거래 기능 없음

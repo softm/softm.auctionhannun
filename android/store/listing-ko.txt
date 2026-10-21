@@ -30,4 +30,4 @@
 • 찾기쉬운 생활법령정보: https://easylaw.go.kr/
 
 개인정보처리방침
-https://softm.github.io/softm.auctionhannun/privacy.html
+https://auctionhannun.designboard.net/privacy.html
