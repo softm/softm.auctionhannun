@@ -1,7 +1,20 @@
 window.AUCTIONHANNUN_AD_CONFIG = Object.freeze({
   enabled: true,
   script: "https://t1.kakaocdn.net/kas/static/ba.min.js",
+  desktopBreakpoint: 768,
   placements: Object.freeze({
-    results: Object.freeze({unit: "DAN-ZqOFrLPUmlI5AWvH", width: 320, height: 100})
+    entry: Object.freeze({
+      unit: "DAN-3NtJk6tf5EHgkkOJ", width: 300, height: 250,
+      delayMs: 900, cooldownHours: 24
+    }),
+    infeed: Object.freeze({
+      after: 5,
+      mobile: Object.freeze({unit: "DAN-5I0qVPgviCSNBEcc", width: 320, height: 100}),
+      desktop: Object.freeze({unit: "DAN-CuNtEfgzRE9ZSmn1", width: 728, height: 90})
+    }),
+    bottom: Object.freeze({
+      mobile: Object.freeze({unit: "DAN-ZqOFrLPUmlI5AWvH", width: 320, height: 100}),
+      desktop: Object.freeze({unit: "DAN-5dClDD1g2RiGnJwR", width: 728, height: 90})
+    })
   })
 });
