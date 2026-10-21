@@ -1,0 +1,18 @@
+{
+  "score": 4,
+  "summary": "Prototype private workspaces: owner-only access, identical create/update validation, bounded payload, server timestamp, monotonic revision, deny-by-default. Emulator attack tests and save/restore/conflict checks passed. Not a comprehensive production security certification.",
+  "findings": [
+    {
+      "check": "Type Safety / Business Logic",
+      "severity": "minor",
+      "issue": "Rules validate the payload string envelope, not the internal JSON. An owner can corrupt only their own payload through direct SDK access; the client validates before loading and preserves originals.",
+      "recommendation": "Use typed documents and per-field rules or a server validation layer if data must be trusted outside the owner workspace. Never interpret payload roles or owner fields as authority."
+    },
+    {
+      "check": "Storage Abuse",
+      "severity": "minor",
+      "issue": "One bounded document per UID limits individual payload size but does not prevent account farming or repeated authenticated writes. App Check and backend rate limits are not enabled.",
+      "recommendation": "Review usage quotas, abuse monitoring and App Check before broad release; test provider and server rate limits before enabling social auth."
+    }
+  ]
+}
