@@ -14,14 +14,17 @@ test("collection counts are from manifest, not an unpublished attempt", () => {
   const row = collectionRow("온비드", manifest, { state: "failed", itemCount: 7499, expectedCount: 7499 });
   assert.equal(row[1], "7,512");
   assert.equal(row[2], "4,466");
-  assert.match(row[3], /비교 대상 없음/);
-  assert.match(row[5], /실패/);
-  const good = collectionRow("온비드", manifest, { state: "ready", itemCount: 7512, expectedCount: 7512, lastSuccessAt: manifest.collectedAt });
-  assert.match(good[3], /100%/);
+  assert.equal(row[3], "—");
+  assert.match(row[4], /비교 대상 없음/);
+  assert.match(row[7], /실패/);
+  const good = collectionRow("온비드", manifest, { state: "ready", itemCount: 7512, expectedCount: 7512, completedPages: 16, photoProperties: 80, lastSuccessAt: manifest.collectedAt });
+  assert.match(good[3], /80건 \(1\.7%\)/);
+  assert.match(good[4], /100%/);
+  assert.equal(good[5], "16");
 });
 test("unconfigured, missing and demo data remain distinct", () => {
   assert.equal(collectionRow("법원", { demo: false, itemCount: 0 }, { state: "unconfigured" })[1], "0");
-  assert.match(collectionRow("법원", { demo: false, itemCount: 0 }, { state: "unconfigured" })[5], /미연결/);
+  assert.match(collectionRow("법원", { demo: false, itemCount: 0 }, { state: "unconfigured" })[7], /미연결/);
   assert.equal(collectionRow("법원", null, null)[1], "확인 불가");
   assert.equal(collectionRow("법원", { demo: true, itemCount: 4 }, null)[1], "확인 불가");
 });

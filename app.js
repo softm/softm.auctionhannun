@@ -2,7 +2,7 @@ import { filterAndSortCases, regionOf, reviewMetrics } from "./auction-utils.js"
 import { loadCatalog, loadDetail, cachedDetail, loadCollectionStatus } from "./auction-data.js";
 import { AuctionMap } from "./auction-map.js";
 import { mapConfig } from "./map-config.js";
-import { eumUrl, validCoordinate, validPnu, selectParcelCandidate } from "./parcel-utils.js";
+import { eumUrl, validCoordinate, validPnu, selectParcelCandidate, parcelScopeMessage } from "./parcel-utils.js";
 import { searchParcels, loadParcel } from "./parcel-api.js";
 import { workspace } from "./workspace-store.js";
 import { editRegisteredCase, removeRegisteredCase } from "./case-editor.js";
@@ -92,7 +92,11 @@ const state = {
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const allCases = () => [...state.added, ...state.collected];
-const auctionMap = new AuctionMap($("#mapCanvas"), selectCase, $("#vworldCanvas"), text => { $("#mapStatus").textContent = text; });
+function setParcelScopeNotice(text = "") {
+  $("#parcelScopeNotice").textContent = text;
+  $("#parcelScopeNotice").hidden = !text;
+}
+const auctionMap = new AuctionMap($("#mapCanvas"), selectCase, $("#vworldCanvas"), text => { $("#mapStatus").textContent = text; }, () => setParcelScopeNotice());
 const parcelSelections = new Map();
 let parcelRequest;
 let boundaryRequest;
@@ -370,6 +374,7 @@ function renderSummary(item) {
   const lastVerified = state.verified[item.id];
   const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.auctionKind === "onbid" ? "한국자산관리공사 온비드 공매 자료입니다. 법원경매가 아니며 법원 3대 서류 공시 기준을 적용하지 않습니다. 공고문·입찰 마감시각·정정 여부를 온비드 원문에서 확인하세요." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
   return `<div class="demo-banner">${icon("help")}<span>${notice}</span></div>
+    ${renderImageGallery(item)}
     <section class="summary-card">
       <h3>물건 검토 기준정보</h3>
       <dl class="fact-list">
@@ -382,10 +387,65 @@ function renderSummary(item) {
         <div><dt>최근 공식 확인</dt><dd>${lastVerified ? escapeHtml(lastVerified) : "아직 기록 없음"}</dd></div>
       </dl>
     </section>
+    ${renderCollectedDetails(item)}
     ${renderLandTools(item)}
     <div class="step-card"><span>1</span><div><b>공식 물건 원문 찾기</b><small>${item.auctionKind === "onbid" ? "물건관리번호로 온비드에서 검색" : "사건번호·주소로 법원경매정보에서 검색"}</small></div><button type="button" data-action="official">열기</button></div>
     <div class="step-card"><span>2</span><div><b>${item.auctionKind === "onbid" ? "공매 공고·명세 대조" : "3대 서류 대조"}</b><small>${item.auctionKind === "onbid" ? "공고별 입찰·명도·인수조건 확인" : "공시는 매각기일마다 1주일 전까지"}</small></div><button type="button" data-action="tab" data-tab-target="documents">확인</button></div>
     <div class="step-card"><span>3</span><div><b>권리·현장 체크</b><small>등기기록과 현장 점유를 원문과 교차 확인</small></div><button type="button" data-action="tab" data-tab-target="rights">체크</button></div>`;
+}
+
+function renderImageGallery(item) {
+  const images = Array.isArray(item.imageUrls) ? item.imageUrls.slice(0, 8) : [];
+  if (!images.length) return "";
+  return `<section class="detail-gallery" aria-label="${escapeHtml(item.title)} 공식 제공 사진">
+    <div class="detail-gallery-stage"><img data-gallery-main data-gallery-index="0" src="${escapeHtml(images[0])}" alt="${escapeHtml(item.title)} 사진 1/${images.length}" decoding="async" referrerpolicy="no-referrer"><button type="button" data-action="gallery-prev" aria-label="이전 사진">‹</button><button type="button" data-action="gallery-next" aria-label="다음 사진">›</button><span data-gallery-caption>공식 제공 사진 1/${images.length}</span></div>
+    ${images.length > 1 ? `<div class="detail-gallery-thumbs" aria-label="사진 선택">${images.map((url, index) => `<button type="button" data-action="gallery-select" data-gallery-index="${index}" aria-label="사진 ${index + 1} 보기" aria-current="${index === 0}"><img src="${escapeHtml(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>`).join("")}</div>` : ""}
+  </section>`;
+}
+
+function factRows(values) {
+  return values.filter(([, value]) => value !== "" && value != null).map(([label, value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join("");
+}
+
+function renderCollectedDetails(item) {
+  const sections = [];
+  if (item.caseDetails) {
+    const rows = factRows([["사건접수일", item.caseDetails.filedAt], ["경매개시결정일", item.caseDetails.commencedAt], ["배당요구종기", item.caseDetails.distributionDeadline], ["청구금액", item.caseDetails.claimAmount]]);
+    if (rows) sections.push(`<section class="summary-card"><h3>사건 기본정보</h3><dl class="fact-list">${rows}</dl></section>`);
+  }
+  if (Array.isArray(item.schedules) && item.schedules.length) sections.push(`<section class="summary-card collected-detail"><h3>기일내역</h3><div class="detail-table-wrap"><table><thead><tr><th>기일</th><th>종류</th><th>장소</th><th>최저가격</th><th>결과</th></tr></thead><tbody>${item.schedules.map(value => `<tr><td>${escapeHtml([value.date, value.time].filter(Boolean).join(" ") || "—")}</td><td>${escapeHtml(value.type || "—")}</td><td>${escapeHtml(value.place || "—")}</td><td>${escapeHtml(value.minimum || "—")}</td><td>${escapeHtml(value.result || "—")}</td></tr>`).join("")}</tbody></table></div></section>`);
+  if (Array.isArray(item.propertyLots) && item.propertyLots.length) sections.push(`<section class="summary-card collected-detail"><h3>목록내역</h3><div class="property-lot-list">${item.propertyLots.map(value => `<article><b>목록 ${escapeHtml(value.number)} · ${escapeHtml(value.type || "구분 확인")}</b><p>${escapeHtml(value.address || item.address)}</p>${value.area ? `<span>면적 ${escapeHtml(value.area)}</span>` : ""}${value.share ? `<span>지분 ${escapeHtml(value.share)}</span>` : ""}${value.details ? `<small>${escapeHtml(value.details)}</small>` : ""}</article>`).join("")}</div></section>`);
+  if (item.appraisalSummary) {
+    const labels = { valuedAt: "감정평가일", location: "위치", transport: "교통", surroundings: "주변환경", usage: "이용상태", structure: "건물구조", facilities: "설비", landUse: "토지이용계획", other: "기타" };
+    const rows = factRows(Object.entries(labels).map(([key, label]) => [label, item.appraisalSummary[key]]));
+    if (rows) sections.push(`<section class="summary-card"><h3>감정평가 요약</h3><dl class="fact-list appraisal-facts">${rows}</dl></section>`);
+  }
+  if (item.tenancySummary) {
+    const rows = factRows([["조사 상태", item.tenancySummary.status], ["확인된 점유 주체 수", item.tenancySummary.occupantCount], ["비식별 요약", item.tenancySummary.note]]);
+    if (rows) sections.push(`<section class="summary-card"><h3>점유·임차관계 요약</h3><dl class="fact-list">${rows}</dl><p class="legal-note">개인 이름·연락처·주민등록번호는 저장하지 않습니다. 원문과 최신 전입·배당 상태를 직접 대조하세요.</p></section>`);
+  }
+  if (item.documents && Object.keys(item.documents).length) {
+    const labels = { saleSpecification: "매각물건명세서", fieldReport: "현황조사보고서", appraisalReport: "감정평가서" };
+    sections.push(`<section class="summary-card collected-documents"><h3>공식 공개문서</h3>${Object.entries(labels).map(([key, label]) => {
+      const document = item.documents[key];
+      if (!document) return "";
+      return `<div><span><b>${label}</b><small>${document.publishedAt ? `공시 ${escapeHtml(document.publishedAt)}` : "공시일 확인 필요"}</small></span>${document.url ? `<a href="${escapeHtml(document.url)}" target="_blank" rel="noopener noreferrer">원문 열기 ↗</a>` : "<em>공식 사이트 확인</em>"}</div>`;
+    }).join("")}</section>`);
+  }
+  return sections.join("");
+}
+
+function setGalleryImage(action) {
+  const item = getSelected();
+  const images = item?.imageUrls;
+  const main = $("[data-gallery-main]", $("#detailContent"));
+  if (!main || !Array.isArray(images) || !images.length) return;
+  const current = Number(main.dataset.galleryIndex) || 0;
+  const requested = action.dataset.action === "gallery-prev" ? current - 1 : action.dataset.action === "gallery-next" ? current + 1 : Number(action.dataset.galleryIndex);
+  const index = (requested + images.length) % images.length;
+  main.src = images[index]; main.dataset.galleryIndex = String(index); main.alt = `${item.title} 사진 ${index + 1}/${images.length}`;
+  $("[data-gallery-caption]", $("#detailContent")).textContent = `공식 제공 사진 ${index + 1}/${images.length}`;
+  $$('[data-action="gallery-select"]', $("#detailContent")).forEach(button => button.setAttribute("aria-current", String(Number(button.dataset.galleryIndex) === index)));
 }
 
 function renderLandTools(item) {
@@ -728,6 +788,7 @@ $("#detailContent").addEventListener("change", event => {
 $("#detailContent").addEventListener("click", event => {
   const action = event.target.closest("[data-action]");
   if (!action) return;
+  if (action.dataset.action.startsWith("gallery-")) { setGalleryImage(action); return; }
   if (action.dataset.action === "locate") void locateSelected();
   if (action.dataset.action === "parcel-search") void findSelectedParcel();
   if (action.dataset.action === "parcel-map") void showSelectedParcel();
@@ -853,9 +914,9 @@ async function showCaseParcelBoundary(item, operation = mapOperation) {
       const request = new AbortController();
       boundaryRequest = request;
       $("#mapStatus").textContent = `선택 매물의 필지 확인 중: ${item.address}`;
-      const candidates = await searchParcels(item.address, request.signal);
+      const candidates = await searchParcels(item.address, request.signal, { primaryOnly: true });
       if (operation !== mapOperation || request.signal.aborted) return false;
-      const candidate = selectParcelCandidate(item.address, candidates);
+      const candidate = selectParcelCandidate(item.address, candidates, { allowPrimary: true });
       parcelSelections.set(item.id, candidate);
       pnu = candidate.pnu;
     }
@@ -865,7 +926,9 @@ async function showCaseParcelBoundary(item, operation = mapOperation) {
     if (operation !== mapOperation || !stillSelected || auctionMap.mode !== "cadastral") return false;
     if (!await auctionMap.showParcel(feature, () => operation === mapOperation && auctionMap.mode === "cadastral")) return false;
     syncMapModeControls("cadastral");
-    $("#mapStatus").textContent = `PNU ${pnu} · 분홍색 영역은 선택 매물의 필지 경계 · 경매 대상 범위는 원문 대조`;
+    const scope = parcelScopeMessage(item.address, feature.properties?.addr || parcelSelections.get(item.id)?.address);
+    setParcelScopeNotice(scope);
+    $("#mapStatus").textContent = `PNU ${pnu} · ${scope || "분홍색 영역은 선택 매물의 필지 경계 · 경매 대상 범위는 원문 대조"}`;
     return true;
   } catch (error) {
     if (operation !== mapOperation || error?.name === "AbortError") return false;
@@ -919,8 +982,10 @@ async function showSelectedParcel() {
     if (!await auctionMap.showParcel(feature, () => operation === mapOperation)) return;
     if (operation !== mapOperation) return;
     syncMapModeControls("cadastral");
+    const scope = parcelScopeMessage(item.address, feature.properties?.addr || parcelSelections.get(item.id)?.address);
+    setParcelScopeNotice(scope);
     $("#mapStage").scrollIntoView({ block: "start" });
-    $("#mapStatus").textContent = `PNU ${pnu} · VWorld 연속지적도 · 경매 대상 범위는 원문 대조`;
+    $("#mapStatus").textContent = `PNU ${pnu} · ${scope || "VWorld 연속지적도 · 경매 대상 범위는 원문 대조"}`;
   } catch (error) {
     if (operation === mapOperation) {
       const results = $("#parcelResults");

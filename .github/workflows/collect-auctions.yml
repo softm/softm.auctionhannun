@@ -22,6 +22,7 @@ jobs:
       AUCTION_FEED_URL: ${{ secrets.AUCTION_FEED_URL || vars.AUCTION_FEED_URL }}
       AUCTION_FEED_TOKEN: ${{ secrets.AUCTION_FEED_TOKEN }}
       ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
+      ONBID_IMAGE_ENRICH_LIMIT: ${{ vars.ONBID_IMAGE_ENRICH_LIMIT || 80 }}
     steps:
       - uses: actions/checkout@v4
         with:

@@ -40,6 +40,75 @@ function normalizeImageUrls(values) {
   return urls;
 }
 
+function optionalDate(value, label) {
+  const result = clean(value, 10);
+  if (!result) return "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(result) || !Number.isFinite(Date.parse(result)) || new Date(result).toISOString().slice(0, 10) !== result) throw new Error(`${label} 형식은 유효한 YYYY-MM-DD입니다.`);
+  return result;
+}
+
+function normalizeCaseDetails(value = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const result = {
+    filedAt: optionalDate(value.filedAt, "사건접수일"),
+    commencedAt: optionalDate(value.commencedAt, "경매개시결정일"),
+    distributionDeadline: optionalDate(value.distributionDeadline, "배당요구종기"),
+    claimAmount: clean(value.claimAmount, 80)
+  };
+  return Object.values(result).some(Boolean) ? result : null;
+}
+
+function normalizeSchedules(values) {
+  if (!Array.isArray(values)) return [];
+  return values.slice(0, 100).map((value, index) => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`기일내역 ${index + 1}: 객체가 아닙니다.`);
+    return {
+      date: optionalDate(value.date, `기일내역 ${index + 1} 기일`),
+      time: clean(value.time, 20), type: clean(value.type, 40), place: clean(value.place, 120),
+      minimum: clean(value.minimum, 80), result: clean(value.result, 80)
+    };
+  }).filter(value => Object.values(value).some(Boolean));
+}
+
+function normalizePropertyLots(values) {
+  if (!Array.isArray(values)) return [];
+  return values.slice(0, 100).map((value, index) => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`목록내역 ${index + 1}: 객체가 아닙니다.`);
+    return {
+      number: clean(value.number, 40) || String(index + 1), type: clean(value.type, 60),
+      address: clean(value.address, 300), area: clean(value.area, 120), share: clean(value.share, 120),
+      details: clean(value.details, 2000)
+    };
+  }).filter(value => value.type || value.address || value.area || value.details);
+}
+
+function normalizeAppraisalSummary(value = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const keys = ["valuedAt", "location", "transport", "surroundings", "usage", "structure", "facilities", "landUse", "other"];
+  const result = Object.fromEntries(keys.map(key => [key, key === "valuedAt" ? optionalDate(value[key], "감정평가일") : clean(value[key], 2000)]));
+  return Object.values(result).some(Boolean) ? result : null;
+}
+
+function normalizeDocuments(value = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const result = {};
+  for (const key of ["saleSpecification", "fieldReport", "appraisalReport"]) {
+    const document = value[key];
+    if (!document || typeof document !== "object" || Array.isArray(document)) continue;
+    const url = document.url ? validateSourceUrl(document.url) : "";
+    const publishedAt = optionalDate(document.publishedAt, `${key} 공시일`);
+    if (url || publishedAt || document.available === true) result[key] = { available: document.available === true || Boolean(url), publishedAt, url };
+  }
+  return Object.keys(result).length ? result : null;
+}
+
+function normalizeTenancySummary(value = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const occupantCount = Number.isSafeInteger(value.occupantCount) && value.occupantCount >= 0 ? value.occupantCount : null;
+  const result = { status: clean(value.status, 100), occupantCount, note: clean(value.note, 1000) };
+  return result.status || result.note || occupantCount != null ? result : null;
+}
+
 export function containsSensitiveData(value) {
   if (typeof value === "string") return residentNumberPattern.test(value);
   if (Array.isArray(value)) return value.some(containsSensitiveData);
@@ -59,6 +128,12 @@ export function normalizeItem(item, index) {
   if (item.pnu && !validPnu(item.pnu)) throw new Error(`물건 ${index + 1}: PNU 형식 오류`);
 
   const imageUrls = normalizeImageUrls(item.imageUrls);
+  const caseDetails = normalizeCaseDetails(item.caseDetails);
+  const schedules = normalizeSchedules(item.schedules);
+  const propertyLots = normalizePropertyLots(item.propertyLots);
+  const appraisalSummary = normalizeAppraisalSummary(item.appraisalSummary);
+  const documents = normalizeDocuments(item.documents);
+  const tenancySummary = normalizeTenancySummary(item.tenancySummary);
   return {
     id: requireText(item, "id"),
     demo: Boolean(item.demo),
@@ -84,6 +159,12 @@ export function normalizeItem(item, index) {
     pnu: item.pnu || null,
     status: clean(item.status, 60) || "원문 확인",
     ...(imageUrls.length ? { imageUrls } : {}),
+    ...(caseDetails ? { caseDetails } : {}),
+    ...(schedules.length ? { schedules } : {}),
+    ...(propertyLots.length ? { propertyLots } : {}),
+    ...(appraisalSummary ? { appraisalSummary } : {}),
+    ...(documents ? { documents } : {}),
+    ...(tenancySummary ? { tenancySummary } : {}),
     sourceUrl: validateSourceUrl(item.sourceUrl)
   };
 }
@@ -101,7 +182,7 @@ export function normalizeDataset(input, previous = null, now = new Date()) {
   const contentHash = createHash("sha256").update(JSON.stringify(items)).digest("hex");
   const unchanged = previous?.metadata?.contentHash === contentHash;
   const metadata = {
-    schemaVersion: 2,
+    schemaVersion: input.metadata?.schemaVersion === 3 ? 3 : 2,
     demo: input.metadata?.demo !== false,
     reviewed: true,
     sourceType: clean(input.metadata?.sourceType, 60) || "reviewed-json",

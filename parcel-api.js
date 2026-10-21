@@ -46,9 +46,9 @@ function request(path, params, signal) {
   });
 }
 
-export async function searchParcels(address, signal) {
+export async function searchParcels(address, signal, { primaryOnly = false } = {}) {
   const parts = parcelAddressParts(address);
-  const query = parts.query;
+  const query = primaryOnly && parts.kind === "parcel" ? parts.key : parts.query;
   if (query.length < 2 || query.length > 180) throw new Error("조회할 소재지를 확인해 주세요.");
   const results = await Promise.all((parts.kind ? [parts.kind] : ["parcel", "road"]).map(async category => parcelCandidates(await request("/req/search", {
     service: "search", request: "search", version: "2.0", crs: "EPSG:4326", size: "10", page: "1",

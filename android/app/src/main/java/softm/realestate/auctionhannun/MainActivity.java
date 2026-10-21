@@ -18,6 +18,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     private WebView web;
     private ProgressBar progress;
     private LinearLayout error;
+    private AdMobController ads;
 
     @Override
     public void onCreate(Bundle state) {
@@ -74,9 +76,21 @@ public class MainActivity extends Activity {
 
         web = new WebView(this);
         root.addView(web, new LinearLayout.LayoutParams(-1, 0, 1));
+
+        Button privacyOptions = new Button(this);
+        privacyOptions.setText(R.string.privacy_options);
+        privacyOptions.setVisibility(View.GONE);
+        root.addView(privacyOptions, new LinearLayout.LayoutParams(-1, -2));
+
+        FrameLayout bannerHost = new FrameLayout(this);
+        bannerHost.setVisibility(View.GONE);
+        bannerHost.setContentDescription(getString(R.string.ad_label));
+        root.addView(bannerHost, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
 
         configureWebView();
+        ads = new AdMobController(this, bannerHost, privacyOptions);
+        ads.start();
         if (state == null || web.restoreState(state) == null) web.loadUrl(HOME);
     }
 
@@ -89,7 +103,9 @@ public class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setMediaPlaybackRequiresUserGesture(true);
-        settings.setUserAgentString(settings.getUserAgentString() + " AuctionhannunAndroid/2");
+        settings.setUserAgentString(settings.getUserAgentString()
+            + " AuctionhannunAndroid/2"
+            + (BuildConfig.ADMOB_ENABLED ? " AdMobNative/1" : ""));
 
         CookieManager.getInstance().setAcceptThirdPartyCookies(web, false);
         web.setWebViewClient(new WebViewClient() {
@@ -223,6 +239,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
+        if (ads != null) ads.pause();
         web.onPause();
         super.onPause();
     }
@@ -231,10 +248,12 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         web.onResume();
+        if (ads != null) ads.resume();
     }
 
     @Override
     protected void onDestroy() {
+        if (ads != null) ads.destroy();
         web.destroy();
         super.onDestroy();
     }

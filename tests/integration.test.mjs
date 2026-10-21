@@ -32,6 +32,27 @@ test("가짜 좌표 생성 없이 날짜·PNU·국내 좌표를 검증한다", (
   assert.throws(() => normalizeItem({ ...item, pnu: "111" }, 0), /PNU/);
 });
 
+test("법원 상세 공급원의 기일·목록·감정·문서·비식별 점유정보를 정규화한다", () => {
+  const normalized = normalizeItem({
+    ...item,
+    imageUrls: ["https://www.courtauction.go.kr/photo/1.jpg"],
+    caseDetails: { filedAt: "2026-01-02", commencedAt: "2026-01-09", distributionDeadline: "2026-03-11", claimAmount: "94,959,713원" },
+    schedules: [{ date: "2026-11-01", time: "10:00", type: "매각기일", place: "법정", minimum: "45,150,000원", result: "진행" }],
+    propertyLots: [{ number: "1", type: "집합건물", address: item.address, area: "109.98㎡", details: "전유부분과 대지권" }],
+    appraisalSummary: { valuedAt: "2026-02-10", location: "도로 인근", usage: "다세대주택", structure: "철근콘크리트조" },
+    documents: { saleSpecification: { available: true, publishedAt: "2026-10-25", url: "https://www.courtauction.go.kr/document/spec.pdf" } },
+    tenancySummary: { status: "현황조사서 확인", occupantCount: 1, note: "개인 식별정보를 제외한 점유 요약" }
+  }, 0);
+  assert.equal(normalized.imageUrls.length, 1);
+  assert.equal(normalized.schedules[0].result, "진행");
+  assert.equal(normalized.propertyLots[0].type, "집합건물");
+  assert.equal(normalized.appraisalSummary.structure, "철근콘크리트조");
+  assert.equal(normalized.documents.saleSpecification.available, true);
+  assert.equal(normalized.tenancySummary.occupantCount, 1);
+  assert.throws(() => normalizeItem({ ...item, schedules: [{ date: "2026-02-30" }] }, 0), /기일/);
+  assert.throws(() => normalizeItem({ ...item, tenancySummary: { tenantName: "홍길동" } }, 0), /개인정보/);
+});
+
 test("차단·호출 한도는 재시도 없이 중단, 5xx만 제한 재시도", async () => {
   for (const code of [401, 403, 429]) {
     let calls = 0;

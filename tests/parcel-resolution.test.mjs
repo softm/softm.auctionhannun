@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parcelAddressParts, selectParcelCandidate, parcelFeature } from '../parcel-utils.js';
+import { parcelAddressParts, selectParcelCandidate, parcelFeature, parcelScopeMessage } from '../parcel-utils.js';
 
 const mountain = { pnu: '4136026221200240000', address: '경기도 남양주시 오남읍 양지리 산 24' };
 const plain = { pnu: '4136026221100240000', address: '경기도 남양주시 오남읍 양지리 24' };
@@ -40,4 +40,19 @@ test('missing boundaries, authentication errors and malformed or mismatched geom
   assert.throws(() => parcelFeature({ response: { status: 'NOT_FOUND' } }, plain.pnu), /경계 데이터가 없습니다/);
   assert.throws(() => parcelFeature({ response: { status: 'ERROR', error: { code: 'INCORRECT_KEY' } } }, plain.pnu), /INCORRECT_KEY/);
   assert.throws(() => parcelFeature(payload([{ ...shape, geometry: { type: 'Point', coordinates: [127,37] } }]), plain.pnu), /유효한 필지/);
+});
+
+test('an explicit primary lot can be shown only as a partial boundary, never a fuzzy match', () => {
+  const address = '서울특별시 서초구 서초동 1487-110 외 1필지 에비앙하우스 제2층 제204호';
+  const primary = { pnu: '1165010800114870110', address: '서울특별시 서초구 서초동 1487-110' };
+  const other = { pnu: '1165010800114870111', address: '서울특별시 서초구 서초동 1487-111' };
+  assert.throws(() => selectParcelCandidate(address, [primary]), /여러 필지/);
+  const result = selectParcelCandidate(address, [other, primary], { allowPrimary: true });
+  assert.equal(result.pnu, primary.pnu);
+  assert.equal(result.partial, true);
+  assert.equal(primary.partial, undefined);
+  assert.equal(parcelAddressParts(address).key, primary.address);
+  assert.match(parcelScopeMessage(address, result.address), /일부 필지만 표시.*1487-110.*다른 필지 미확인.*전체 경매 범위가 아닙니다/);
+  assert.throws(() => selectParcelCandidate(address, [other], { allowPrimary: true }), /정확히 일치/);
+  assert.equal(parcelScopeMessage(primary.address, primary.address), '');
 });

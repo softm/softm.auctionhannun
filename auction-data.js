@@ -25,7 +25,7 @@ export function safeDataPath(path, kind) {
 
 export async function loadCatalog(base = "./data", kind = "court") {
   const manifest = await load(`${base}/manifest.json`, { fresh: true });
-  if (manifest.schemaVersion !== 2 || manifest.demo !== false || !safeDataPath(manifest.catalogFile, "catalog")) throw new Error("운영 자료 매니페스트 오류");
+  if (![2, 3].includes(manifest.schemaVersion) || manifest.demo !== false || !safeDataPath(manifest.catalogFile, "catalog")) throw new Error("운영 자료 매니페스트 오류");
   const catalog = await load(`${base}/${manifest.catalogFile}`);
   if (!Array.isArray(catalog.items) || catalog.items.length !== manifest.itemCount || new Set(catalog.items.map(item => item.id)).size !== catalog.items.length) throw new Error("검색 자료 건수·중복 검증 실패");
   if (catalog.items.some(item => item.demo || !safeDataPath(item.detailFile, "detail"))) throw new Error("운영 목록에 예시 또는 잘못된 상세 경로가 포함되었습니다.");

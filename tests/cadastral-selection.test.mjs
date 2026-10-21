@@ -21,7 +21,7 @@ test("지도 표시 방식은 일반·위성·위성+지적을 제공한다", ()
 test("지적 모드에서 선택 매물의 실제 PNU 폴리곤만 자동 표시한다", () => {
   assert.match(app, /async function showCaseParcelBoundary/);
   assert.match(app, /validPnu\(pnu\)/);
-  assert.match(app, /selectParcelCandidate\(item.address, candidates\)/);
+  assert.match(app, /selectParcelCandidate\(item.address, candidates, \{ allowPrimary: true \}\)/);
   assert.match(app, /await loadParcel\(pnu\)/);
   assert.match(app, /auctionMap\.showParcel\(feature/);
   assert.match(vworld, /ol\.format\.GeoJSON/);

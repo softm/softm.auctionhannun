@@ -73,9 +73,9 @@ export function parcelAddressParts(address) {
   return { query: multiple ? text : query, key: query, kind: parcel ? "parcel" : "road", mountain, main, sub, multiple };
 }
 
-export function selectParcelCandidate(address, candidates) {
+export function selectParcelCandidate(address, candidates, { allowPrimary = false } = {}) {
   const target = parcelAddressParts(address);
-  if (target.multiple) throw new Error("여러 필지가 포함된 소재지입니다. 상세 화면에서 필지를 확인·선택해 주세요. 한 필지를 전체 경매 범위로 표시하지 않습니다.");
+  if (target.multiple && (!allowPrimary || target.kind !== "parcel")) throw new Error("여러 필지가 포함된 소재지입니다. 상세 화면에서 필지를 확인·선택해 주세요. 한 필지를 전체 경매 범위로 표시하지 않습니다.");
   const exact = candidates.filter(candidate => {
     if (!validPnu(candidate.pnu) || !target.key) return false;
     const actual = parcelAddressParts(target.kind === "road" ? candidate.roadAddress : candidate.address);
@@ -85,7 +85,12 @@ export function selectParcelCandidate(address, candidates) {
   });
   const unique = [...new Map(exact.map(candidate => [candidate.pnu, candidate])).values()];
   if (unique.length !== 1) throw new Error(unique.length ? "동일 주소의 필지가 여러 개입니다. 상세 화면에서 정확한 필지를 선택해 주세요." : "소재지의 지번·산 여부와 정확히 일치하는 필지가 없습니다. 상세 화면에서 후보를 확인해 주세요.");
-  return unique[0];
+  return target.multiple ? { ...unique[0], partial: true } : unique[0];
+}
+
+export function parcelScopeMessage(address, displayedAddress) {
+  if (!parcelAddressParts(address).multiple) return "";
+  return `일부 필지만 표시: ${displayedAddress || "확인된 1필지"} · 다른 필지 미확인 · 전체 경매 범위가 아닙니다.`;
 }
 
 export function parcelFeature(payload, pnu) {

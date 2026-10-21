@@ -11,6 +11,7 @@ data/inbox.json
 android/.gradle/
 android/local.properties
 android/signing.properties
+android/admob.properties
 android/**/build/
 android/*.jks
 android/*.keystore

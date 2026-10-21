@@ -6,6 +6,17 @@ if (signingFile.exists()) {
     signingFile.withInputStream { releaseSigning.load(it) }
 }
 
+def admobConfig = new Properties()
+def admobFile = rootProject.file('admob.properties')
+if (admobFile.exists()) {
+    admobFile.withInputStream { admobConfig.load(it) }
+}
+def googleTestAppId = 'ca-app-pub-3940256099942544~3347511713'
+def googleTestBannerId = 'ca-app-pub-3940256099942544/6300978111'
+def releaseAdsEnabled = admobConfig.getProperty('enabled', 'false').toBoolean()
+def releaseAppId = admobConfig.getProperty('appId', googleTestAppId)
+def releaseBannerId = admobConfig.getProperty('bannerId', googleTestBannerId)
+
 android {
     namespace 'softm.realestate.auctionhannun'
     compileSdk 36
@@ -16,7 +27,10 @@ android {
         targetSdk 36
         versionCode 2
         versionName '1.0.1'
+        manifestPlaceholders = [admobAppId: googleTestAppId]
     }
+
+    buildFeatures { buildConfig true }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -35,11 +49,24 @@ android {
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders = [admobAppId: googleTestAppId]
+            buildConfigField 'boolean', 'ADMOB_ENABLED', 'true'
+            buildConfigField 'String', 'ADMOB_BANNER_ID', '"' + googleTestBannerId + '"'
+        }
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
+            manifestPlaceholders = [admobAppId: releaseAppId]
+            buildConfigField 'boolean', 'ADMOB_ENABLED', releaseAdsEnabled.toString()
+            buildConfigField 'String', 'ADMOB_BANNER_ID', '"' + releaseBannerId + '"'
         }
     }
+}
+
+dependencies {
+    implementation 'com.google.android.gms:play-services-ads:25.5.0'
+    implementation 'com.google.android.ump:user-messaging-platform:4.0.0'
 }
 
 tasks.configureEach { task ->

@@ -8,11 +8,14 @@ export function date(value) {
   return new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(value));
 }
 export function collectionRow(name, manifest, status) {
-  if (!manifest || !Number.isInteger(manifest.itemCount) || manifest.itemCount < 0 || manifest.demo !== false) return [name, "확인 불가", "—", "확인 불가", "—", "배포 매니페스트 확인 필요"];
+  if (!manifest || !Number.isInteger(manifest.itemCount) || manifest.itemCount < 0 || manifest.demo !== false) return [name, "확인 불가", "—", "—", "확인 불가", "—", "—", "배포 매니페스트 확인 필요"];
   const sameSnapshot = status?.lastSuccessAt === manifest.collectedAt && status?.state === "ready" && status.itemCount === manifest.itemCount;
   const verified = sameSnapshot && Number.isInteger(status.expectedCount) && status.expectedCount > 0 && status.itemCount <= status.expectedCount;
   const labels = { ready: "정상", unconfigured: "공급원 미연결", failed: "실패 · 이전 정상 자료 유지", error: "실패 · 이전 정상 자료 유지" };
-  return [name, number(manifest.itemCount), number(manifest.distinctProperties), verified ? `${number(status.itemCount)} / ${number(status.expectedCount)}건 (${Math.floor(status.itemCount / status.expectedCount * 1000) / 10}%)` : "— (비교 대상 없음)", date(manifest.collectedAt), `${labels[status?.state] || "상태 확인 필요"}${status?.attemptedAt ? ` · ${date(status.attemptedAt)}` : ""}`];
+  const propertyCount = Number.isInteger(manifest.distinctProperties) ? manifest.distinctProperties : null;
+  const photoCount = Number.isInteger(status?.photoProperties) ? status.photoProperties : Number.isInteger(manifest.photoProperties) ? manifest.photoProperties : null;
+  const photoCoverage = photoCount == null ? "—" : `${number(photoCount)}건${propertyCount > 0 ? ` (${Math.floor(photoCount / propertyCount * 1000) / 10}%)` : ""}`;
+  return [name, number(manifest.itemCount), number(propertyCount), photoCoverage, verified ? `${number(status.itemCount)} / ${number(status.expectedCount)}건 (${Math.floor(status.itemCount / status.expectedCount * 1000) / 10}%)` : "— (비교 대상 없음)", number(status?.completedPages), date(manifest.collectedAt), `${labels[status?.state] || "상태 확인 필요"}${status?.attemptedAt ? ` · ${date(status.attemptedAt)}` : ""}`];
 }
 async function json(url) {
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12000) });
@@ -47,6 +50,8 @@ async function loadPublished() {
   document.getElementById("onbidCount").textContent = number(onbid?.itemCount);
   document.getElementById("propertyCount").textContent = number(onbid?.distinctProperties);
   document.getElementById("courtCount").textContent = number(court?.itemCount);
+  const photoCounts = results.map(x => Number.isInteger(x.status?.photoProperties) ? x.status.photoProperties : Number.isInteger(x.manifest?.photoProperties) ? x.manifest.photoProperties : null);
+  document.getElementById("photoCount").textContent = photoCounts.some(value => value != null) ? number(photoCounts.reduce((sum, value) => sum + (value || 0), 0)) : "—";
   document.getElementById("scope").textContent = results.map(x => `${x.name} 수집 범위: ${x.manifest?.coverage || "확인 불가"}`).join("\n");
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   document.getElementById("notice").textContent = `${local ? "로컬 미리보기 자료 기준 (운영 배포본과 다를 수 있음)" : "현재 사이트에서 제공 중인 자료 기준"} · 확인 ${date(new Date())} KST${results.some(x => !x.manifest || !x.status) ? " · 일부 자료를 불러오지 못했습니다. 새로고침해 주세요." : ""}`;

@@ -1,0 +1,5 @@
+# AdMob에서 경매한눈 Android 앱을 등록한 뒤 발급값으로 복사합니다.
+# 이 파일을 admob.properties로 복사하기 전에는 release 광고가 비활성화됩니다.
+enabled=false
+appId=ca-app-pub-0000000000000000~0000000000
+bannerId=ca-app-pub-0000000000000000/0000000000

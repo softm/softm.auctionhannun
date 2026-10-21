@@ -81,7 +81,7 @@ export function createGeocoder(maps, storage = window.localStorage) {
 }
 
 export class AuctionMap {
-  constructor(element, onSelect, vworldElement, onStatus = () => {}) {
+  constructor(element, onSelect, vworldElement, onStatus = () => {}, onParcelClear = () => {}) {
     this.element = element;
     this.onSelect = onSelect;
     this.items = [];
@@ -90,6 +90,7 @@ export class AuctionMap {
     this.polygons = [];
     this.vworldElement = vworldElement;
     this.onStatus = onStatus;
+    this.onParcelClear = onParcelClear;
     this.mode = "normal";
   }
   async ready() {
@@ -174,7 +175,7 @@ export class AuctionMap {
   }
   setCadastral(enabled, isCurrent = () => true) { return this.setMode(enabled ? "cadastral" : "normal", isCurrent); }
   zoom(delta) { if (this.mode !== "normal" || this.cadastralEnabled) this.vworld.zoom(delta); else if (this.map) this.map.setZoom(this.map.getZoom() + delta); }
-  clearParcel() { this.vworld?.clearParcel(); this.polygons.forEach(polygon => polygon.setMap(null)); this.polygons = []; }
+  clearParcel() { this.vworld?.clearParcel(); this.polygons.forEach(polygon => polygon.setMap(null)); this.polygons = []; this.onParcelClear(); }
   async showParcel(feature, isCurrent = () => true) {
     if (!await this.setMode("cadastral", isCurrent) || !isCurrent()) return false;
     const paths = polygonPaths(feature.geometry);

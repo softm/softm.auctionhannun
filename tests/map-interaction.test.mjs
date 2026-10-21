@@ -52,3 +52,10 @@ test("a stale parcel request cannot switch the map or draw its boundary", async 
   assert.equal(map.element.hidden, false);
   assert.equal(map.vworldElement.hidden, true);
 });
+
+test("clearing a parcel also clears its partial-coverage notice", () => {
+  let cleared = 0;
+  const map = new AuctionMap({}, () => {}, {}, () => {}, () => { cleared++; });
+  map.clearParcel();
+  assert.equal(cleared, 1);
+});

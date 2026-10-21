@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">경매한눈</string>
+    <string name="ad_label">광고</string>
+    <string name="privacy_options">광고 개인정보 설정</string>
 </resources>
