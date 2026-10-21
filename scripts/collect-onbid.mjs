@@ -13,6 +13,29 @@ const money = value => /^\d+$/.test(text(value)) ? `${Number(value).toLocaleStri
 const date = value => /^\d{12}$/.test(text(value)) ? `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}` : "";
 const time = value => date(value) ? `${date(value)}T${value.slice(8, 10)}:${value.slice(10, 12)}:00+09:00` : "";
 
+export function onbidDetailUrl(key, cltrMngNo) {
+  if (!key || !text(cltrMngNo)) throw new Error("온비드 상세 조회에는 인증키와 물건관리번호가 필요합니다.");
+  let decoded = key.trim();
+  if (/%[0-9a-f]{2}/i.test(decoded)) decoded = decodeURIComponent(decoded);
+  const url = new URL("https://apis.data.go.kr/B010003/OnbidRlstDtlSrvc2/getRlstDtlInf2");
+  url.search = new URLSearchParams({ serviceKey: decoded, pageNo: "1", numOfRows: "100", resultType: "json", cltrMngNo: text(cltrMngNo) });
+  return url;
+}
+
+export function onbidDetailItems(payload) {
+  const data = payload.response || payload;
+  if (String(data.header?.resultCode) !== "00") throw new Error("온비드 상세 API 응답 오류");
+  const value = data.body?.items?.item;
+  return Array.isArray(value) ? value : value ? [value] : [];
+}
+
+export function onbidPhotoUrls(item) {
+  let photos = item?.potoUrlList;
+  if (photos && !Array.isArray(photos) && typeof photos === "object") photos = photos.potoUrl || photos.item || Object.values(photos);
+  const values = Array.isArray(photos) ? photos.flatMap(photo => typeof photo === "string" ? photo.split("|") : [photo?.urlAdr]) : String(photos || "").split("|");
+  return [...new Set(values.map(text).filter(Boolean))];
+}
+
 export function onbidRecord(row) {
   if (!row.cltrMngNo || !row.pbctCdtnNo || !row.onbidCltrNm || !date(row.cltrBidEndDt)) throw new Error("온비드 필수 물건번호·물건명·마감일 누락");
   const category = [row.cltrUsgMclsCtgrNm, row.cltrUsgSclsCtgrNm].map(text).filter(Boolean).join(" · ");
@@ -44,7 +67,7 @@ export function onbidPage(payload) {
   return { rows, total };
 }
 
-export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "source-data/onbid", days = 7, maxPages = 100, now = new Date(), fetcher = fetch } = {}) {
+export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "source-data/onbid", days = 7, maxPages = 100, imageLimit = 0, now = new Date(), fetcher = fetch } = {}) {
   if (!Number.isInteger(days) || days < 1 || days > 31) throw new Error("조회 범위는 1~31일입니다.");
   const startDate = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
   const endDate = new Date(Date.parse(`${startDate}T00:00:00Z`) + days * 86400000).toISOString().slice(0, 10);
@@ -94,11 +117,31 @@ export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "sour
     let previous;
     try { previous = JSON.parse(await readFile(resolve(dataDir, "auctions.json"), "utf8")); } catch {}
     if (previous?.items?.length && !total) throw new Error("온비드 응답이 갑자기 0건으로 바뀌어 자동 반영을 중단합니다.");
-    const metadata = { demo: false, reviewed: true, datasetKind: "onbid-public-sale", redistributionAllowed: true, sourceType: "onbid-official-api", sourceUrl: "https://www.data.go.kr/data/15157207/openapi.do", coverage: `전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 ${startDate}~${endDate} / 공매조건·마감일별 입찰건`, snapshotId: `onbid-${startedAt}` };
+    const previousImages = new Map((previous?.items || []).filter(item => item.imageUrls?.length).map(item => [item.caseNumber, item.imageUrls]));
+    const recordsByProperty = new Map();
+    for (const record of records) {
+      record.imageUrls = previousImages.get(record.caseNumber) || [];
+      if (!recordsByProperty.has(record.caseNumber)) recordsByProperty.set(record.caseNumber, []);
+      recordsByProperty.get(record.caseNumber).push(record);
+    }
+    const targets = [...recordsByProperty.entries()].filter(([, rows]) => !rows[0].imageUrls.length).sort((a, b) => (a[1][0].bidEndsAt || "9999").localeCompare(b[1][0].bidEndsAt || "9999")).slice(0, Math.max(0, imageLimit));
+    let photoProperties = 0;
+    for (const [cltrMngNo, rows] of targets) {
+      try {
+        const detail = await requestFeed(onbidDetailUrl(key, cltrMngNo), { fetcher });
+        const imageUrls = [...new Set(onbidDetailItems(detail).flatMap(onbidPhotoUrls))].slice(0, 8);
+        if (imageUrls.length) {
+          rows.forEach(record => { record.imageUrls = imageUrls; });
+          photoProperties++;
+        }
+      } catch (error) { console.warn(`온비드 사진 보강 생략: ${cltrMngNo} · ${error.message}`); }
+      await new Promise(resolve => setTimeout(resolve, 120));
+    }
+    const metadata = { demo: false, reviewed: true, datasetKind: "onbid-public-sale", redistributionAllowed: true, sourceType: "onbid-official-api", sourceUrl: "https://www.data.go.kr/data/15157207/openapi.do", coverage: `전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 ${startDate}~${endDate} / 공매조건·마감일별 입찰건`, snapshotId: `onbid-${startedAt}`, photoProperties };
     const dataset = normalizeDataset({ metadata, items: records }, previous, now);
     dataset.metadata.distinctProperties = new Set(records.map(item => item.caseNumber)).size;
     await publishDataset(dataset, dataDir);
-    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, coverage: metadata.coverage };
+    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: dataset.items.filter(item => item.imageUrls?.length).reduce((set, item) => set.add(item.caseNumber), new Set()).size, coverage: metadata.coverage };
     await saveStatus(status);
     await writeFile(resolve(archive, "checkpoint.json"), JSON.stringify({ ...status, complete: true }, null, 2));
     return dataset;
@@ -109,7 +152,7 @@ export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "sour
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7) })
+  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
     .then(data => console.log(`실제 온비드 ${data.items.length}입찰건 / ${data.metadata.distinctProperties}물건 수집 완료`))
     .catch(error => { console.error(error.message); process.exitCode = 1; });
 }

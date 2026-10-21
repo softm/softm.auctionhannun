@@ -26,6 +26,20 @@ function validateSourceUrl(value) {
   return url.href;
 }
 
+function normalizeImageUrls(values) {
+  if (!Array.isArray(values)) return [];
+  const urls = [];
+  for (const value of values) {
+    try {
+      const url = new URL(clean(value, 2000));
+      if (url.protocol !== "https:" || url.username || url.password || [...url.searchParams.keys()].some(key => /key|token|secret|auth|signature/i.test(key))) continue;
+      if (!urls.includes(url.href)) urls.push(url.href);
+    } catch {}
+    if (urls.length === 8) break;
+  }
+  return urls;
+}
+
 export function containsSensitiveData(value) {
   if (typeof value === "string") return residentNumberPattern.test(value);
   if (Array.isArray(value)) return value.some(containsSensitiveData);
@@ -44,6 +58,7 @@ export function normalizeItem(item, index) {
   if (item.location != null && !validCoordinate(item.location)) throw new Error(`물건 ${index + 1}: 유효한 국내 위도·경도가 필요합니다.`);
   if (item.pnu && !validPnu(item.pnu)) throw new Error(`물건 ${index + 1}: PNU 형식 오류`);
 
+  const imageUrls = normalizeImageUrls(item.imageUrls);
   return {
     id: requireText(item, "id"),
     demo: Boolean(item.demo),
@@ -68,6 +83,7 @@ export function normalizeItem(item, index) {
     location: item.location ? { latitude: item.location.latitude, longitude: item.location.longitude, source: clean(item.location.source, 80) || "feed" } : null,
     pnu: item.pnu || null,
     status: clean(item.status, 60) || "원문 확인",
+    ...(imageUrls.length ? { imageUrls } : {}),
     sourceUrl: validateSourceUrl(item.sourceUrl)
   };
 }
@@ -95,6 +111,7 @@ export function normalizeDataset(input, previous = null, now = new Date()) {
     snapshotId: clean(input.metadata?.snapshotId, 120),
     collectedAt: unchanged && previous.metadata.collectedAt ? previous.metadata.collectedAt : now.toISOString(),
     itemCount: items.length,
+    ...(Number.isSafeInteger(input.metadata?.photoProperties) && input.metadata.photoProperties >= 0 ? { photoProperties: input.metadata.photoProperties } : {}),
     contentHash
   };
   return { metadata, items };
