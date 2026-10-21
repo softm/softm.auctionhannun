@@ -6,7 +6,7 @@
   <meta name="description" content="경매한눈 데이터 수집 현황: 출처별 건수, 수집 범위, 자동 수집 일정과 운영 반영 상태를 확인하세요.">
   <title>데이터 수집 현황 | 경매한눈</title>
   <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./data-status.css">
+  <link rel="stylesheet" href="./data-status.css?v=20261022-2">
 </head>
 <body>
   <a class="skip" href="#main">본문으로 이동</a>
@@ -22,13 +22,26 @@
       <article><span>온비드 입찰건</span><strong id="onbidCount">—</strong><small>조건·회차별 기록</small></article>
       <article><span>온비드 고유 물건</span><strong id="propertyCount">—</strong><small>물건 관리번호 중복 제외</small></article>
       <article><span>법원 경매</span><strong id="courtCount">—</strong><small>예시·직접 등록 제외</small></article>
-      <article><span>공식 사진 물건</span><strong id="photoCount">—</strong><small>온비드·법원 배포자료 합계</small></article>
-      <article><span>정기 수집 예약</span><strong>06:20</strong><small>매일 · 한국시간 / 실행 지연 가능</small></article>
+      <article><span>공식 사진 물건</span><strong id="photoCount">—</strong><small id="photoNote">배포 자료의 사진 집계 확인 중</small></article>
+      <article class="metric-highlight"><span>정기 수집 예약</span><strong>매일 06:20</strong><small>한국시간 / 실행 지연 가능</small></article>
+      <article class="metric-highlight"><span>마지막 수집 · 배포 자료</span><strong id="lastCollectedAt" class="metric-date">—</strong><small>한국시간 / 미배포 수집 결과 제외</small></article>
     </div>
     <section><div class="section-head"><div><p class="eyebrow">현재 제공 자료</p><h2>수집 구분별 건수</h2></div><p>이 페이지와 함께 제공되는 정적 데이터 기준</p></div>
       <div class="table-wrap" tabindex="0" role="region" aria-label="수집 구분별 상세 건수 표"><table class="collection-table"><thead><tr><th scope="col">수집 구분</th><th scope="col">입찰건</th><th scope="col">고유 물건</th><th scope="col">사진 물건</th><th scope="col">수집 검증</th><th scope="col">완료 페이지</th><th scope="col">최근 정상 수집 (KST)</th><th scope="col">최근 시도 상태</th></tr></thead><tbody id="collectionRows"><tr><td colspan="8">확인 중…</td></tr></tbody></table></div>
-      <p class="note">입찰건과 고유 물건은 더하지 않습니다. 같은 물건이 입찰 조건·회차별로 여러 건 존재할 수 있습니다. 사진 보유율은 고유 물건 중 공식 사진 URL이 확인된 물건의 비율입니다. 검증 비율은 해당 검색 조건의 API 예상 건수 대비 비율이며, 전국 전체 경매·공매의 수집률이 아닙니다.</p>
+      <p class="note">입찰건과 고유 물건은 더하지 않습니다. 같은 물건이 입찰 조건·회차별로 여러 건 존재할 수 있습니다. 사진 보유율은 고유 물건 중 공식 사진 URL이 확인된 물건의 비율입니다. 사진 집계가 없는 자료는 0건으로 추정하지 않고 —로 표시합니다. 검증 비율은 해당 검색 조건의 API 예상 건수 대비 비율이며, 전국 전체 경매·공매의 수집률이 아닙니다.</p>
       <div id="scope" class="callout">현재 수집 범위를 확인하고 있습니다.</div>
+    </section>
+    <section><p class="eyebrow">DETAILS · PHOTOS · DOCUMENTS</p><h2>사진·상세정보 제공 범위</h2>
+      <p>아래 정보는 자료가 수집된 물건에 표시됩니다. 화면 지원 여부와 실제 자료 확보 여부를 구분해서 확인하세요.</p>
+      <div id="courtDetailStatus" class="callout" role="status">법원 상세자료의 연결 상태를 확인하고 있습니다.</div>
+      <div class="table-wrap detail-support" tabindex="0" role="region" aria-label="사진과 상세정보 지원 범위 표"><table><thead><tr><th scope="col">세부 항목</th><th scope="col">화면 지원</th><th scope="col">추가로 필요한 자료</th></tr></thead><tbody>
+        <tr><th scope="row">물건 사진</th><td>대표 사진과 최대 8장 갤러리, 이전·다음 탐색</td><td>온비드는 공식 상세 조회로 사진 보강. 법원은 사진을 포함한 공급원 연결 필요</td></tr>
+        <tr><th scope="row">사건 정보·기일내역</th><td>접수일·개시결정일·배당요구종기·청구금액, 기일별 가격·결과</td><td>법원 사건과 물건번호에 맞는 상세자료 필요</td></tr>
+        <tr><th scope="row">토지·건물 목록</th><td>목록별 소재지·면적·지분·상세내역</td><td>목록 요약을 넘어선 개별 토지·건물 상세자료 필요</td></tr>
+        <tr><th scope="row">감정평가·점유 요약</th><td>위치·교통·구조·설비·이용상태, 비식별 점유 요약</td><td>확인된 평가·조사 자료와 제공 가능한 요약 필요</td></tr>
+        <tr><th scope="row">법원 공개문서</th><td>매각물건명세서·현황조사보고서·감정평가서 원문 연결과 공시일</td><td>각 물건에 대응하는 실제 문서 주소·공시일 필요</td></tr>
+      </tbody></table></div>
+      <p class="note">온비드 공매와 법원 경매는 별도 자료입니다. 온비드 사진 수집만으로 법원 사건의 사진이나 서류가 채워지지는 않습니다. 문서 확인 체크리스트와 원문 링크는 문서 자체를 수집했다는 뜻이 아닙니다.</p>
     </section>
     <section><p class="eyebrow">WHERE · WHAT · HOW · WHEN</p><h2>출처·수집 방식·시점</h2>
       <div class="table-wrap" tabindex="0" role="region" aria-label="데이터 출처와 수집 방식 표"><table class="wide"><thead><tr><th scope="col">구분 / 어디서</th><th scope="col">무엇을</th><th scope="col">어떻게</th><th scope="col">언제</th><th scope="col">건수 집계 기준·상태</th></tr></thead><tbody>
@@ -64,6 +77,6 @@
     </tbody></table></div></section>
   </main>
   <footer>경매한눈 · 공공자료 기반 독립 서비스 <a href="./privacy.html">개인정보처리방침</a></footer>
-  <script type="module" src="./data-status.js"></script>
+  <script type="module" src="./data-status.js?v=20261022-2"></script>
 </body>
 </html>

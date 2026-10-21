@@ -1,9 +1,11 @@
 window.AUCTIONHANNUN_AD_CONFIG = Object.freeze({
   enabled: true,
   script: "https://t1.kakaocdn.net/kas/static/ba.min.js",
+  allowedHosts: Object.freeze(["auctionhannun.designboard.net"]),
   desktopBreakpoint: 768,
   placements: Object.freeze({
     entry: Object.freeze({
+      enabled: false, policyApproved: false,
       unit: "DAN-3NtJk6tf5EHgkkOJ", width: 300, height: 250,
       delayMs: 900, cooldownHours: 24
     }),

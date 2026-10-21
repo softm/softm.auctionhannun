@@ -9,7 +9,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
     <title>경매한눈 | 법원경매 검토 체크리스트</title>
-    <link rel="stylesheet" href="./styles.css?v=1.0.1" />
+    <link rel="stylesheet" href="./styles.css?v=20261022-2" />
     <link rel="stylesheet" href="./account.css" />
   </head>
   <body>
@@ -154,11 +154,14 @@
         </div>
         <p class="sample-disclaimer"><span>i</span><span id="datasetNotice">수집 자료를 불러오는 중입니다. 최신 상태와 서류 원문은 대한민국 법원경매정보에서 확인하세요.</span></p>
         <p class="collection-health" id="collectionHealth" role="status">수집 상태 확인 중</p>
-        <div class="case-list" id="caseList" aria-live="polite"></div>
-        <aside class="adfit-zone adfit-infeed" id="infeedAd" aria-label="목록 광고" hidden>
-          <span class="adfit-label">광고</span>
-          <div class="adfit-host" data-adfit-host></div>
-        </aside>
+        <div class="case-list" id="caseList" aria-live="polite">
+          <div class="case-list-section" id="caseListBeforeAd"></div>
+          <aside class="adfit-zone adfit-infeed" id="infeedAd" aria-label="목록 광고" hidden>
+            <span class="adfit-label">광고</span>
+            <div class="adfit-host" data-adfit-host></div>
+          </aside>
+          <div class="case-list-section" id="caseListAfterAd"></div>
+        </div>
         <button class="load-more" id="loadMore" type="button" hidden>다음 물건 보기</button>
       </section>
 
@@ -260,14 +263,14 @@
       </section>
     </div>
     <aside class="adfit-bottom" id="bottomAd" aria-label="하단 광고" hidden>
-      <button class="adfit-bottom-toggle" id="bottomAdToggle" type="button" aria-expanded="true">광고 접기</button>
+      <button class="adfit-bottom-toggle" id="bottomAdToggle" type="button" aria-expanded="true" aria-controls="bottomAdContent">광고 접기</button>
       <span class="adfit-label">광고</span>
-      <div class="adfit-host" data-adfit-host></div>
+      <div class="adfit-host" id="bottomAdContent" data-adfit-host></div>
     </aside>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./adfit-config.js?v=20261021-1"></script>
-    <script src="./adfit.js?v=20261021-1"></script>
-    <script src="./app.js?v=1.0.1" type="module"></script>
+    <script src="./adfit-config.js?v=20261022-2"></script>
+    <script src="./adfit.js?v=20261022-2"></script>
+    <script src="./app.js?v=20261022-2" type="module"></script>
     <script type="module" src="./account.js"></script>
   </body>
 </html>

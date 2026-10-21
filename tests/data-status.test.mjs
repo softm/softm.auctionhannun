@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { collectionRow, number, date } from "../data-status.js";
+import { collectionRow, number, date, publishedPhotoCount, publishedPhotoTotal } from "../data-status.js";
 
 test("status counters preserve zero and never present unknown as zero", () => {
   assert.equal(number(0), "0");
@@ -27,4 +27,26 @@ test("unconfigured, missing and demo data remain distinct", () => {
   assert.match(collectionRow("법원", { demo: false, itemCount: 0 }, { state: "unconfigured" })[7], /미연결/);
   assert.equal(collectionRow("법원", null, null)[1], "확인 불가");
   assert.equal(collectionRow("법원", { demo: true, itemCount: 4 }, null)[1], "확인 불가");
+});
+test("photo coverage and page counts never mix an unpublished collection with published data", () => {
+  const manifest = { demo: false, itemCount: 7512, distinctProperties: 4466, photoProperties: 40, collectedAt: "2026-10-19T08:31:55Z", snapshotId: "published" };
+  const newer = { state: "ready", itemCount: 7499, expectedCount: 7499, completedPages: 15, photoProperties: 160, lastSuccessAt: "2026-10-21T08:31:55Z", snapshotId: "unpublished" };
+  const row = collectionRow("온비드", manifest, newer);
+  assert.equal(row[3], "40건 (0.8%)");
+  assert.equal(row[5], "—");
+  const { photoProperties, ...unmeasured } = manifest;
+  assert.equal(publishedPhotoCount(unmeasured, newer), null);
+  assert.equal(publishedPhotoCount(unmeasured, { ...newer, itemCount: manifest.itemCount, lastSuccessAt: manifest.collectedAt }), null);
+  assert.equal(publishedPhotoCount(unmeasured, { ...newer, itemCount: manifest.itemCount, lastSuccessAt: manifest.collectedAt, snapshotId: manifest.snapshotId }), 160);
+});
+test("an unknown photo count cannot silently become zero or a partial total", () => {
+  const known = { manifest: { demo: false, itemCount: 100, distinctProperties: 80, photoProperties: 20 } };
+  const unmeasured = { manifest: { demo: false, itemCount: 40 } };
+  const empty = { manifest: { demo: false, itemCount: 0 } };
+  assert.equal(publishedPhotoTotal([known, unmeasured]), null);
+  assert.equal(publishedPhotoTotal([known, empty]), 20);
+  assert.equal(publishedPhotoCount({ ...known.manifest, photoProperties: -1 }), null);
+  assert.equal(publishedPhotoCount({ ...known.manifest, photoProperties: 81 }), null);
+  assert.equal(publishedPhotoCount({ ...known.manifest, photoProperties: 0 }), 0);
+  assert.equal(publishedPhotoTotal([known, { manifest: null }]), null);
 });

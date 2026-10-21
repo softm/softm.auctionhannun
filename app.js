@@ -121,7 +121,9 @@ function selectedCardInViewport() {
   // In the stacked mobile layout the sticky map occupies the top of the reading area.
   if (map.left < list.right && map.right > list.left && map.top < innerHeight) top = Math.max(top, map.bottom);
   const bottomNav = $(".bottom-nav").getBoundingClientRect();
-  const bottom = bottomNav.height ? Math.min(innerHeight, bottomNav.top) : innerHeight;
+  const bottomAd = $("#bottomAd");
+  const adRect = bottomAd && !bottomAd.hidden ? bottomAd.getBoundingClientRect() : null;
+  const bottom = Math.min(innerHeight, bottomNav.height ? bottomNav.top : innerHeight, adRect?.height ? adRect.top : innerHeight);
   return cardAtReadingLine($$("#caseList [data-map-case-id]").map(card => {
     const rect = card.getBoundingClientRect(); return { id: card.dataset.mapCaseId, top: rect.top, bottom: rect.bottom };
   }), top, bottom);
@@ -232,7 +234,7 @@ function propertyIllustration(type) {
 
 function propertyVisual(item, meta) {
   const image = item.imageUrls?.[0];
-  return `<div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true"><small>온비드 제공 사진</small>` : "<small>유형 일러스트 · 실제 사진 아님</small>"}</div>`;
+  return `<div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.textContent='사진을 불러오지 못했습니다'"><small>${item.auctionKind === "onbid" ? "온비드 제공 사진" : "법원경매 제공 사진"}</small>` : "<small>유형 일러스트 · 실제 사진 아님</small>"}</div>`;
 }
 
 function renderPins(cases) {
@@ -244,9 +246,7 @@ function renderPins(cases) {
 
 function renderCases() {
   listScrollSelection.cancel();
-  const caseList = $("#caseList");
   const infeedAd = $("#infeedAd");
-  infeedAd?.remove();
   const cases = filteredCases();
   const signature = JSON.stringify([state.query, state.filter, state.region, state.court, state.kind, state.sort]);
   if (renderCases.signature !== signature) state.visibleCount = 40;
@@ -255,7 +255,7 @@ function renderCases() {
   $("#resultCount").textContent = String(cases.length);
   $("#clearSearch").hidden = !state.query;
   renderPins(cases);
-  caseList.innerHTML = cases.length ? visibleCases.map(item => {
+  const cards = visibleCases.map(item => {
     const meta = typeMeta[item.type] || typeMeta.other;
     const selected = (state.selectedId || mapSelectedId) === item.id ? " selected" : "";
     const favorite = state.favorites.has(item.id);
@@ -272,17 +272,14 @@ function renderCases() {
       </div>
       <button class="bookmark-mini${favorite ? " active" : ""}" type="button" data-favorite-id="${escapeHtml(item.id)}" aria-pressed="${favorite}" aria-label="${escapeHtml(item.title)} ${favorite ? "관심 물건에서 삭제" : "관심 물건에 추가"}">${icon("bookmark")}</button>
     </article>`;
-  }).join("") : `<div class="empty-state">${state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
-  if (infeedAd && visibleCases.length) {
-    const after = Math.max(1, Number(window.AUCTIONHANNUN_AD_CONFIG?.placements?.infeed?.after) || 5);
-    const cards = $$(".case-card", caseList);
-    cards[Math.min(after, cards.length) - 1].after(infeedAd);
-    if (infeedAd.dataset.state !== "failed") infeedAd.hidden = false;
-    document.dispatchEvent(new CustomEvent("auctionhannun:ads-updated"));
-  } else if (infeedAd) {
-    caseList.after(infeedAd);
-    infeedAd.hidden = true;
-  }
+  });
+  const after = Math.max(1, Number(window.AUCTIONHANNUN_AD_CONFIG?.placements?.infeed?.after) || 5);
+  // Keep the ad and its iframe connected: moving an existing iframe resets its
+  // browsing context. Only replace the cards on either side of the fixed slot.
+  $("#caseListBeforeAd").innerHTML = cases.length ? cards.slice(0, after).join("") : `<div class="empty-state">${state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
+  $("#caseListAfterAd").innerHTML = cards.slice(after).join("");
+  if (infeedAd) infeedAd.hidden = visibleCases.length < after || infeedAd.dataset.state === "failed";
+  document.dispatchEvent(new CustomEvent("auctionhannun:ads-updated"));
   updateFavoriteBadge();
   renderMetrics();
   $("#loadMore").hidden = visibleCases.length >= cases.length;
