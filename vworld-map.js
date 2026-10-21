@@ -55,7 +55,7 @@ export class VWorldMap {
       ], view: new ol.View({ center: ol.proj.fromLonLat([127.8, 36.3]), zoom: 7, minZoom: 6, maxZoom: 19, constrainResolution: true }) });
       [base, satellite].forEach(source => source.on("tileloaderror", () => this.status("VWorld 배경지도 연결 실패 · 네트워크를 확인하세요.")));
       this.cadastral.on("tileloaderror", () => { this.failed = true; this.status("VWorld 지적도 연결 실패 · 인증키·등록 도메인·서비스 한도를 확인하세요. 지적도 버튼을 껐다 켜면 재시도합니다."); });
-      this.cadastral.on("tileloadend", () => { if (!this.failed) this.status("VWorld 연속지적도 · 참고용이며 법적 경계·경매 대상 범위가 아닙니다."); });
+      // Background tile success must not overwrite a selected-parcel result/error.
       this.map.on("moveend", () => { if (this.map.getView().getZoom() < 16) this.status("VWorld 지도 · 지적도는 확대 레벨 16 이상에서 표시됩니다. 물건을 선택하거나 확대해 주세요."); });
       this.map.on("singleclick", event => { const hit = this.map.forEachFeatureAtPixel(event.pixel, feature => feature, { layerFilter: layer => layer === this.markerLayer }); if (hit) this.onSelect(hit.get("caseId")); });
     })().catch(error => { this.starting = null; throw error; });

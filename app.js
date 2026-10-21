@@ -2,10 +2,11 @@ import { filterAndSortCases, regionOf, reviewMetrics } from "./auction-utils.js"
 import { loadCatalog, loadDetail, cachedDetail, loadCollectionStatus } from "./auction-data.js";
 import { AuctionMap } from "./auction-map.js";
 import { mapConfig } from "./map-config.js";
-import { eumUrl, validCoordinate, validPnu } from "./parcel-utils.js";
+import { eumUrl, validCoordinate, validPnu, selectParcelCandidate } from "./parcel-utils.js";
 import { searchParcels, loadParcel } from "./parcel-api.js";
 import { workspace } from "./workspace-store.js";
 import { editRegisteredCase, removeRegisteredCase } from "./case-editor.js";
+import { cardAtReadingLine, createScrollSelection } from "./list-map-sync.js";
 const storage = {
   get: (...args) => workspace.get(...args),
   subscribe: (...args) => workspace.subscribe(...args),
@@ -99,6 +100,34 @@ let mapOperation = 0;
 let mapSelectedId = null;
 let editingCaseId = null;
 let deletingCaseId = null;
+let scrollSyncPausedUntil = 0;
+const listScrollSelection = createScrollSelection({ select: id => {
+  if (id !== mapSelectedId) void focusCaseOnMap(id, { fromScroll: true });
+} });
+
+function pauseListScrollSync() {
+  scrollSyncPausedUntil = Date.now() + 1000;
+  listScrollSelection.cancel();
+}
+
+function selectedCardInViewport() {
+  if (Date.now() < scrollSyncPausedUntil || state.selectedId || $('dialog[open]') || $(".workspace").inert) return null;
+  const list = $("#caseList").getBoundingClientRect(), map = $("#mapStage").getBoundingClientRect();
+  let top = Math.max(0, $(".topbar").getBoundingClientRect().bottom);
+  // In the stacked mobile layout the sticky map occupies the top of the reading area.
+  if (map.left < list.right && map.right > list.left && map.top < innerHeight) top = Math.max(top, map.bottom);
+  const bottomNav = $(".bottom-nav").getBoundingClientRect();
+  const bottom = bottomNav.height ? Math.min(innerHeight, bottomNav.top) : innerHeight;
+  return cardAtReadingLine($$("#caseList [data-map-case-id]").map(card => {
+    const rect = card.getBoundingClientRect(); return { id: card.dataset.mapCaseId, top: rect.top, bottom: rect.bottom };
+  }), top, bottom);
+}
+
+window.addEventListener("scroll", () => listScrollSelection.queue(selectedCardInViewport), { passive: true });
+$("#resultsSheet").addEventListener("scroll", () => listScrollSelection.queue(selectedCardInViewport), { passive: true });
+// Map control focus/drag must not be treated as browsing a different card.
+$("#mapStage").addEventListener("pointerdown", pauseListScrollSync, { passive: true });
+$("#mapStage").addEventListener("keydown", pauseListScrollSync);
 
 function applyWorkspace(data) {
   state.added = data.cases; state.favorites = new Set(data.favorites);
@@ -210,6 +239,7 @@ function renderPins(cases) {
 }
 
 function renderCases() {
+  listScrollSelection.cancel();
   const cases = filteredCases();
   const signature = JSON.stringify([state.query, state.filter, state.region, state.court, state.kind, state.sort]);
   if (renderCases.signature !== signature) state.visibleCount = 40;
@@ -223,7 +253,7 @@ function renderCases() {
     const selected = (state.selectedId || mapSelectedId) === item.id ? " selected" : "";
     const favorite = state.favorites.has(item.id);
     const sample = !item.userAdded && (item.demo === true || state.dataset.demo !== false);
-    return `<article class="case-card${selected}" data-map-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)}">
+    return `<article class="case-card${selected}" data-map-case-id="${escapeHtml(item.id)}"${selected ? ' aria-current="true"' : ''} aria-label="${escapeHtml(item.title)}">
       ${propertyVisual(item, meta)}
       <div class="case-body">
         <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="sample-tag">${item.userAdded ? "직접 등록" : item.auctionKind === "onbid" ? "온비드 공매" : sample ? "예시 물건" : "법원경매"}</span><span class="due">${daysUntil(item.saleDate)}</span></div>
@@ -247,6 +277,7 @@ function getSelected() {
 }
 
 function selectCase(id) {
+  pauseListScrollSync();
   const item = allCases().find(candidate => candidate.id === id);
   if (!item) return;
   ++mapOperation;
@@ -736,7 +767,7 @@ async function enableMap() {
     $("#enableMap").hidden = true;
     await auctionMap.ready();
     $("#mapPlaceholder").hidden = true;
-    $("#mapStatus").textContent = "목록 제목을 누르면 주소를 조회해 이동합니다. 지적도: VWorld 연속지적도";
+    $("#mapStatus").textContent = "목록 스크롤 또는 제목 선택 시 지도가 동기화됩니다. 지적도: VWorld 연속지적도";
     $$("[data-map-mode]").forEach(button => { button.disabled = false; });
     auctionMap.resize();
     renderPins(filteredCases());
@@ -750,18 +781,37 @@ async function enableMap() {
   }
 }
 
-async function focusCaseOnMap(id) {
+async function focusCaseOnMap(id, { fromScroll = false } = {}) {
   const item = allCases().find(candidate => candidate.id === id);
   if (!item) return;
+  if (!fromScroll) pauseListScrollSync();
   const operation = ++mapOperation;
+  boundaryRequest?.abort();
+  auctionMap.clearParcel();
   mapSelectedId = id;
-  if (state.selectedId) closeDetail();
-  setView("map"); renderCases();
-  $("#mapStage").scrollIntoView({ block: "start", behavior: "smooth" });
+  if (!fromScroll) {
+    if (state.selectedId) closeDetail();
+    setView("map"); renderCases();
+    $("#mapStage").scrollIntoView({ block: "start", behavior: "smooth" });
+  } else {
+    // Preserve DOM, keyboard focus and scroll offset during scroll-driven selection.
+    $$("#caseList [data-map-case-id]").forEach(card => {
+      const selected = card.dataset.mapCaseId === id;
+      card.classList.toggle("selected", selected);
+      if (selected) card.setAttribute("aria-current", "true"); else card.removeAttribute("aria-current");
+    });
+  }
   try {
     if (!await enableMap() || operation !== mapOperation) return;
     $("#mapStatus").textContent = `선택 물건 주소 확인 중: ${item.address}`;
-    const position = await auctionMap.locate(item);
+    let position;
+    try { position = await auctionMap.locate(item); }
+    catch (error) {
+      // A NAVER address lookup failure does not imply that VWorld has no boundary.
+      if (operation !== mapOperation) return;
+      if (auctionMap.mode === "cadastral") { await showCaseParcelBoundary(item, operation); return; }
+      throw error;
+    }
     if (operation !== mapOperation) return;
     renderPins(filteredCases()); auctionMap.focus(position);
     if (auctionMap.mode === "cadastral") await showCaseParcelBoundary(item, operation);
@@ -769,7 +819,7 @@ async function focusCaseOnMap(id) {
   } catch (error) {
     if (operation !== mapOperation) return;
     $("#mapStatus").textContent = `선택 물건 위치 확인 실패: ${error.message} 기존 지도 위치를 유지합니다.`;
-    showToast(error.message);
+    if (!fromScroll) showToast(error.message);
   }
 }
 
@@ -792,9 +842,9 @@ async function showCaseParcelBoundary(item, operation = mapOperation) {
       $("#mapStatus").textContent = `선택 매물의 필지 확인 중: ${item.address}`;
       const candidates = await searchParcels(item.address, request.signal);
       if (operation !== mapOperation || request.signal.aborted) return false;
-      if (candidates.length !== 1) throw new Error(candidates.length ? `필지 후보가 ${candidates.length}개입니다. 상세 화면에서 정확한 필지를 선택해 주세요.` : "주소와 일치하는 필지를 찾지 못했습니다.");
-      parcelSelections.set(item.id, candidates[0]);
-      pnu = candidates[0].pnu;
+      const candidate = selectParcelCandidate(item.address, candidates);
+      parcelSelections.set(item.id, candidate);
+      pnu = candidate.pnu;
     }
     $("#mapStatus").textContent = `PNU ${pnu} · 선택 매물 경계 불러오는 중…`;
     const feature = await loadParcel(pnu);

@@ -78,6 +78,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-l
 .case-list{display:grid;gap:14px}
 .case-card{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);overflow:hidden;background:white;border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 3px #17324d04}
 .case-card:hover,.case-card.selected{border-color:#6daaa5;box-shadow:0 4px 14px #17324d0a}
+.case-card.selected{background:#f1faf8;box-shadow:inset 4px 0 var(--green),0 4px 14px #17324d0a}
 .property-visual{display:grid;place-items:center;position:relative;background:#e6eef4;color:#8399ac;min-height:190px}
 .property-visual.land{background:#e7eee6;color:#76957f}
 .property-visual.commercial{background:#e8edf2;color:#8d9eae}
@@ -296,8 +297,11 @@ svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-l
  body.filters-open .filter-panel{display:grid}
  .filter-panel label{min-width:0}.filter-panel select{font-size:12px}.filter-panel p{display:none}.reset-filters{align-self:end;text-align:right;padding-right:0}
  .app-shell{display:flex;flex-direction:column;gap:18px}.results-sheet{order:0;width:100%}.sheet-heading h2{font-size:20px}.view-toggle{display:flex}
- .map-stage{display:block;position:relative;top:0;order:-1;width:100%;height:460px;min-height:0;max-height:none}body.map-view .map-stage{display:block}
+ .map-stage{display:block;position:sticky;top:74px;z-index:15;order:-1;flex-shrink:0;width:100%;height:clamp(220px,40dvh,320px);min-height:0;max-height:none}body.map-view .map-stage{display:block}
  .map-heading{flex-direction:row;align-items:center}.map-heading small{font-size:9px}.case-card{grid-template-columns:1fr}
+ .map-heading{padding:8px 10px;font-size:12px}.map-mode-control button{padding:5px 7px;font-size:10px;min-height:30px}
+ .map-frame{inset:47px 0 68px}.map-caption{bottom:30px;padding:5px 8px;left:6px;right:6px;font-size:10px}.map-caption>div{gap:1px}.map-caption small{font-size:9px}.map-caption button{padding:5px;font-size:10px}
+ .map-tools{top:54px;right:8px}.map-tools button{width:28px;height:28px;font-size:18px}.map-status{bottom:3px;left:8px;right:8px;max-height:27px;font-size:9px}.map-placeholder{inset:48px 6px 68px;font-size:11px}.map-placeholder p{margin:4px}
  .property-visual{height:145px;min-height:0}.property-visual svg{width:220px;height:145px}.property-visual small{font-size:9px;bottom:9px;right:10px;padding:2px 6px}
  .case-body{padding:16px}.case-card-head{padding-right:0}.case-card h3{font-size:19px;margin-top:12px}.case-id,.case-address{font-size:12px}
  .case-card .bookmark-mini{top:10px;right:10px;width:38px;height:38px}.price-row{padding:12px;margin-top:14px}.price-row>div:last-child b{font-size:23px}
