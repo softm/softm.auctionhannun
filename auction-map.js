@@ -1,5 +1,6 @@
 import { mapConfig } from "./map-config.js";
 import { validCoordinate, polygonPaths } from "./parcel-utils.js";
+import { VWorldMap } from "./vworld-map.js";
 
 let sdkTask;
 export function loadMapSdk() {
@@ -80,13 +81,16 @@ export function createGeocoder(maps, storage = window.localStorage) {
 }
 
 export class AuctionMap {
-  constructor(element, onSelect) {
+  constructor(element, onSelect, vworldElement, onStatus = () => {}) {
     this.element = element;
     this.onSelect = onSelect;
     this.items = [];
     this.positions = new Map();
     this.markers = new Map();
     this.polygons = [];
+    this.vworldElement = vworldElement;
+    this.onStatus = onStatus;
+    this.mode = "normal";
   }
   async ready() {
     if (this.map) return;
@@ -94,7 +98,6 @@ export class AuctionMap {
     this.starting = (async () => {
       this.maps = await loadMapSdk();
       this.map = new this.maps.Map(this.element, { center: new this.maps.LatLng(36.3, 127.8), zoom: 7, minZoom: 6, mapTypeControl: true, mapTypeControlOptions: { position: this.maps.Position.TOP_LEFT } });
-      this.cadastral = new this.maps.CadastralLayer();
       this.geocode = createGeocoder(this.maps);
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(this.element);
@@ -104,15 +107,18 @@ export class AuctionMap {
   }
   position(item) { return validCoordinate(item.location) ? item.location : this.positions.get(item.id); }
   resize() {
+    this.vworld?.resize();
     if (this.map && this.element.clientWidth && this.element.clientHeight) this.map.setSize(new this.maps.Size(this.element.clientWidth, this.element.clientHeight));
   }
   render(items, selectedId) {
     this.items = items;
     this.selectedId = selectedId;
+    this.vworld?.render(items, selectedId, item => this.position(item));
     if (!this.map) return;
     for (const marker of this.markers.values()) { this.maps.Event.clearInstanceListeners(marker); marker.setMap(null); }
     this.markers.clear();
-    for (const [index, item] of items.entries()) {
+    const ordered = items.map((item, index) => ({ item, index })).sort((a, b) => Number(b.item.id === selectedId) - Number(a.item.id === selectedId));
+    for (const { item, index } of ordered) {
       if (this.markers.size >= 500) break;
       const position = this.position(item);
       if (!validCoordinate(position)) continue;
@@ -129,36 +135,52 @@ export class AuctionMap {
     let position = this.position(item);
     if (!validCoordinate(position)) {
       position = await this.geocode(item.address);
-      this.positions.set(item.id, position);
+      // A pending lookup must not restore stale coordinates after an edit/deletion.
+      if (this.items.some(current => current.id === item.id && current.address === item.address)) this.positions.set(item.id, position);
     }
     return position;
   }
-  focus(position) { if (this.map && validCoordinate(position)) { this.map.setCenter(new this.maps.LatLng(position.latitude, position.longitude)); this.map.setZoom(17); } }
+  focus(position) { if (this.map && validCoordinate(position)) { this.clearParcel(); this.map.setCenter(new this.maps.LatLng(position.latitude, position.longitude)); this.map.setZoom(17); if (this.mode !== "normal" || this.cadastralEnabled) this.vworld.focus(position); } }
   fit() {
     if (!this.map) return;
     this.clearParcel();
     const positions = this.items.map(item => this.position(item)).filter(validCoordinate);
+    if (this.mode !== "normal" || this.cadastralEnabled) { this.vworld.fit(positions); return; }
     if (!positions.length) { this.map.setCenter(new this.maps.LatLng(36.3, 127.8)); this.map.setZoom(7); return; }
     if (positions.length === 1) { this.focus(positions[0]); return; }
     const bounds = new this.maps.LatLngBounds();
     positions.forEach(pos => bounds.extend(new this.maps.LatLng(pos.latitude, pos.longitude)));
     this.map.fitBounds(bounds, { top: 60, right: 60, bottom: 60, left: 60 });
   }
-  setCadastral(enabled) { this.cadastral?.setMap(enabled ? this.map : null); }
-  zoom(delta) { if (this.map) this.map.setZoom(this.map.getZoom() + delta); }
-  clearParcel() { this.polygons.forEach(polygon => polygon.setMap(null)); this.polygons = []; }
-  showParcel(feature) {
+  async setMode(mode, isCurrent = () => true) {
+    await this.ready();
+    if (!isCurrent()) return false;
+    if (mode !== "normal") {
+      if (!this.vworldElement) throw new Error("VWorld 지도 영역이 없습니다.");
+      this.vworld ||= new VWorldMap(this.vworldElement, this.onSelect, this.onStatus);
+      await this.vworld.ready();
+      if (!isCurrent()) return false;
+      const center = this.map.getCenter();
+      this.vworld.setMode(mode);
+      this.vworld.activate({ latitude: center.lat(), longitude: center.lng() }, this.map.getZoom());
+      this.element.hidden = true; this.mode = mode; this.cadastralEnabled = mode === "cadastral";
+      this.vworld.render(this.items, this.selectedId, item => this.position(item));
+    } else if (this.mode !== "normal" || this.cadastralEnabled) {
+      const center = this.vworld.center(), zoom = this.vworld.zoomLevel();
+      this.vworldElement.hidden = true; this.element.hidden = false; this.mode = "normal"; this.cadastralEnabled = false;
+      this.resize(); this.map.setCenter(new this.maps.LatLng(center.latitude, center.longitude)); this.map.setZoom(zoom);
+    }
+    return true;
+  }
+  setCadastral(enabled, isCurrent = () => true) { return this.setMode(enabled ? "cadastral" : "normal", isCurrent); }
+  zoom(delta) { if (this.mode !== "normal" || this.cadastralEnabled) this.vworld.zoom(delta); else if (this.map) this.map.setZoom(this.map.getZoom() + delta); }
+  clearParcel() { this.vworld?.clearParcel(); this.polygons.forEach(polygon => polygon.setMap(null)); this.polygons = []; }
+  async showParcel(feature, isCurrent = () => true) {
+    if (!await this.setMode("cadastral", isCurrent) || !isCurrent()) return false;
     const paths = polygonPaths(feature.geometry);
     this.clearParcel();
-    const bounds = new this.maps.LatLngBounds();
-    this.polygons = paths.map(rings => new this.maps.Polygon({
-      map: this.map, paths: rings.map(ring => ring.map(point => {
-        const position = new this.maps.LatLng(point.latitude, point.longitude);
-        bounds.extend(position);
-        return position;
-      })), strokeColor: "#0f766e", strokeWeight: 3, fillColor: "#0f766e", fillOpacity: 0.15
-    }));
-    this.setCadastral(true);
-    this.map.fitBounds(bounds, { top: 80, right: 60, bottom: 80, left: 60 });
+    if (!paths.length) return false;
+    this.vworld.showParcel(feature);
+    return true;
   }
 }

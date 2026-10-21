@@ -17,7 +17,7 @@ createServer(async (request, response) => {
   try {
     const rawPath = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
     const requested = rawPath === "/" ? "/index.html" : rawPath;
-    if (requested.split("/").some(part => part.startsWith(".")) || (/^\/(source-data|android|scripts|tests|node_modules)\//.test(requested) && requested !== "/tests/map-browser.html") || requested === "/data/inbox.json") throw new Error("private file");
+    if (requested.split("/").some(part => part.startsWith(".")) || (/^\/(functions|source-data|android|scripts|tests|node_modules)\//.test(requested) && requested !== "/tests/map-browser.html") || requested === "/data/inbox.json") throw new Error("private file");
     const filePath = normalize(join(root, requested));
     if (relative(root, filePath).startsWith("..") || (await stat(filePath)).isDirectory()) {
       throw new Error("not found");

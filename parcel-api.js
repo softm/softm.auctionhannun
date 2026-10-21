@@ -7,12 +7,12 @@ const pending = new Map();
 // VWorld's registered website URL includes the scheme. Send only the real origin.
 export function parcelRequestUrl(path, params, clientLocation = location) {
   if (!/^https?:$/.test(clientLocation.protocol)) throw new Error("필지 조회는 HTTP 미리보기에서 사용해 주세요.");
-  const localPreview = ["localhost", "127.0.0.1", "[::1]"].includes(clientLocation.hostname);
+  const localPreview = clientLocation.origin === mapConfig.vworldLocalOrigin;
   if (!localPreview && clientLocation.origin !== mapConfig.vworldServiceOrigin) {
-    throw new Error(`VWorld 필지 조회는 등록된 운영 주소(${mapConfig.vworldServiceOrigin})에서 사용해 주세요.`);
+    throw new Error(`VWorld 필지 조회는 등록된 운영 주소(${mapConfig.vworldServiceOrigin}) 또는 로컬 개발 주소(${mapConfig.vworldLocalOrigin})에서 사용해 주세요.`);
   }
   const url = new URL(path, "https://api.vworld.kr");
-  url.search = new URLSearchParams({ ...params, key: mapConfig.vworldKey, domain: clientLocation.origin });
+  url.search = new URLSearchParams({ ...params, key: localPreview ? mapConfig.vworldLocalKey : mapConfig.vworldKey, domain: clientLocation.origin });
   return url;
 }
 

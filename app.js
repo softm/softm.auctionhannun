@@ -2,8 +2,23 @@ import { filterAndSortCases, regionOf, reviewMetrics } from "./auction-utils.js"
 import { loadCatalog, loadDetail, cachedDetail, loadCollectionStatus } from "./auction-data.js";
 import { AuctionMap } from "./auction-map.js";
 import { mapConfig } from "./map-config.js";
-import { eumUrl, validCoordinate } from "./parcel-utils.js";
+import { eumUrl, validCoordinate, validPnu } from "./parcel-utils.js";
 import { searchParcels, loadParcel } from "./parcel-api.js";
+import { workspace } from "./workspace-store.js";
+import { editRegisteredCase, removeRegisteredCase } from "./case-editor.js";
+const storage = {
+  get: (...args) => workspace.get(...args),
+  subscribe: (...args) => workspace.subscribe(...args),
+  set(key, value) {
+    try { workspace.set(key, value); return true; }
+    catch (error) {
+      const data = workspace.snapshot();
+      state.added = data.cases; state.favorites = new Set(data.favorites); state.checks = data.checks; state.notes = data.notes; state.verified = data.verified;
+      renderCases(); if (state.selectedId) renderDetail();
+      showToast(`저장하지 못했습니다: ${error.message}`); return false;
+    }
+  }
+};
 
 const COURT_URL = "https://www.courtauction.go.kr/";
 const ONBID_URL = "https://www.onbid.co.kr/";
@@ -47,13 +62,6 @@ const rightsChecklist = [
   ["day", "입찰 당일 상태 재확인", "취하·변경·연기와 기일 진행 여부를 공식 사이트 또는 경매계에서 확인합니다."]
 ];
 
-const storage = {
-  get(key, fallback) {
-    try { return JSON.parse(localStorage.getItem(`auctionhannun:${key}`)) ?? fallback; }
-    catch { return fallback; }
-  },
-  set(key, value) { localStorage.setItem(`auctionhannun:${key}`, JSON.stringify(value)); }
-};
 
 const state = {
   collected: [],
@@ -83,10 +91,25 @@ const state = {
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const allCases = () => [...state.added, ...state.collected];
-const auctionMap = new AuctionMap($("#mapCanvas"), selectCase);
+const auctionMap = new AuctionMap($("#mapCanvas"), selectCase, $("#vworldCanvas"), text => { $("#mapStatus").textContent = text; });
 const parcelSelections = new Map();
 let parcelRequest;
+let boundaryRequest;
 let mapOperation = 0;
+let mapSelectedId = null;
+let editingCaseId = null;
+let deletingCaseId = null;
+
+function applyWorkspace(data) {
+  state.added = data.cases; state.favorites = new Set(data.favorites);
+  state.checks = data.checks; state.notes = data.notes; state.verified = data.verified;
+}
+
+function showRegisteredCases() {
+  resetFilters(); state.filter = "registered"; state.sort = "recent";
+  setView("search"); syncFilters(); renderCases();
+  $("#resultsSheet").scrollIntoView({ block: "start" });
+}
 
 async function loadCollectedCases() {
   try {
@@ -149,6 +172,7 @@ function renderMetrics() {
   $("#totalCases").textContent = metrics.total.toLocaleString("ko-KR");
   $("#savedCases").textContent = metrics.saved.toLocaleString("ko-KR");
   $("#addedCases").textContent = metrics.added.toLocaleString("ko-KR");
+  $("#registeredCount").textContent = metrics.added.toLocaleString("ko-KR");
   $("#checkedDocuments").textContent = `${metrics.checked.toLocaleString("ko-KR")} / ${metrics.documents.toLocaleString("ko-KR")}`;
 }
 
@@ -159,6 +183,7 @@ function renderFilterOptions() {
     ["#courtFilter", items.map(item => item.court), "전체 법원·기관", "court"]
   ]) {
     $(id).innerHTML = `<option value="all">${label}</option>` + [...new Set(values)].filter(Boolean).sort().map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    if (state[key] !== "all" && !values.includes(state[key])) state[key] = "all";
     $(id).value = state[key];
   }
 }
@@ -172,8 +197,13 @@ function propertyIllustration(type) {
   return `<svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="127" cy="30" r="13" fill="#ffffff88" stroke="none"/><path d="M15 138h130"/>${building}</svg>`;
 }
 
+function propertyVisual(item, meta) {
+  const image = item.imageUrls?.[0];
+  return `<div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true"><small>온비드 제공 사진</small>` : "<small>유형 일러스트 · 실제 사진 아님</small>"}</div>`;
+}
+
 function renderPins(cases) {
-  auctionMap.render(cases, state.selectedId);
+  auctionMap.render(cases, state.selectedId || mapSelectedId);
   const located = cases.filter(item => validCoordinate(auctionMap.position(item))).length;
   $("#mapResultCount").textContent = String(auctionMap.map ? Math.min(500, located) : 0);
   $("#mapMissingCount").textContent = `목록 ${cases.length}건 · 좌표 미확인 ${cases.length - located}건${located > 500 ? " · 지도 최대 500건" : ""}`;
@@ -190,22 +220,22 @@ function renderCases() {
   renderPins(cases);
   $("#caseList").innerHTML = cases.length ? visibleCases.map(item => {
     const meta = typeMeta[item.type] || typeMeta.other;
-    const selected = state.selectedId === item.id ? " selected" : "";
+    const selected = (state.selectedId || mapSelectedId) === item.id ? " selected" : "";
     const favorite = state.favorites.has(item.id);
     const sample = !item.userAdded && (item.demo === true || state.dataset.demo !== false);
-    return `<article class="case-card${selected}" aria-label="${escapeHtml(item.title)}">
-      <div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}<small>유형 일러스트 · 실제 사진 아님</small></div>
+    return `<article class="case-card${selected}" data-map-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)}">
+      ${propertyVisual(item, meta)}
       <div class="case-body">
         <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="sample-tag">${item.userAdded ? "직접 등록" : item.auctionKind === "onbid" ? "온비드 공매" : sample ? "예시 물건" : "법원경매"}</span><span class="due">${daysUntil(item.saleDate)}</span></div>
         <h3><button class="case-title" type="button" data-case-id="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button></h3>
         <p class="case-id">${escapeHtml(item.court)} · ${escapeHtml(item.caseNumber)}${item.auctionKind === "onbid" ? ` · ${escapeHtml(item.status)}` : ""}</p>
         <p class="case-address">${escapeHtml(item.address)} · ${escapeHtml(item.area || "면적 확인 필요")}</p>
         <div class="price-row"><div><span>감정가</span><b>${escapeHtml(item.appraisal || "직접 확인")}</b></div><div><span>최저매각가격</span><b>${escapeHtml(item.minimum || "직접 확인")}</b></div></div>
-        <div class="case-bottom"><span>${dateLabel(item.saleDate)} ${item.auctionKind === "onbid" ? "입찰 마감" : "매각기일"} · 원문 확인 필요</span><button class="case-open" type="button" data-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">검토하기 ${icon("arrow")}</button></div>
+        <div class="case-bottom"><span>${dateLabel(item.saleDate)} ${item.auctionKind === "onbid" ? "입찰 마감" : "매각기일"} · 제목 선택 시 지도 이동</span><button class="case-open" type="button" data-open-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">검토하기 ${icon("arrow")}</button></div>
       </div>
       <button class="bookmark-mini${favorite ? " active" : ""}" type="button" data-favorite-id="${escapeHtml(item.id)}" aria-pressed="${favorite}" aria-label="${escapeHtml(item.title)} ${favorite ? "관심 물건에서 삭제" : "관심 물건에 추가"}">${icon("bookmark")}</button>
     </article>`;
-  }).join("") : `<div class="empty-state">${state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
+  }).join("") : `<div class="empty-state">${state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
   updateFavoriteBadge();
   renderMetrics();
   $("#loadMore").hidden = visibleCases.length >= cases.length;
@@ -219,6 +249,7 @@ function getSelected() {
 function selectCase(id) {
   const item = allCases().find(candidate => candidate.id === id);
   if (!item) return;
+  ++mapOperation;
   state.selectedId = id;
   parcelRequest?.abort();
   state.activeTab = "summary";
@@ -233,6 +264,7 @@ function selectCase(id) {
   $("#detailSheet").scrollTop = 0;
   $("#detailClose").focus();
   void loadDetail(item).then(() => { if (state.selectedId === id) renderDetail(); }).catch(() => { if (state.selectedId === id) showToast("상세 자료를 읽지 못했습니다. 공식 원문에서 확인해 주세요."); });
+  if (auctionMap.mode === "cadastral") void showCaseParcelBoundary(item, mapOperation);
 }
 
 function setBackgroundInert(inert) {
@@ -259,6 +291,7 @@ function renderDetail() {
   const meta = typeMeta[item.type] || typeMeta.other;
   $("#detailType").textContent = meta.label;
   $("#detailType").className = `status-pill ${meta.className}`;
+  $("#registeredActions").hidden = !item.userAdded;
   $("#detailCourt").textContent = item.court;
   $("#detailTabs [data-tab=documents]").textContent = item.auctionKind === "onbid" ? "공매 서류" : "3대 서류";
   $("#detailTitle").textContent = item.title;
@@ -357,7 +390,7 @@ function renderNotes(item) {
   const note = state.notes[item.id] || "";
   return `<div class="section-title"><span>FIELD NOTE</span><strong>물건별 현장·권리 메모</strong></div>
     <label class="notes-label">메모<textarea id="caseNotes" maxlength="3000" placeholder="점유자 응답, 현장 상태, 인수 가능 비용, 확인할 질문 등을 기록하세요.">${escapeHtml(note)}</textarea></label>
-    <div class="note-meta"><span>이 브라우저에만 저장됩니다.</span><button type="button" id="saveNotes" data-action="save-notes">메모 저장</button></div>
+    <div class="note-meta"><span>로그인 시 계정에 저장합니다. 상단 저장 상태를 확인하세요.</span><button type="button" id="saveNotes" data-action="save-notes">메모 저장</button></div>
     <div class="step-card"><span>✓</span><div><b>입찰 당일 마지막 확인</b><small>취하·변경·연기·정정공고 여부와 보증금 기준 확인</small></div><button type="button" data-action="verified">오늘 확인</button></div>`;
 }
 
@@ -373,12 +406,12 @@ function renderOfficial(item) {
   return `<div class="section-title"><span>OFFICIAL SOURCES</span><strong>공식 원문과 공적 장부</strong></div>
     <div class="official-grid">${links.map(([url, iconName, title, description]) => `<a class="official-card" href="${url}" target="_blank" rel="noopener noreferrer"><span>${icon(iconName)}</span><div><b>${title}</b><small>${description}</small></div>${icon("external")}</a>`).join("")}</div>
     <p class="legal-note">경매한눈은 공식 원문을 대체하지 않습니다. ${item.auctionKind === "onbid" ? "물건관리번호" : "사건번호"} ${escapeHtml(item.caseNumber)}의 진행상태, 매각조건, 보증금과 서류 정정 여부는 반드시 공식 사이트에서 다시 확인하세요.</p>
-    ${item.userAdded ? `<button class="delete-case" type="button" data-action="delete-case">이 사건을 검토 목록에서 삭제</button>` : ""}`;
+    `;
 }
 
 function toggleFavorite(id) {
   if (state.favorites.has(id)) state.favorites.delete(id); else state.favorites.add(id);
-  storage.set("favorites", [...state.favorites]);
+  if (!storage.set("favorites", [...state.favorites])) return;
   renderCases();
   if (state.selectedId === id) renderDetail();
 }
@@ -425,7 +458,7 @@ function addCase(form) {
     category: typeMeta[String(data.get("type"))]?.label || "기타"
   };
   state.added.unshift(item);
-  storage.set("cases", state.added);
+  if (!storage.set("cases", state.added)) return;
   form.reset();
   $("#addCaseDialog").close();
   state.filter = "all";
@@ -440,22 +473,54 @@ function addCase(form) {
   showToast("검토 목록에 사건을 추가했습니다.");
 }
 
-function deleteSelectedCase() {
+function openCaseEditor(edit = false) {
+  const item = edit ? getSelected() : null;
+  if (edit && !item?.userAdded) return;
+  editingCaseId = item?.id || null;
+  const form = $("#addCaseForm"); form.reset();
+  $("#caseFormError").textContent = "";
+  $("#addCaseTitle").textContent = edit ? "등록 사건 정보 수정" : "검토할 사건 추가";
+  $("#caseFormIntro").textContent = edit ? "법원·사건번호·소재지·유형·기일을 수정합니다. 기존 메모·관심·체크 기록은 유지됩니다. 주소 변경 시 지도 위치와 선택 필지는 다시 확인해야 합니다." : "공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.";
+  $(".dialog-submit", form).textContent = edit ? "수정 내용 저장" : "검토 목록에 추가";
+  if (item) for (const key of ["court", "caseNumber", "address", "type", "saleDate"]) form.elements.namedItem(key).value = item[key] || "";
+  openDialog("#addCaseDialog");
+}
+
+function saveCaseEdit(form) {
+  try {
+    const original = state.added.find(item => item.id === editingCaseId);
+    const data = editRegisteredCase(workspace.snapshot(), editingCaseId, Object.fromEntries(new FormData(form)));
+    workspace.commit(data); applyWorkspace(data);
+    ++mapOperation;
+    if (original.address !== data.cases.find(item => item.id === editingCaseId).address) {
+      auctionMap.positions.delete(editingCaseId); parcelSelections.delete(editingCaseId);
+      parcelRequest?.abort(); auctionMap.clearParcel();
+      $("#mapStatus").textContent = "소재지가 변경되었습니다. 목록을 선택해 새 주소 위치를 확인하세요.";
+    }
+    $("#addCaseDialog").close();
+    renderFilterOptions(); syncFilters(); renderCases(); renderDetail();
+    showToast("사건 정보를 수정했습니다. 메모·관심·체크 기록은 유지됩니다.");
+  } catch (error) { $("#caseFormError").textContent = error.message; }
+}
+
+function requestCaseDeletion() {
   const item = getSelected();
   if (!item?.userAdded) return;
-  state.added = state.added.filter(candidate => candidate.id !== item.id);
-  state.favorites.delete(item.id);
-  delete state.checks[item.id];
-  delete state.notes[item.id];
-  delete state.verified[item.id];
-  storage.set("cases", state.added);
-  storage.set("favorites", [...state.favorites]);
-  storage.set("checks", state.checks);
-  storage.set("notes", state.notes);
-  storage.set("verified", state.verified);
-  renderFilterOptions();
-  closeDetail();
-  showToast("추가한 사건을 삭제했습니다.");
+  deletingCaseId = item.id;
+  $("#deleteCaseSummary").textContent = `${item.caseNumber} · ${item.address}`;
+  $("#deleteCaseError").textContent = "";
+  openDialog("#deleteCaseDialog");
+}
+
+function deleteSelectedCase() {
+  try {
+    const data = removeRegisteredCase(workspace.snapshot(), deletingCaseId);
+    workspace.commit(data); applyWorkspace(data);
+    ++mapOperation; mapSelectedId = null;
+    auctionMap.positions.delete(deletingCaseId); parcelSelections.delete(deletingCaseId); auctionMap.clearParcel();
+    $("#deleteCaseDialog").close(); renderFilterOptions(); closeDetail(); showRegisteredCases();
+    showToast("등록 사건과 연결된 기록을 삭제했습니다.");
+  } catch (error) { $("#deleteCaseError").textContent = error.message; }
 }
 
 function syncFilters() {
@@ -509,13 +574,16 @@ function setTab(tab) {
 $("#caseList").addEventListener("click", event => {
   const favorite = event.target.closest("[data-favorite-id]");
   if (favorite) { event.stopPropagation(); toggleFavorite(favorite.dataset.favoriteId); return; }
-  const card = event.target.closest("[data-case-id]");
-  if (card) selectCase(card.dataset.caseId);
+  const detail = event.target.closest("[data-open-case-id]");
+  if (detail) { selectCase(detail.dataset.openCaseId); return; }
+  const card = event.target.closest("[data-map-case-id]");
+  if (card) void focusCaseOnMap(card.dataset.mapCaseId);
 });
 
 $("#filterRow").addEventListener("click", event => {
   const button = event.target.closest("[data-filter]");
   if (!button) return;
+  if (button.dataset.filter === "registered") { showRegisteredCases(); return; }
   state.filter = button.dataset.filter;
   syncFilters();
   renderCases();
@@ -607,7 +675,7 @@ $("#detailContent").addEventListener("change", event => {
   if (!input || !state.selectedId) return;
   state.checks[state.selectedId] ||= {};
   state.checks[state.selectedId][input.dataset.checkKey] = input.checked;
-  storage.set("checks", state.checks);
+  if (!storage.set("checks", state.checks)) return;
   renderActiveTab();
   renderMetrics();
   $$('[data-check-key]').find(candidate => candidate.dataset.checkKey === input.dataset.checkKey)?.focus();
@@ -623,25 +691,30 @@ $("#detailContent").addEventListener("click", event => {
   if (action.dataset.action === "tab") setTab(action.dataset.tabTarget);
   if (action.dataset.action === "verified") {
     state.verified[state.selectedId] = new Intl.DateTimeFormat("ko-KR", { dateStyle: "medium", timeStyle: "short" }).format(new Date());
-    storage.set("verified", state.verified);
+    if (!storage.set("verified", state.verified)) return;
     renderActiveTab();
     showToast("오늘 공식 확인 기록을 저장했습니다.");
   }
-  if (action.dataset.action === "delete-case") deleteSelectedCase();
   if (action.dataset.action === "save-notes") {
     state.notes[state.selectedId] = $("#caseNotes").value.trim();
-    storage.set("notes", state.notes);
-    showToast("메모를 이 브라우저에 저장했습니다.");
+    if (!storage.set("notes", state.notes)) return;
+    showToast("메모를 반영했습니다. 상단에서 계정 저장 상태를 확인하세요.");
   }
 });
 
 $("#addCaseForm").addEventListener("submit", event => {
   event.preventDefault();
-  if (event.currentTarget.reportValidity()) addCase(event.currentTarget);
+  if (event.currentTarget.reportValidity()) {
+    if (editingCaseId) saveCaseEdit(event.currentTarget); else addCase(event.currentTarget);
+  }
 });
 
 function openDialog(id) { $(id).showModal(); }
-$("#addCaseButton").addEventListener("click", () => openDialog("#addCaseDialog"));
+$("#addCaseButton").addEventListener("click", () => openCaseEditor());
+$("#editCaseButton").addEventListener("click", () => openCaseEditor(true));
+$("#deleteCaseButton").addEventListener("click", requestCaseDeletion);
+$("#confirmDeleteCase").addEventListener("click", deleteSelectedCase);
+$("#registeredCasesButton").addEventListener("click", showRegisteredCases);
 $("#helpButton").addEventListener("click", () => openDialog("#helpDialog"));
 $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => $(`#${button.dataset.closeDialog}`).close()));
 $$('dialog').forEach(dialog => dialog.addEventListener("click", event => {
@@ -660,15 +733,81 @@ async function enableMap() {
   if (auctionMap.map) { auctionMap.resize(); return true; }
   try {
     $("#mapStatus").textContent = "네이버 지도 연결 중…";
+    $("#enableMap").hidden = true;
     await auctionMap.ready();
     $("#mapPlaceholder").hidden = true;
-    $("#mapStatus").textContent = "NAVER 지도 · 지적도는 참고용입니다.";
-    $("#cadastralToggle").disabled = false;
+    $("#mapStatus").textContent = "목록 제목을 누르면 주소를 조회해 이동합니다. 지적도: VWorld 연속지적도";
+    $$("[data-map-mode]").forEach(button => { button.disabled = false; });
     auctionMap.resize();
     renderPins(filteredCases());
     return true;
   } catch (error) {
     $("#mapStatus").textContent = error.message;
+    $("#mapPlaceholder").hidden = false;
+    $("#mapPlaceholderMessage").textContent = error.message;
+    $("#enableMap").hidden = false;
+    return false;
+  }
+}
+
+async function focusCaseOnMap(id) {
+  const item = allCases().find(candidate => candidate.id === id);
+  if (!item) return;
+  const operation = ++mapOperation;
+  mapSelectedId = id;
+  if (state.selectedId) closeDetail();
+  setView("map"); renderCases();
+  $("#mapStage").scrollIntoView({ block: "start", behavior: "smooth" });
+  try {
+    if (!await enableMap() || operation !== mapOperation) return;
+    $("#mapStatus").textContent = `선택 물건 주소 확인 중: ${item.address}`;
+    const position = await auctionMap.locate(item);
+    if (operation !== mapOperation) return;
+    renderPins(filteredCases()); auctionMap.focus(position);
+    if (auctionMap.mode === "cadastral") await showCaseParcelBoundary(item, operation);
+    else $("#mapStatus").textContent = `${position.address || item.address} · 주소 대표 위치 (경매 경계 아님)`;
+  } catch (error) {
+    if (operation !== mapOperation) return;
+    $("#mapStatus").textContent = `선택 물건 위치 확인 실패: ${error.message} 기존 지도 위치를 유지합니다.`;
+    showToast(error.message);
+  }
+}
+
+function syncMapModeControls(mode) {
+  $$('[data-map-mode]').forEach(button => {
+    const active = button.dataset.mapMode === mode;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+async function showCaseParcelBoundary(item, operation = mapOperation) {
+  if (!item || auctionMap.mode !== "cadastral") return false;
+  let pnu = parcelSelections.get(item.id)?.pnu || item.pnu;
+  try {
+    if (!validPnu(pnu)) {
+      boundaryRequest?.abort();
+      const request = new AbortController();
+      boundaryRequest = request;
+      $("#mapStatus").textContent = `선택 매물의 필지 확인 중: ${item.address}`;
+      const candidates = await searchParcels(item.address, request.signal);
+      if (operation !== mapOperation || request.signal.aborted) return false;
+      if (candidates.length !== 1) throw new Error(candidates.length ? `필지 후보가 ${candidates.length}개입니다. 상세 화면에서 정확한 필지를 선택해 주세요.` : "주소와 일치하는 필지를 찾지 못했습니다.");
+      parcelSelections.set(item.id, candidates[0]);
+      pnu = candidates[0].pnu;
+    }
+    $("#mapStatus").textContent = `PNU ${pnu} · 선택 매물 경계 불러오는 중…`;
+    const feature = await loadParcel(pnu);
+    const stillSelected = state.selectedId === item.id || mapSelectedId === item.id;
+    if (operation !== mapOperation || !stillSelected || auctionMap.mode !== "cadastral") return false;
+    if (!await auctionMap.showParcel(feature, () => operation === mapOperation && auctionMap.mode === "cadastral")) return false;
+    syncMapModeControls("cadastral");
+    $("#mapStatus").textContent = `PNU ${pnu} · 분홍색 영역은 선택 매물의 필지 경계 · 경매 대상 범위는 원문 대조`;
+    return true;
+  } catch (error) {
+    if (operation !== mapOperation || error?.name === "AbortError") return false;
+    auctionMap.clearParcel();
+    $("#mapStatus").textContent = `선택 매물 경계 미표시: ${error.message}`;
     return false;
   }
 }
@@ -676,17 +815,7 @@ async function enableMap() {
 async function locateSelected() {
   const item = getSelected();
   if (!item) return;
-  const operation = ++mapOperation;
-  try {
-    if (!await enableMap()) return;
-    const position = await auctionMap.locate(item);
-    if (operation !== mapOperation || state.selectedId !== item.id) return;
-    closeDetail();
-    setView("map");
-    auctionMap.focus(position);
-    $("#mapStage").scrollIntoView({ block: "start" });
-    $("#mapStatus").textContent = `${position.address || item.address} · 주소 대표 위치, 경매 경계 아님`;
-  } catch (error) { if (operation === mapOperation) showToast(error.message); }
+  await focusCaseOnMap(item.id);
 }
 
 async function findSelectedParcel() {
@@ -724,12 +853,13 @@ async function showSelectedParcel() {
     if (operation !== mapOperation || state.selectedId !== item.id) return;
     closeDetail();
     setView("map");
-    auctionMap.showParcel(feature);
-    $("#cadastralToggle").setAttribute("aria-pressed", "true");
+    if (!await auctionMap.showParcel(feature, () => operation === mapOperation)) return;
+    if (operation !== mapOperation) return;
+    syncMapModeControls("cadastral");
     $("#mapStage").scrollIntoView({ block: "start" });
     $("#mapStatus").textContent = `PNU ${pnu} · VWorld 연속지적도 · 경매 대상 범위는 원문 대조`;
   } catch (error) {
-    if (operation === mapOperation && state.selectedId === item.id) {
+    if (operation === mapOperation) {
       const results = $("#parcelResults");
       if (results) results.textContent = error.message;
       showToast(error.message);
@@ -738,11 +868,24 @@ async function showSelectedParcel() {
 }
 
 $("#enableMap").addEventListener("click", () => void enableMap());
-$("#cadastralToggle").addEventListener("click", event => {
-  const enabled = event.currentTarget.getAttribute("aria-pressed") !== "true";
-  auctionMap.setCadastral(enabled);
-  event.currentTarget.setAttribute("aria-pressed", String(enabled));
-});
+$$('[data-map-mode]').forEach(button => button.addEventListener("click", async event => {
+  const selectedMode = event.currentTarget.dataset.mapMode;
+  $$('[data-map-mode]').forEach(control => { control.disabled = true; });
+  try {
+    $("#mapStatus").textContent = selectedMode === "normal" ? "네이버 일반지도로 전환 중…" : selectedMode === "satellite" ? "VWorld 위성지도로 전환 중…" : "VWorld 위성지도·연속지적도 연결 중…";
+    await auctionMap.setMode(selectedMode);
+    syncMapModeControls(selectedMode);
+    if (selectedMode !== "cadastral") {
+      auctionMap.clearParcel();
+      $("#mapStatus").textContent = selectedMode === "normal" ? "네이버 일반지도 · 위치를 유지했습니다." : "VWorld 위성지도 · 위치를 유지했습니다.";
+    } else {
+      const selected = allCases().find(item => item.id === (state.selectedId || mapSelectedId));
+      if (selected) await showCaseParcelBoundary(selected, mapOperation);
+      else $("#mapStatus").textContent = "위성+지적 모드 · 목록에서 매물을 선택하면 해당 필지 경계를 표시합니다.";
+    }
+  } catch (error) { $("#mapStatus").textContent = error.message; showToast(error.message); }
+  finally { $$('[data-map-mode]').forEach(control => { control.disabled = false; }); }
+}));
 $("#locateList").addEventListener("click", async event => {
   const button = event.currentTarget;
   const operation = ++mapOperation;
@@ -771,10 +914,28 @@ document.addEventListener("keydown", event => {
 });
 
 async function bootstrap() {
+  void enableMap();
   await loadCollectedCases();
   renderFilterOptions();
   syncFilters();
   renderCases();
 }
 
+storage.subscribe(({ data, locked, change }) => {
+  $(".workspace").inert = locked;
+  if (change) return;
+  ++mapOperation; mapSelectedId = null;
+  state.added = data.cases;
+  state.favorites = new Set(data.favorites);
+  state.checks = data.checks;
+  state.notes = data.notes;
+  state.verified = data.verified;
+  closeDetail();
+  if ($("#addCaseDialog").open) $("#addCaseDialog").close();
+  if ($("#deleteCaseDialog").open) $("#deleteCaseDialog").close();
+  editingCaseId = null; deletingCaseId = null;
+  $("#addCaseForm").reset();
+  renderFilterOptions();
+  renderCases();
+});
 void bootstrap();

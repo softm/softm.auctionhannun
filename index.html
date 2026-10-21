@@ -10,6 +10,7 @@
     <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
     <title>경매한눈 | 법원경매 검토 체크리스트</title>
     <link rel="stylesheet" href="./styles.css?v=1.0.1" />
+    <link rel="stylesheet" href="./account.css" />
   </head>
   <body>
     <a class="skip-link" href="#resultsSheet">검색 결과로 바로가기</a>
@@ -44,6 +45,7 @@
           <button type="button" data-nav="favorite">관심 물건</button>
         </nav>
         <div class="top-actions">
+          <button class="primary-button" id="accountButton" type="button">로그인</button>
           <button class="round-button" id="favoritesButton" type="button" aria-label="관심 물건만 보기" aria-pressed="false"><svg><use href="#i-bookmark"/></svg><span class="badge" id="favoriteCount">0</span></button>
           <button class="round-button" id="helpButton" type="button" aria-label="이용 안내"><svg><use href="#i-help"/></svg></button>
           <button class="primary-button" id="addCaseButton" type="button" aria-label="사건 직접 추가"><svg><use href="#i-plus"/></svg><span>사건 등록</span></button>
@@ -51,6 +53,31 @@
       </div>
     </header>
 
+    <p id="accountStatus" class="account-status" role="status" aria-live="polite">계정 연결 확인 중 · 기존 브라우저 자료는 유지됩니다.</p>
+    <dialog id="accountDialog" class="account-dialog" aria-labelledby="accountIdentity">
+      <button id="closeAccount" type="button" aria-label="계정 창 닫기">닫기</button>
+      <h2 id="accountIdentity">로그인하고 작업 이어가기</h2>
+      <p id="accountDialogStatus" role="status" aria-live="polite"></p>
+      <p>관심 물건·직접 등록 사건·메모·서류 체크·공식 확인 기록을 계정별로 보관합니다.</p>
+      <div id="accountProviders">
+        <button id="googleLogin" type="button">Google로 계속하기</button>
+        <button id="kakaoLogin" class="kakao-login" type="button" disabled>카카오 로그인</button>
+        <button id="naverLogin" class="naver-login" type="button" disabled>네이버 로그인</button>
+        <p class="account-note">카카오·네이버는 개발자 앱 확인 및 서버 설정 전까지 이용할 수 없습니다. 로그인 제공자가 다르면 별도 계정이며 자동 병합하지 않습니다.</p>
+      </div>
+      <div id="accountSignedIn" hidden>
+        <button id="importGuest" type="button">이 기기의 비로그인 자료 가져오기</button>
+        <button id="retrySave" type="button">저장 재시도</button>
+        <button id="reloadCloud" type="button">서버 자료 다시 불러오기</button>
+        <button id="restorePending" type="button" hidden>미전송 로컬 사본 복구</button>
+        <button id="keepServer" type="button" hidden>미전송 사본 백업 후 서버 자료 사용</button>
+        <button id="clearCloud" type="button">계정 작업 정보 비우기</button>
+        <button id="logoutAccount" type="button">로그아웃</button>
+      </div>
+      <button id="exportWorkspace" type="button">내 작업 JSON 백업</button>
+      <p class="account-note">오프라인·저장 실패 시 상단 상태를 확인하세요. 공용 기기에서는 로그아웃 후 브라우저 데이터를 삭제하세요. 민감한 개인정보는 메모에 입력하지 마세요.</p>
+      <a href="./privacy.html">개인정보처리방침</a>
+    </dialog>
     <div class="workspace">
       <section class="search-panel" aria-labelledby="searchTitle">
         <div class="search-heading">
@@ -70,11 +97,12 @@
           <button type="button" data-filter="commercial" aria-pressed="false">상가·근린</button>
           <button type="button" data-filter="other" aria-pressed="false">기타</button>
           <button type="button" data-filter="favorite" aria-pressed="false"><svg><use href="#i-bookmark"/></svg>관심 물건</button>
+          <button type="button" data-filter="registered" aria-pressed="false">내 등록 사건 <span id="registeredCount">0</span></button>
         </div>
         <div class="workspace-stats" aria-label="내 검토 현황">
           <div><span>검토 입찰건</span><strong id="totalCases">0</strong><small>수집 + 직접 추가</small></div>
           <div><span>관심 물건</span><strong id="savedCases">0</strong><small>나의 저장 목록</small></div>
-          <div><span>직접 추가</span><strong id="addedCases">0</strong><small>내가 등록한 사건</small></div>
+          <div><span>직접 추가</span><strong id="addedCases">0</strong><button class="registered-shortcut" id="registeredCasesButton" type="button">내 등록 사건 보기</button></div>
           <div><span>서류 확인</span><strong id="checkedDocuments">0/0</strong><small>개인 확인 기록</small></div>
         </div>
       </section>
@@ -86,14 +114,21 @@
         <label>법원·기관<select id="courtFilter"><option value="all">전체 법원·기관</option></select></label>
         <label>정렬<select id="sortOrder"><option value="date">매각기일 빠른순</option><option value="minimum">최저가 낮은순</option><option value="recent">직접 등록 우선</option></select></label>
         <button class="reset-filters" id="resetFilters" type="button">조건 초기화</button>
-        <p><svg><use href="#i-shield"/></svg> 로그인 없이, 이 기기에만 저장</p>
+        <p><svg><use href="#i-shield"/></svg> 비로그인은 기기 저장 · 로그인은 계정 저장</p>
       </section>
 
     <main class="app-shell">
       <section class="map-stage" id="mapStage" aria-label="네이버 경매 물건 지도">
-        <div class="map-heading"><span><svg><use href="#i-map"/></svg>지도에서 탐색</span><button type="button" id="cadastralToggle" aria-pressed="false" disabled>지적도</button></div>
-        <div class="map-frame"><div class="map-canvas" id="mapCanvas" aria-label="네이버 지도"></div></div>
-        <div class="map-placeholder" id="mapPlaceholder"><strong>실제 좌표로 확인하는 물건 위치</strong><p>네이버 지도를 불러옵니다.<br/>기기 GPS 위치는 사용하지 않습니다.</p><button type="button" id="enableMap">네이버 지도 켜기</button></div>
+        <div class="map-heading">
+          <span><svg><use href="#i-map"/></svg>지도에서 탐색</span>
+          <div class="map-mode-control" role="group" aria-label="지도 표시 방식">
+            <button class="active" type="button" data-map-mode="normal" aria-pressed="true" disabled>일반</button>
+            <button type="button" data-map-mode="satellite" aria-pressed="false" disabled>위성</button>
+            <button type="button" id="cadastralToggle" data-map-mode="cadastral" aria-pressed="false" title="VWorld 위성지도·연속지적도로 전환" disabled>위성+지적</button>
+          </div>
+        </div>
+        <div class="map-frame"><div class="map-canvas" id="mapCanvas" aria-label="네이버 지도"></div><div class="map-canvas" id="vworldCanvas" aria-label="VWorld 지도·연속지적도" tabindex="0" hidden></div></div>
+        <div class="map-placeholder" id="mapPlaceholder"><strong>지도를 불러오는 중입니다</strong><p id="mapPlaceholderMessage">별도 버튼 없이 자동으로 표시됩니다.<br/>기기 GPS 위치는 사용하지 않습니다.</p><button type="button" id="enableMap" hidden>지도 다시 연결</button></div>
         <div class="map-tools" aria-label="지도 조작">
           <button id="zoomIn" type="button" aria-label="지도 확대">＋</button>
           <button id="zoomOut" type="button" aria-label="지도 축소">−</button>
@@ -104,7 +139,7 @@
           <div><span>확인된 좌표 <b id="mapResultCount">0</b></span><small id="mapMissingCount">목록 0건 · 좌표 미확인 0건</small></div>
           <button id="locateList" type="button">목록 주소 확인</button>
         </div>
-        <p class="map-status" id="mapStatus" role="status">주소 확인 시 최대 40건의 소재지를 네이버에 전송합니다.</p>
+        <p class="map-status" id="mapStatus" role="status">목록을 선택하면 해당 소재지를 네이버에 전송해 위치를 확인합니다.</p>
       </section>
 
       <section class="results-sheet" id="resultsSheet" aria-labelledby="resultsTitle">
@@ -146,6 +181,11 @@
           <button id="copyCase" type="button" aria-label="사건번호와 주소 복사"><svg><use href="#i-copy"/></svg></button>
         </div>
         <div class="price-grid" id="priceGrid"></div>
+        <div class="registered-actions" id="registeredActions" hidden>
+          <span>내가 직접 등록한 사건</span>
+          <button type="button" id="editCaseButton">사건 정보 수정</button>
+          <button type="button" id="deleteCaseButton" class="danger-button">사건 삭제</button>
+        </div>
         <nav class="detail-tabs" id="detailTabs" role="tablist" aria-label="경매 물건 상세">
           <button class="active" type="button" role="tab" aria-selected="true" data-tab="summary">핵심</button>
           <button type="button" role="tab" aria-selected="false" data-tab="documents">3대 서류</button>
@@ -168,19 +208,31 @@
     <dialog class="app-dialog" id="addCaseDialog" aria-labelledby="addCaseTitle">
       <form id="addCaseForm" method="dialog">
         <div class="dialog-head">
-          <div><span class="eyebrow">브라우저에만 저장</span><h2 id="addCaseTitle">검토할 사건 추가</h2></div>
+          <div><span class="eyebrow">비로그인은 기기 저장 · 로그인은 계정 저장</span><h2 id="addCaseTitle">검토할 사건 추가</h2></div>
           <button type="button" data-close-dialog="addCaseDialog" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
         </div>
-        <p class="dialog-intro">공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.</p>
-        <label>담당 법원<input name="court" required placeholder="예: 서울중앙지방법원" /></label>
-        <label>사건번호<input name="caseNumber" required placeholder="예: 2026타경12345" /></label>
-        <label>소재지<input name="address" required placeholder="지번 또는 도로명 주소" /></label>
+        <p class="dialog-intro" id="caseFormIntro">공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.</p>
+        <label>담당 법원<input name="court" required maxlength="1000" placeholder="예: 서울중앙지방법원" /></label>
+        <label>사건번호<input name="caseNumber" required maxlength="1000" placeholder="예: 2026타경12345" /></label>
+        <label>소재지<input name="address" required maxlength="1000" placeholder="지번 또는 도로명 주소" /></label>
         <div class="form-row">
           <label>물건 유형<select name="type"><option value="apartment">아파트·주거</option><option value="land">토지·임야</option><option value="commercial">상가·업무</option><option value="other">기타</option></select></label>
           <label>매각기일<input name="saleDate" type="date" /></label>
         </div>
+        <p id="caseFormError" class="form-error" role="alert"></p>
         <button class="dialog-submit" value="submit" type="submit">검토 목록에 추가</button>
       </form>
+    </dialog>
+
+    <dialog class="app-dialog" id="deleteCaseDialog" aria-labelledby="deleteCaseTitle">
+      <div class="dialog-head"><h2 id="deleteCaseTitle">등록 사건을 삭제할까요?</h2></div>
+      <p id="deleteCaseSummary"></p>
+      <p>이 사건의 관심 표시·메모·서류 및 권리 체크·공식 확인 기록도 함께 삭제됩니다. 로그인 상태에서는 계정에도 반영되며 되돌릴 수 없습니다.</p>
+      <p id="deleteCaseError" class="form-error" role="alert"></p>
+      <div class="confirm-actions">
+        <button type="button" data-close-dialog="deleteCaseDialog" autofocus>취소</button>
+        <button type="button" id="confirmDeleteCase" class="danger-button">사건과 기록 삭제</button>
+      </div>
     </dialog>
 
     <dialog class="app-dialog help-dialog" id="helpDialog" aria-labelledby="helpTitle">
@@ -204,5 +256,6 @@
     <script src="./adfit-config.js?v=20261020-1"></script>
     <script src="./adfit.js?v=20261020-1"></script>
     <script src="./app.js?v=1.0.1" type="module"></script>
+    <script type="module" src="./account.js"></script>
   </body>
 </html>

@@ -1,0 +1,25 @@
+rules_version = '2';
+// /workspaces/{uid}: private snapshot, not a public user profile.
+// Required: schemaVersion=1; payload JSON string <=200000 chars; revision int;
+// updatedAt timestamp. Identity comes only from the document path and Auth UID.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(uid) { return request.auth != null && request.auth.uid == uid; }
+    function validWorkspace(data) {
+      return data.keys().hasAll(['schemaVersion', 'payload', 'revision', 'updatedAt'])
+        && data.keys().hasOnly(['schemaVersion', 'payload', 'revision', 'updatedAt'])
+        && data.schemaVersion == 1
+        && data.payload is string && data.payload.size() > 0 && data.payload.size() <= 200000
+        && data.revision is int && data.revision > 0 && data.revision < 2147483647
+        && data.updatedAt is timestamp && data.updatedAt == request.time;
+    }
+    match /workspaces/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid) && validWorkspace(request.resource.data) && request.resource.data.revision == 1;
+      allow update: if isOwner(uid) && validWorkspace(request.resource.data)
+        && request.resource.data.revision == resource.data.revision + 1;
+      allow delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

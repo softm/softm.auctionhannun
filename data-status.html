@@ -34,8 +34,8 @@
         <tr><th scope="row"><a href="https://www.data.go.kr/data/15157207/openapi.do">온비드 공식 API</a></th><td>물건번호, 소재지, 용도, 가격, 입찰 조건·기간</td><td><code>OnbidRlstListSrvc2/getRlstCltrList2</code><br>비공개 인증키로 페이지별 수집</td><td>매일 06:20 예약 + 수동 실행</td><td>입찰건과 고유 물건을 별도 집계. 실제 수치는 위 표 참조</td></tr>
         <tr><th scope="row"><a href="https://www.courtauction.go.kr/">법원 경매정보</a></th><td>사건번호, 물건내역, 매각기일, 최저매각가격 등 연결 대상</td><td>승인된 공급원·검토된 파일을 읽는 수집기 구현. 직접 사이트 조회 차단</td><td>공급원 설정 시 정기 작업에서 실행</td><td>현재 연결 여부와 실제 건수는 위 표 참조. 예시 자료 제외</td></tr>
         <tr><th scope="row"><a href="https://data.iros.go.kr/rp/oa/openOapiIntro.do">인터넷등기소</a></th><td>등기 관련 통계 등 검토 대상</td><td>현재 수집기 미연결</td><td>실행 일정 없음</td><td>수집 0건. 개별 경매 물건의 공급원으로 사용하지 않음</td></tr>
-        <tr><th scope="row">NAVER Maps</th><td>지도 배경, 주소 좌표, 지적도 레이어</td><td>지도 SDK·주소 변환 기능</td><td>사용자가 지도 조회 시</td><td>요청 시 조회. 경매 수집 건수에 합산하지 않음</td></tr>
-        <tr><th scope="row"><a href="https://www.vworld.kr/">VWorld</a></th><td>주소 후보, 선택한 필지의 경계</td><td>검색·공간정보 API, 전용 웹 키 사용</td><td>주소 후보 선택·필지 조회 시</td><td>누적 건수 미집계. 전용 키 적용 후 운영 환경 검증 필요 (2026-10-19 점검 기준)</td></tr>
+        <tr><th scope="row">NAVER Maps</th><td>기본 지도·주소 좌표</td><td>지도 SDK·주소 변환 기능</td><td>페이지 진입 시 지도 표시, 목록 선택 시 해당 주소 조회</td><td>요청 시 조회. 경매 수집 건수에 합산하지 않음</td></tr>
+        <tr><th scope="row"><a href="https://www.vworld.kr/">VWorld</a></th><td>배경지도, 연속지적도, 주소 후보, 선택한 필지의 경계</td><td>XYZ 타일·WMS·검색·공간정보 API, 운영·로컬 전용 웹 키 분리</td><td>지적도 전환·화면 이동·주소 후보 선택·필지 조회 시</td><td>누적 건수 미집계. localhost:3000에서 배경지도·WMS 필지 경계·지번 표시 확인. 운영 주소는 새 코드 배포 후 검증 필요 (2026-10-21 점검)</td></tr>
         <tr><th scope="row"><a href="https://www.eum.go.kr/">토지이음</a></th><td>선택 필지의 토지이용계획 원문</td><td>필지번호를 이용한 원문 페이지 연결</td><td>사용자가 원문 보기 선택 시</td><td>원문 링크 제공. 데이터 수집이 아님</td></tr>
       </tbody></table></div>
     </section>
@@ -56,10 +56,10 @@
     <section><h2>사용자 행위와 API 연계</h2><div class="table-wrap" tabindex="0" role="region" aria-label="사용자 행위별 연계 표"><table><thead><tr><th scope="col">사용자 행위</th><th scope="col">처리·연계</th><th scope="col">저장·집계</th></tr></thead><tbody>
       <tr><th scope="row">목록 검색·필터</th><td>Pages의 수집 목록 조회</td><td>사용자별 온비드 API 호출 없음</td></tr>
       <tr><th scope="row">물건 상세 열기</th><td>물건별 상세 JSON 추가 로딩</td><td>배포된 정적 데이터</td></tr>
-      <tr><th scope="row">지도·지적도 보기</th><td>NAVER Maps 주소 변환·지도·지적도 레이어</td><td>지도 조회는 수집 물건 수에 포함하지 않음</td></tr>
+      <tr><th scope="row">지도·지적도 보기</th><td>NAVER 기본 지도 자동 표시. 목록 선택 시 위치 이동. 지적도 버튼은 VWorld 배경지도·연속지적도(WMS)로 전환</td><td>지도 조회는 수집 물건 수에 포함하지 않음</td></tr>
       <tr><th scope="row">필지 경계 확인</th><td>주소 후보 확인 후 VWorld 필지 경계 요청</td><td>선택한 필지 기준 조회</td></tr>
       <tr><th scope="row">토지이용계획 보기</th><td>토지이음 원문으로 이동</td><td>원문 링크, 일괄 수집 아님</td></tr>
-      <tr><th scope="row">직접 등록·관심 물건·메모</th><td>브라우저 로컬 저장</td><td>서버 동기화 없음. 이 페이지 수집 건수에서 제외</td></tr>
+      <tr><th scope="row">직접 등록·관심 물건·메모·체크리스트·확인 기록</th><td>비로그인: 브라우저 저장. 로그인: Firebase 인증 후 계정별 Firestore 저장</td><td>변경 후 자동 저장·로그인 시 복원. 저장 실패 및 충돌은 상단 안내. 공개 수집 건수에서 제외</td></tr>
     </tbody></table></div></section>
   </main>
   <footer>경매한눈 · 공공자료 기반 독립 서비스 <a href="./privacy.html">개인정보처리방침</a></footer>

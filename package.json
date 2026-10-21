@@ -12,5 +12,10 @@
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check-syntax.mjs && npm run validate:data && npm test"
+  },
+  "overrides": { "@grpc/grpc-js": "^1.13.6" },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.0",
+    "firebase": "^12.4.0"
   }
 }
