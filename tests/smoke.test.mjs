@@ -17,7 +17,8 @@ test("핵심 화면과 공식 출처가 포함된다", async () => {
 test("공식 법원 연결과 브라우저 저장 기능이 선언된다", async () => {
   const app = await readFile(new URL("app.js", root), "utf8");
   assert.match(app, /https:\/\/www\.courtauction\.go\.kr\//);
-  assert.match(app, /localStorage/);
+  assert.match(app, /workspace-store\.js/);
+  assert.match(await readFile(new URL("../workspace-store.js", import.meta.url), "utf8"), /localStorage/);
   assert.match(app, /userAdded/);
   assert.match(app, /입찰 당일 상태 재확인/);
   assert.match(app, /loadCatalog/);

@@ -105,14 +105,14 @@ test("필지는 실제 PNU·Polygon만 허용하며 토지이음에 동일 PNU�
 });
 
 test("VWorld는 경매한눈 전용 등록 URL과 실제 origin만 사용한다", () => {
-  for (const origin of ["http://localhost:3000", "http://127.0.0.1:3000", "https://auctionhannun.designboard.net/"]) {
+  for (const origin of ["http://localhost:3000", "https://auctionhannun.designboard.net/"]) {
     const location = new URL(origin);
     const url = parcelRequestUrl("/req/data", { domain: "tojihannun.designboard.net", service: "data" }, location);
     assert.equal(url.origin, "https://api.vworld.kr");
     assert.equal(url.searchParams.get("domain"), location.origin);
     assert.equal(url.searchParams.get("service"), "data");
   }
-  for (const origin of ["https://softm.github.io/softm.auctionhannun/", "https://tojihannun.designboard.net/", "http://auctionhannun.designboard.net/", "https://auctionhannun.designboard.net.example.com/"]) {
+  for (const origin of ["http://127.0.0.1:3000", "http://localhost:3001", "https://localhost:3000", "https://softm.github.io/softm.auctionhannun/", "https://tojihannun.designboard.net/", "http://auctionhannun.designboard.net/", "https://auctionhannun.designboard.net.example.com/"]) {
     assert.throws(() => parcelRequestUrl("/req/data", {}, new URL(origin)), /등록된 운영 주소/);
   }
   assert.throws(() => parcelRequestUrl("/req/data", {}, new URL("file:///index.html")), /HTTP/);

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onbidListUrl, probeOnbid } from "../scripts/probe-onbid.mjs";
-import { onbidRecord, onbidPage, collectOnbid } from "../scripts/collect-onbid.mjs";
+import { onbidRecord, onbidPage, onbidDetailUrl, onbidDetailItems, onbidPhotoUrls, collectOnbid } from "../scripts/collect-onbid.mjs";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -20,6 +20,16 @@ test("차세대 온비드 공식 주소·필수값과 키 인코딩을 사용한
   assert.equal(url.searchParams.get("pvctTrgtYn"), "N");
 });
 
+test("온비드 공식 상세 API의 사진 목록만 추출한다", () => {
+  const url = onbidDetailUrl("fake%2Bkey%3D", "2026-001-001");
+  assert.equal(url.pathname, "/B010003/OnbidRlstDtlSrvc2/getRlstDtlInf2");
+  assert.equal(url.searchParams.get("serviceKey"), "fake+key=");
+  assert.equal(url.searchParams.get("cltrMngNo"), "2026-001-001");
+  const payload = { header: { resultCode: "00" }, body: { items: { item: { potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/a.jpg" }, { urlAdr: "https://img.onbid.co.kr/b.jpg" }] } } } };
+  assert.deepEqual(onbidPhotoUrls(onbidDetailItems(payload)[0]), ["https://img.onbid.co.kr/a.jpg", "https://img.onbid.co.kr/b.jpg"]);
+  assert.deepEqual(onbidPhotoUrls({ potoUrlList: "https://img.onbid.co.kr/a.jpg|https://img.onbid.co.kr/b.jpg" }), ["https://img.onbid.co.kr/a.jpg", "https://img.onbid.co.kr/b.jpg"]);
+});
+
 test("온비드 물건은 법원 사건으로 변환하지 않고 마감시각·비공개 가격을 보존한다", () => {
   const item = onbidRecord(row);
   assert.equal(item.auctionKind, "onbid");
@@ -31,6 +41,7 @@ test("온비드 물건은 법원 사건으로 변환하지 않고 마감시각·
   assert.equal(normalized.items[0].auctionKind, "onbid");
   assert.equal(normalized.items[0].bidEndsAt, item.bidEndsAt);
   assert.equal(normalized.metadata.datasetKind, "onbid-public-sale");
+  assert.deepEqual(normalizeDataset({ metadata: { reviewed: true, demo: false, sourceUrl: "https://www.onbid.co.kr/" }, items: [{ ...item, imageUrls: ["http://unsafe.example/a.jpg", "https://img.onbid.co.kr/a.jpg"] }] }).items[0].imageUrls, ["https://img.onbid.co.kr/a.jpg"]);
 });
 
 test("온비드 전체 페이지를 검증하고 실패·키 누락 시 정상 목록을 보존한다", async () => {
@@ -51,6 +62,19 @@ test("온비드 전체 페이지를 검증하고 실패·키 누락 시 정상 �
   const status = JSON.parse(await readFile(join(options.dataDir, "collection-status.json"), "utf8"));
   assert.equal(status.state, "unconfigured");
   assert.equal(status.lastSuccessAt, options.now.toISOString());
+});
+
+test("수집기가 마감 임박 물건을 상세 조회해 공식 사진을 보강한다", async () => {
+  const root = await mkdtemp(join(tmpdir(), "onbid-photos-"));
+  const list = { response: { header: { resultCode: "00" }, body: { pageNo: 1, numOfRows: 500, totalCount: 1, items: { item: [row] } } } };
+  const detail = { header: { resultCode: "00" }, body: { items: { item: { potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/property.jpg" }] } } } };
+  const data = await collectOnbid({
+    key: "test-only-key", dataDir: join(root, "data"), rawDir: join(root, "raw"), imageLimit: 1,
+    now: new Date("2026-10-19T09:00:00Z"),
+    fetcher: async url => new Response(JSON.stringify(new URL(url).pathname.includes("OnbidRlstDtlSrvc2") ? detail : list), { headers: { "content-type": "application/json" } })
+  });
+  assert.deepEqual(data.items[0].imageUrls, ["https://img.onbid.co.kr/property.jpg"]);
+  assert.equal(data.metadata.photoProperties, 1);
 });
 
 test("API 오류를 빈 목록 성공으로 취급하지 않는다", async () => {

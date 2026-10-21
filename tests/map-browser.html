@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>경매한눈 지도 실연동 검증 (배포 제외)</title>
-<style>body{font:16px sans-serif;margin:24px;color:#17324d}#map{width:100%;height:60vh;min-height:320px}button,a{margin:8px;padding:12px}#status{white-space:pre-wrap;line-height:1.7}.map-pin{background:#0f766e;color:white;border:2px solid white;border-radius:6px;padding:8px}</style>
+<style>body{font:16px sans-serif;margin:24px;color:#17324d}#map,#vworld{width:100%;height:60vh;min-height:320px}[hidden]{display:none!important}button,a{margin:8px;padding:12px}#status{white-space:pre-wrap;line-height:1.7}.map-pin{background:#0f766e;color:white;border:2px solid white;border-radius:6px;padding:8px}</style>
 <h1>지도 실연동 검증 · 경매 물건 아님</h1>
 <p>공공청사 서울시청의 주소로 테스트합니다. 운영 목록·로컬 사건 저장소에 추가하지 않으며 이 페이지는 배포하지 않습니다.</p>
-<button id="locate">네이버로 서울시청 주소 확인</button><button id="parcel">VWorld로 서울시청 필지 찾기</button><button id="cadastral">네이버 지적도 켜기</button>
-<div id="status" role="status">시작 전</div><div id="results"></div><div id="map"></div>
+<button id="locate">네이버로 서울시청 주소 확인</button><button id="parcel">VWorld로 서울시청 필지 찾기</button><button id="cadastral">VWorld 지적도 켜기</button>
+<div id="status" role="status">시작 전</div><div id="results"></div><div id="map"></div><div id="vworld" hidden></div>
 <script type="module">
 import {AuctionMap} from '../auction-map.js';
 import {searchParcels,loadParcel} from '../parcel-api.js';
 import {eumUrl} from '../parcel-utils.js';
-const map=new AuctionMap(document.querySelector('#map'),()=>{});
 const status=document.querySelector('#status');
+const map=new AuctionMap(document.querySelector('#map'),()=>{},document.querySelector('#vworld'),text=>status.textContent=text);
 const item={id:'browser-test-only',title:'서울시청 · 경매 물건 아님',address:'서울특별시 중구 세종대로 110'};
 async function run(task){try{status.textContent='조회 중…';await task();}catch(error){status.textContent=error.message;}}
 document.querySelector('#locate').onclick=()=>run(async()=>{const position=await map.locate(item);map.render([item]);map.focus(position);status.textContent=`네이버 주소 확인 성공: ${position.address} (${position.latitude}, ${position.longitude})`;});
-document.querySelector('#cadastral').onclick=()=>run(async()=>{await map.ready();map.setCadastral(true);status.textContent='네이버 지적도 레이어 켜짐';});
-document.querySelector('#parcel').onclick=()=>run(async()=>{const candidates=await searchParcels(item.address);status.textContent=`VWorld 필지 후보 ${candidates.length}건`;const results=document.querySelector('#results');results.replaceChildren();for(const candidate of candidates){const button=document.createElement('button');button.textContent=`${candidate.address} · ${candidate.pnu} 경계 확인`;button.onclick=()=>run(async()=>{const feature=await loadParcel(candidate.pnu);await map.ready();map.showParcel(feature);status.textContent=`PNU 일치 경계 표시 성공: ${candidate.pnu}`;const link=document.createElement('a');link.textContent='토지이음 동일 필지 원문';link.href=eumUrl(candidate.pnu);link.target='_blank';link.rel='noopener noreferrer';results.append(link);});results.append(button);}});
+document.querySelector('#cadastral').onclick=()=>run(async()=>{await map.ready();await map.setCadastral(true);});
+document.querySelector('#parcel').onclick=()=>run(async()=>{const candidates=await searchParcels(item.address);status.textContent=`VWorld 필지 후보 ${candidates.length}건`;const results=document.querySelector('#results');results.replaceChildren();for(const candidate of candidates){const button=document.createElement('button');button.textContent=`${candidate.address} · ${candidate.pnu} 경계 확인`;button.onclick=()=>run(async()=>{const feature=await loadParcel(candidate.pnu);await map.ready();await map.showParcel(feature);status.textContent=`PNU 일치 경계 표시 성공: ${candidate.pnu}`;const link=document.createElement('a');link.textContent='토지이음 동일 필지 원문';link.href=eumUrl(candidate.pnu);link.target='_blank';link.rel='noopener noreferrer';results.append(link);});results.append(button);}});
 </script></html>
