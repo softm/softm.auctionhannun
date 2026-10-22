@@ -64,7 +64,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-l
 .reset-filters{background:none;border:0;color:var(--ink-2);min-height:40px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
 .filter-panel p{display:flex;align-items:center;gap:5px;margin:0 0 10px auto;color:var(--ink-2);font-size:11px}
 .filter-panel p svg{width:15px;height:15px}
-.app-shell{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
+.app-shell{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);gap:24px;align-items:start}
 .results-sheet{order:-1;min-width:0}
 .sheet-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 9px}
 .sheet-heading h2{margin:2px 0 0;font-size:22px;letter-spacing:-.03em}
@@ -306,7 +306,7 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
 .toast.show{visibility:visible;opacity:1;transform:translate(-50%,0)}
 @media(min-width:768px) and (max-width:1100px){
  .topbar-inner{gap:26px;padding-inline:24px}.desktop-nav{gap:16px}.workspace{padding:24px}
- .app-shell{grid-template-columns:minmax(0,1.1fr) minmax(0,.8fr);gap:18px}
+ .app-shell{grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:18px}
  .case-card{grid-template-columns:100px minmax(0,1fr)}.property-visual small{font-size:8px;padding-inline:3px}
  .filter-panel p,.workspace-stats small{display:none}.map-heading{align-items:start;flex-direction:column;gap:4px}
 }
@@ -327,7 +327,7 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
  body.filters-open .filter-panel{display:grid}
  .filter-panel label{min-width:0}.filter-panel select{font-size:12px}.filter-panel p{display:none}.reset-filters{align-self:end;text-align:right;padding-right:0}
  .app-shell{display:flex;flex-direction:column;gap:18px}.results-sheet{order:0;width:100%}.sheet-heading h2{font-size:20px}.view-toggle{display:flex}
- .map-stage{display:block;position:sticky;top:74px;z-index:15;order:-1;flex-shrink:0;width:100%;height:clamp(280px,40dvh,320px);min-height:0;max-height:none}body.map-view .map-stage{display:block}
+ .map-stage{display:block;position:sticky;top:74px;z-index:15;order:-1;flex-shrink:0;width:100%;height:clamp(300px,44dvh,380px);min-height:0;max-height:none}body.map-view .map-stage{display:block}
  .map-heading{flex-direction:row;align-items:center}.map-heading small{font-size:9px}.case-card{grid-template-columns:1fr}
  .map-heading{padding:8px 10px;font-size:12px}.map-mode-control button{padding:5px 7px;font-size:10px;min-height:30px}
  .parcel-scope-notice{top:52px;left:6px;right:42px;padding:5px 7px;font-size:10px}
@@ -353,12 +353,11 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
  .brand>span:last-child{font-size:18px}.brand-mark{width:28px}.topbar-inner{padding-inline:12px}.search-heading h1{font-size:21px}
  .primary-button span{display:none}.primary-button{width:36px}.search-box input{font-size:12px}.form-row{grid-template-columns:1fr;gap:0}
 }
-/* Short/landscape screens scroll the complete map instead of squeezing its
-   174px desktop / 115px mobile chrome over the actual map canvas. */
+/* Keep the map visible while the result list scrolls, including short/landscape screens. */
 @media(max-height:639px){
- .map-stage{position:relative;top:auto;height:340px;min-height:340px;max-height:none}
+ .map-stage{position:sticky;top:74px;height:min(420px,calc(100dvh - 92px - var(--auction-ad-space,0px)));min-height:300px;max-height:none}
 }
 @media(max-height:639px) and (max-width:767px){
- .map-stage{height:280px;min-height:280px}
+ .map-stage{top:66px;height:clamp(260px,48dvh,340px);min-height:260px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
