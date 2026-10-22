@@ -128,8 +128,10 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
     let photoProperties = 0;
     let photoDetailDenied = 0;
     let photoDetailErrors = 0;
+    let photoAttempted = 0;
     for (const [cltrMngNo, rows] of targets) {
       try {
+        photoAttempted++;
         const detail = await requestFeed(onbidDetailUrl(detailKey, cltrMngNo), { fetcher });
         const imageUrls = [...new Set(onbidDetailItems(detail).flatMap(onbidPhotoUrls))].slice(0, 8);
         if (imageUrls.length) {
@@ -137,18 +139,22 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
           photoProperties++;
         }
       } catch (error) {
-        if (/HTTP\s*403|SERVICE_ACCESS_DENIED|PERMISSION_DENIED/i.test(error.message)) photoDetailDenied++;
-        else photoDetailErrors++;
+        if (/HTTP\s*(401|403)|SERVICE_ACCESS_DENIED|PERMISSION_DENIED/i.test(error.message)) {
+          photoDetailDenied++;
+          console.warn(`온비드 사진·상세 보강 중단: 부동산 물건상세 API 활용 권한을 확인하세요. · ${error.message}`);
+          break;
+        }
+        photoDetailErrors++;
         console.warn(`온비드 사진 보강 생략: ${cltrMngNo} · ${error.message}`);
       }
       await new Promise(resolve => setTimeout(resolve, 120));
     }
     const photoPropertiesTotal = records.filter(item => item.imageUrls?.length).reduce((set, item) => set.add(item.caseNumber), new Set()).size;
-    const metadata = { demo: false, reviewed: true, datasetKind: "onbid-public-sale", redistributionAllowed: true, sourceType: "onbid-official-api", sourceUrl: "https://www.data.go.kr/data/15157207/openapi.do", coverage: `전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 ${startDate}~${endDate} / 공매조건·마감일별 입찰건`, snapshotId: `onbid-${startedAt}`, photoProperties: photoPropertiesTotal };
+    const metadata = { demo: false, reviewed: true, datasetKind: "onbid-public-sale", redistributionAllowed: true, sourceType: "onbid-official-api", sourceUrl: "https://www.data.go.kr/data/15157207/openapi.do", detailSourceUrl: "https://www.data.go.kr/data/15157247/openapi.do", coverage: `전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 ${startDate}~${endDate} / 공매조건·마감일별 입찰건`, snapshotId: `onbid-${startedAt}`, photoProperties: photoPropertiesTotal };
     const dataset = normalizeDataset({ metadata, items: records }, previous, now);
     dataset.metadata.distinctProperties = new Set(records.map(item => item.caseNumber)).size;
     await publishDataset(dataset, dataDir);
-    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: targets.length, added: photoProperties, denied: photoDetailDenied, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
+    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: photoAttempted, requested: targets.length, added: photoProperties, denied: photoDetailDenied, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
     await saveStatus(status);
     await writeFile(resolve(archive, "checkpoint.json"), JSON.stringify({ ...status, complete: true }, null, 2));
     return dataset;
