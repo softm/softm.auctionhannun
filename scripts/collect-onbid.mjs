@@ -67,7 +67,7 @@ export function onbidPage(payload) {
   return { rows, total };
 }
 
-export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "source-data/onbid", days = 7, maxPages = 100, imageLimit = 0, now = new Date(), fetcher = fetch } = {}) {
+export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid", rawDir = "source-data/onbid", days = 7, maxPages = 100, imageLimit = 0, now = new Date(), fetcher = fetch } = {}) {
   if (!Number.isInteger(days) || days < 1 || days > 31) throw new Error("조회 범위는 1~31일입니다.");
   const startDate = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
   const endDate = new Date(Date.parse(`${startDate}T00:00:00Z`) + days * 86400000).toISOString().slice(0, 10);
@@ -126,15 +126,21 @@ export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "sour
     }
     const targets = [...recordsByProperty.entries()].filter(([, rows]) => !rows[0].imageUrls.length).sort((a, b) => (a[1][0].bidEndsAt || "9999").localeCompare(b[1][0].bidEndsAt || "9999")).slice(0, Math.max(0, imageLimit));
     let photoProperties = 0;
+    let photoDetailDenied = 0;
+    let photoDetailErrors = 0;
     for (const [cltrMngNo, rows] of targets) {
       try {
-        const detail = await requestFeed(onbidDetailUrl(key, cltrMngNo), { fetcher });
+        const detail = await requestFeed(onbidDetailUrl(detailKey, cltrMngNo), { fetcher });
         const imageUrls = [...new Set(onbidDetailItems(detail).flatMap(onbidPhotoUrls))].slice(0, 8);
         if (imageUrls.length) {
           rows.forEach(record => { record.imageUrls = imageUrls; });
           photoProperties++;
         }
-      } catch (error) { console.warn(`온비드 사진 보강 생략: ${cltrMngNo} · ${error.message}`); }
+      } catch (error) {
+        if (/HTTP\s*403|SERVICE_ACCESS_DENIED|PERMISSION_DENIED/i.test(error.message)) photoDetailDenied++;
+        else photoDetailErrors++;
+        console.warn(`온비드 사진 보강 생략: ${cltrMngNo} · ${error.message}`);
+      }
       await new Promise(resolve => setTimeout(resolve, 120));
     }
     const photoPropertiesTotal = records.filter(item => item.imageUrls?.length).reduce((set, item) => set.add(item.caseNumber), new Set()).size;
@@ -142,7 +148,7 @@ export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "sour
     const dataset = normalizeDataset({ metadata, items: records }, previous, now);
     dataset.metadata.distinctProperties = new Set(records.map(item => item.caseNumber)).size;
     await publishDataset(dataset, dataDir);
-    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, coverage: metadata.coverage };
+    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: targets.length, added: photoProperties, denied: photoDetailDenied, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
     await saveStatus(status);
     await writeFile(resolve(archive, "checkpoint.json"), JSON.stringify({ ...status, complete: true }, null, 2));
     return dataset;
@@ -153,7 +159,7 @@ export async function collectOnbid({ key, dataDir = "data/onbid", rawDir = "sour
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
+  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, detailKey: process.env.ONBID_DETAIL_SERVICE_KEY || process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
     .then(data => console.log(`실제 온비드 ${data.items.length}입찰건 / ${data.metadata.distinctProperties}물건 수집 완료`))
     .catch(error => { console.error(error.message); process.exitCode = 1; });
 }
