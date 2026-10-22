@@ -89,7 +89,6 @@ const state = {
   activeTab: "summary"
 };
 
-const mobileFocusMedia = window.matchMedia("(max-width:767px)");
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const allCases = () => [...state.added, ...state.collected];
@@ -297,56 +296,24 @@ function selectCase(id) {
   if (!item) return;
   ++mapOperation;
   state.selectedId = id;
-  mapSelectedId = id;
   parcelRequest?.abort();
   state.activeTab = "summary";
   renderCases();
-  renderPins(filteredCases());
   renderDetail();
   $("#detailSheet").classList.add("open");
   $("#detailSheet").setAttribute("aria-hidden", "false");
   $("#detailSheet").inert = false;
-  $("#detailBackdrop").hidden = mobileFocusMedia.matches;
+  $("#detailBackdrop").hidden = false;
   document.body.classList.add("detail-open");
-  if (mobileFocusMedia.matches) {
-    document.body.classList.add("mobile-map-focus");
-    document.body.classList.remove("mobile-focus-expanded", "mobile-focus-full");
-    $("#detailExpand").setAttribute("aria-pressed", "false");
-    $("#detailExpand").innerHTML = `${icon("expand")}<span>상세 크게</span>`;
-    state.view = "map";
-    syncFilters();
-    void focusSelectedForMobile(item, id);
-  }
   setBackgroundInert(true);
   $("#detailSheet").scrollTop = 0;
-  $("#detailClose").focus({ preventScroll: true });
+  $("#detailClose").focus();
   void loadDetail(item).then(() => { if (state.selectedId === id) renderDetail(); }).catch(() => { if (state.selectedId === id) showToast("상세 자료를 읽지 못했습니다. 공식 원문에서 확인해 주세요."); });
   if (auctionMap.mode === "cadastral") void showCaseParcelBoundary(item, mapOperation);
 }
 
-async function focusSelectedForMobile(item, id) {
-  if (!mobileFocusMedia.matches) return;
-  const operation = mapOperation;
-  try {
-    if (!await enableMap() || operation !== mapOperation || state.selectedId !== id) return;
-    let position = auctionMap.position(item);
-    if (!validCoordinate(position)) position = await auctionMap.locate(item);
-    if (operation !== mapOperation || state.selectedId !== id) return;
-    auctionMap.resize();
-    renderPins(filteredCases());
-    auctionMap.focus(position);
-    requestAnimationFrame(() => auctionMap.resize());
-  } catch (error) {
-    if (operation === mapOperation && state.selectedId === id) $("#mapStatus").textContent = `선택 물건 위치 확인 실패: ${error.message}`;
-  }
-}
-
 function setBackgroundInert(inert) {
-  const selector = mobileFocusMedia.matches && document.body.classList.contains("mobile-map-focus")
-    ? ".topbar, .search-panel, .filter-panel, .mobile-filters, .skip-link, .results-sheet, .bottom-nav, .workspace-footer"
-    : ".topbar, .search-panel, .filter-panel, .mobile-filters, .skip-link, .results-sheet, .map-stage, .bottom-nav, .workspace-footer";
-  $(selector).forEach(element => { element.inert = inert; });
-  if (mobileFocusMedia.matches && document.body.classList.contains("mobile-map-focus")) $("#mapStage").inert = false;
+  $$(".topbar, .search-panel, .filter-panel, .mobile-filters, .skip-link, .results-sheet, .map-stage, .bottom-nav, .workspace-footer").forEach(element => { element.inert = inert; });
 }
 
 function closeDetail() {
@@ -356,13 +323,11 @@ function closeDetail() {
   $("#detailSheet").setAttribute("aria-hidden", "true");
   $("#detailSheet").inert = true;
   $("#detailBackdrop").hidden = true;
-  document.body.classList.remove("detail-open", "mobile-map-focus", "mobile-focus-expanded", "mobile-focus-full");
+  document.body.classList.remove("detail-open");
   setBackgroundInert(false);
   state.selectedId = null;
   renderCases();
-  renderPins(filteredCases());
-  requestAnimationFrame(() => auctionMap.resize());
-  $(".case-title").find(button => button.dataset.caseId === returnId)?.focus({ preventScroll: true });
+  $$(".case-title").find(button => button.dataset.caseId === returnId)?.focus({ preventScroll: true });
 }
 
 function renderDetail() {
@@ -781,38 +746,6 @@ $$('[data-nav]').forEach(button => button.addEventListener("click", () => {
   $(view === "map" ? "#mapStage" : view === "favorite" ? "#resultsSheet" : ".search-panel").scrollIntoView({ block: "start" });
 }));
 
-$("#detailExpand").addEventListener("click", () => {
-  if (!mobileFocusMedia.matches || !state.selectedId) return;
-  const expanded = !document.body.classList.contains("mobile-focus-expanded");
-  document.body.classList.toggle("mobile-focus-expanded", expanded);
-  document.body.classList.remove("mobile-focus-full");
-  $("#detailExpand").setAttribute("aria-pressed", String(expanded));
-  $("#detailExpand").innerHTML = `${icon(expanded ? "collapse" : "expand")}<span>${expanded ? "상세 보기" : "상세 크게"}</span>`;
-  $("#focusFullMap").setAttribute("aria-pressed", "false");
-  $("#focusFullMap").innerHTML = `${icon("expand")}<span>전체지도</span>`;
-  requestAnimationFrame(() => auctionMap.resize());
-});
-$("#focusFullMap").addEventListener("click", () => {
-  if (!mobileFocusMedia.matches || !state.selectedId) return;
-  const full = !document.body.classList.contains("mobile-focus-full");
-  document.body.classList.add("mobile-focus-expanded");
-  document.body.classList.toggle("mobile-focus-full", full);
-  $("#focusFullMap").setAttribute("aria-pressed", String(full));
-  $("#focusFullMap").innerHTML = `${icon(full ? "collapse" : "expand")}<span>${full ? "상세 열기" : "전체지도"}</span>`;
-  requestAnimationFrame(() => auctionMap.resize());
-});
-$("#focusSearch").addEventListener("click", () => {
-  closeDetail(); setView("search"); window.scrollTo({ top: 0, behavior: "smooth" }); $("#searchInput").focus({ preventScroll: true });
-});
-$("#focusFilters").addEventListener("click", () => {
-  closeDetail(); setView("search"); document.body.classList.add("filters-open"); $("#filtersToggle").setAttribute("aria-expanded", "true"); syncFilters(); $("#filtersToggle").scrollIntoView({ block: "start" });
-});
-$("#focusList").addEventListener("click", () => {
-  closeDetail(); setView("search"); $("#resultsSheet").scrollIntoView({ block: "start" });
-});
-mobileFocusMedia.addEventListener("change", event => {
-  if (!event.matches && document.body.classList.contains("mobile-map-focus")) closeDetail();
-});
 $("#detailClose").addEventListener("click", closeDetail);
 $("#detailBackdrop").addEventListener("click", closeDetail);
 $("#detailFavorite").addEventListener("click", () => state.selectedId && toggleFavorite(state.selectedId));
