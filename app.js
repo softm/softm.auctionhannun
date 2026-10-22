@@ -393,7 +393,14 @@ function renderSummary(item) {
 
 function renderImageGallery(item) {
   const images = Array.isArray(item.imageUrls) ? item.imageUrls.slice(0, 8) : [];
-  if (!images.length) return "";
+  if (!images.length) {
+    const message = item.auctionKind === "onbid"
+      ? "현재 목록 자료에는 사진이 포함되지 않습니다. 온비드 부동산 물건상세 API 권한이 연결되면 공식 사진을 자동 보강합니다."
+      : item.userAdded
+        ? "직접 등록한 사건에는 사진이 저장되지 않았습니다."
+        : "법원경매 사진 공급원이 아직 연결되지 않아 공식 사진을 표시할 수 없습니다.";
+    return `<section class="detail-media-empty" role="status"><b>공식 사진 미수집</b><span>${escapeHtml(message)}</span></section>`;
+  }
   return `<section class="detail-gallery" aria-label="${escapeHtml(item.title)} 공식 제공 사진">
     <div class="detail-gallery-stage"><img data-gallery-main data-gallery-index="0" src="${escapeHtml(images[0])}" alt="${escapeHtml(item.title)} 사진 1/${images.length}" decoding="async" referrerpolicy="no-referrer"><button type="button" data-action="gallery-prev" aria-label="이전 사진">‹</button><button type="button" data-action="gallery-next" aria-label="다음 사진">›</button><span data-gallery-caption>공식 제공 사진 1/${images.length}</span></div>
     ${images.length > 1 ? `<div class="detail-gallery-thumbs" aria-label="사진 선택">${images.map((url, index) => `<button type="button" data-action="gallery-select" data-gallery-index="${index}" aria-label="사진 ${index + 1} 보기" aria-current="${index === 0}"><img src="${escapeHtml(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>`).join("")}</div>` : ""}
