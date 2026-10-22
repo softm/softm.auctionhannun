@@ -214,6 +214,9 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
 .fact-list div{display:grid;grid-template-columns:95px minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid #edf1f4}
 .fact-list dt{color:var(--ink-2);font-size:12px}
 .fact-list dd{margin:0;font-size:13px;overflow-wrap:anywhere}
+.detail-media-empty{display:grid;gap:5px;margin-top:16px;padding:16px;border:1px dashed #b8cbd3;border-radius:8px;background:#f7fafc;color:var(--ink-2)}
+.detail-media-empty b{color:var(--ink);font-size:13px}
+.detail-media-empty span{font-size:12px;line-height:1.7}
 .detail-gallery{margin-top:16px}
 .detail-gallery-stage{position:relative;display:grid;place-items:center;min-height:260px;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:#e6eef4}
 .detail-gallery-stage>img{display:block;width:100%;height:clamp(260px,42vw,390px);object-fit:contain;background:#101923}
