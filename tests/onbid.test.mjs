@@ -92,3 +92,26 @@ test("법원·온비드 필터와 서류 기록은 혼합하지 않는다", () =
   assert.deepEqual(filterAndSortCases([court, onbid], { kind: "onbid" }), [onbid]);
   assert.equal(reviewMetrics([onbid], new Set(), { [onbid.id]: { "doc:onbid-notice": true, "doc:sale-spec": true } }).checked, 1);
 });
+
+
+test("상세 API 권한 거부는 첫 요청에서 사진 보강을 중단하고 상태를 기록한다", async () => {
+  const root = await mkdtemp(join(tmpdir(), "onbid-detail-denied-"));
+  const rows = Array.from({ length: 3 }, (_, index) => ({ ...row, cltrMngNo: `denied-${index + 1}`, pbctCdtnNo: index + 1 }));
+  const list = { response: { header: { resultCode: "00" }, body: { pageNo: 1, numOfRows: 500, totalCount: 3, items: { item: rows } } } };
+  let detailCalls = 0;
+  const data = await collectOnbid({
+    key: "list-key", detailKey: "detail-key", dataDir: join(root, "data"), rawDir: join(root, "raw"), imageLimit: 3,
+    now: new Date("2026-10-22T00:00:00Z"),
+    fetcher: async url => {
+      if (new URL(url).pathname.includes("OnbidRlstDtlSrvc2")) { detailCalls++; return new Response("", { status: 403 }); }
+      return new Response(JSON.stringify(list), { headers: { "content-type": "application/json" } });
+    }
+  });
+  assert.equal(data.metadata.photoProperties, 0);
+  assert.equal(detailCalls, 1);
+  const status = JSON.parse(await readFile(join(root, "data", "collection-status.json"), "utf8"));
+  assert.equal(status.photoEnrichment.state, "detail-api-access-required");
+  assert.equal(status.photoEnrichment.attempted, 1);
+  assert.equal(status.photoEnrichment.requested, 3);
+  assert.equal(status.photoEnrichment.denied, 1);
+});
