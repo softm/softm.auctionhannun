@@ -1,0 +1,118 @@
+/* 돌봄한눈식 모바일 지도 집중모드 */
+.mobile-focus-shortcuts,.detail-expand{display:none}
+@media(max-width:767px){
+  body.mobile-map-focus{overflow:hidden;padding-bottom:0}
+  body.mobile-map-focus>.topbar,
+  body.mobile-map-focus>.account-status,
+  body.mobile-map-focus .search-panel,
+  body.mobile-map-focus .mobile-filters,
+  body.mobile-map-focus .filter-panel,
+  body.mobile-map-focus .results-sheet,
+  body.mobile-map-focus .workspace-footer,
+  body.mobile-map-focus .bottom-nav,
+  body.mobile-map-focus .adfit-bottom{display:none!important}
+  body.mobile-map-focus .workspace{padding:0}
+  body.mobile-map-focus .app-shell{display:block}
+  body.mobile-map-focus .map-stage{
+    position:fixed;inset:0;z-index:40;width:100%;height:100dvh;min-height:0;max-height:none;
+    border:0;border-radius:0;overflow:hidden;background:#e8eef2
+  }
+  body.mobile-map-focus .map-frame{inset:0}
+  body.mobile-map-focus .map-heading{
+    position:absolute;z-index:48;top:calc(12px + env(safe-area-inset-top));left:12px;right:12px;
+    display:none;padding:8px;border:1px solid #d5e0e6;border-radius:12px;box-shadow:0 4px 18px #17324d22
+  }
+  body.mobile-map-focus.mobile-focus-expanded .map-heading{display:flex}
+  body.mobile-map-focus .map-heading>span{display:none}
+  body.mobile-map-focus .map-mode-control{width:100%;justify-content:center}
+  body.mobile-map-focus .map-mode-control button{flex:1;min-height:40px}
+  body.mobile-map-focus .map-tools{
+    z-index:49;top:calc(72px + env(safe-area-inset-top));right:12px;display:none;
+    border-radius:12px;box-shadow:0 4px 18px #17324d22
+  }
+  body.mobile-map-focus.mobile-focus-expanded .map-tools{display:grid}
+  body.mobile-map-focus .map-tools button{width:44px;height:44px}
+  body.mobile-map-focus .mobile-focus-shortcuts{
+    position:absolute;z-index:49;top:calc(72px + env(safe-area-inset-top));left:12px;
+    display:none;gap:8px;align-items:center
+  }
+  body.mobile-map-focus.mobile-focus-expanded .mobile-focus-shortcuts{display:flex}
+  .mobile-focus-shortcuts button{
+    display:flex;align-items:center;gap:5px;min-height:44px;padding:0 12px;border:1px solid #d5e0e6;
+    border-radius:22px;background:#fff;color:var(--ink);box-shadow:0 4px 18px #17324d22;font-size:11px;font-weight:700
+  }
+  .mobile-focus-shortcuts button svg{width:17px;height:17px}
+  body.mobile-map-focus .map-caption,
+  body.mobile-map-focus .map-status{display:none}
+  body.mobile-map-focus.mobile-focus-expanded .map-caption{
+    display:flex;bottom:calc(45% + 12px);left:12px;right:12px;z-index:47
+  }
+  body.mobile-map-focus.mobile-focus-expanded .map-status{
+    display:block;bottom:calc(45% + 2px);z-index:47;background:#ffffffdd;border-radius:5px;padding:3px 6px
+  }
+  body.mobile-map-focus .parcel-scope-notice{
+    top:calc(126px + env(safe-area-inset-top));left:12px;right:64px;z-index:47
+  }
+
+  body.mobile-map-focus .detail-backdrop{display:none!important}
+  body.mobile-map-focus .detail-sheet{
+    visibility:visible;opacity:1;transform:none;z-index:60;
+    top:auto;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));
+    width:auto;height:62dvh;max-height:72dvh;padding:0 16px calc(18px + env(safe-area-inset-bottom));
+    border:1px solid #dce5e9;border-radius:26px;box-shadow:0 12px 38px #10283d3d;
+    background:#fff;overflow-y:auto;overscroll-behavior:contain
+  }
+  body.mobile-map-focus .detail-handle{
+    position:sticky;z-index:5;top:0;display:block;width:42px;height:18px;margin:0 auto 2px;border:0;background:transparent
+  }
+  body.mobile-map-focus .detail-handle::after{
+    content:"";display:block;width:38px;height:4px;margin:auto;border-radius:3px;background:#c5d0d6
+  }
+  body.mobile-map-focus .detail-top{
+    position:sticky;z-index:4;top:18px;margin:0 -16px;padding:8px 14px;background:#fff;border-bottom:1px solid var(--line)
+  }
+  body.mobile-map-focus .detail-expand{
+    display:flex!important;align-items:center;gap:5px;width:auto!important;min-height:40px;padding:0 10px!important;
+    background:#eef8f5!important;color:var(--green)!important;border-color:#d9ece6!important;font-size:11px;font-weight:700
+  }
+  body.mobile-map-focus .detail-expand svg{width:17px;height:17px}
+  body.mobile-map-focus .detail-actions{gap:5px}
+  body.mobile-map-focus .detail-actions .official-button span{display:none}
+  body.mobile-map-focus .detail-actions .official-button{width:40px;padding:0!important}
+  body.mobile-map-focus .detail-title-row{margin:16px 0 14px}
+  body.mobile-map-focus .detail-title-row h2{font-size:22px}
+  body.mobile-map-focus .price-grid{grid-template-columns:1fr 1fr}
+  body.mobile-map-focus .detail-tabs{top:66px;margin-inline:-16px;padding-inline:8px}
+  body.mobile-map-focus .detail-gallery-stage{min-height:200px}
+  body.mobile-map-focus .detail-gallery-stage>img{height:240px}
+
+  body.mobile-map-focus:not(.mobile-focus-expanded) .detail-sheet{height:61dvh}
+  body.mobile-map-focus.mobile-focus-expanded .detail-sheet{height:45dvh;max-height:45dvh;border-radius:24px 24px 14px 14px}
+  body.mobile-map-focus.mobile-focus-expanded .detail-title-row,
+  body.mobile-map-focus.mobile-focus-expanded .price-grid,
+  body.mobile-map-focus.mobile-focus-expanded .registered-actions,
+  body.mobile-map-focus.mobile-focus-expanded .detail-tabs,
+  body.mobile-map-focus.mobile-focus-expanded .detail-content{display:none}
+  body.mobile-map-focus.mobile-focus-expanded .detail-top{top:0}
+  body.mobile-map-focus.mobile-focus-expanded .detail-sheet::after{
+    content:"지도 도구를 사용할 수 있습니다. ‘상세 크게’를 누르면 물건 상세로 돌아갑니다.";
+    display:block;padding:18px 4px;color:var(--ink-2);font-size:12px;line-height:1.6
+  }
+
+  body.mobile-map-focus.mobile-focus-full .detail-sheet{
+    height:auto;min-height:58px;max-height:none;overflow:hidden;padding-bottom:8px
+  }
+  body.mobile-map-focus.mobile-focus-full .detail-title-row,
+  body.mobile-map-focus.mobile-focus-full .price-grid,
+  body.mobile-map-focus.mobile-focus-full .registered-actions,
+  body.mobile-map-focus.mobile-focus-full .detail-tabs,
+  body.mobile-map-focus.mobile-focus-full .detail-content{display:none}
+  body.mobile-map-focus.mobile-focus-full .map-heading,
+  body.mobile-map-focus.mobile-focus-full .map-tools,
+  body.mobile-map-focus.mobile-focus-full .mobile-focus-shortcuts{display:flex}
+  body.mobile-map-focus.mobile-focus-full .map-tools{display:grid}
+  body.mobile-map-focus.mobile-focus-full .map-caption,
+  body.mobile-map-focus.mobile-focus-full .map-status{display:none}
+
+  body.mobile-map-focus .toast{z-index:100;bottom:calc(76px + env(safe-area-inset-bottom))}
+}
