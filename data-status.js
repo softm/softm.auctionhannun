@@ -76,7 +76,10 @@ async function loadPublished() {
   document.getElementById("courtCount").textContent = number(court?.itemCount);
   const photoTotal = publishedPhotoTotal(results);
   document.getElementById("photoCount").textContent = number(photoTotal);
-  document.getElementById("photoNote").textContent = photoTotal == null ? "배포 자료의 사진 집계 미확인" : "온비드·법원 배포자료 합계";
+  const onbidStatus = results[0]?.status;
+  document.getElementById("photoNote").textContent = onbidStatus?.photoEnrichment?.state === "detail-api-access-required"
+    ? "온비드 상세 API 권한 필요 · 사진 보강 중단"
+    : photoTotal == null ? "배포 자료의 사진 집계 미확인" : "온비드·법원 배포자료 합계";
   const publishedDates = results.filter(x => publishedManifest(x.manifest) && x.manifest.itemCount > 0)
     .map(x => x.manifest.collectedAt).filter(value => value && Number.isFinite(Date.parse(value))).sort();
   document.getElementById("lastCollectedAt").textContent = date(publishedDates.at(-1));
