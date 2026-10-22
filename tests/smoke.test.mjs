@@ -37,3 +37,11 @@ test("GitHub Actions 수집·배포 흐름이 선언된다", async () => {
   assert.match(collect, /--base main/);
   assert.match(deploy, /actions\/deploy-pages@v4/);
 });
+
+
+test("모바일 지도는 목록 스크롤을 가리지 않고 충분한 높이를 확보한다", async () => {
+  const css = await readFile(new URL("styles.css", root), "utf8");
+  assert.match(css, /@media\(max-width:767px\)[\s\S]*?\.map-stage\{display:block;position:relative;top:auto;[^}]*height:clamp\(380px,52dvh,520px\);min-height:360px;max-height:none\}/);
+  assert.match(css, /Short screens keep a useful map without pinning it over the scrolling list/);
+  assert.doesNotMatch(css, /Keep the map visible while the result list scrolls/);
+});
