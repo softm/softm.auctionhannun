@@ -111,10 +111,16 @@ async function loadPublished() {
 }
 async function loadRuns() {
   try {
-    const data = await json(`${repo}/actions/workflows/collect-auctions.yml/runs?per_page=6`);
-    if (!Array.isArray(data.workflow_runs)) throw new Error("invalid runs");
-    const labels = { success: "성공 (배포 완료 의미 아님)", failure: "실패", cancelled: "취소", skipped: "건너뜀", timed_out: "시간 초과", in_progress: "실행 중", queued: "대기 중", waiting: "대기 중" };
-    rows("runRows", data.workflow_runs.length ? data.workflow_runs.map(run => [link(`#${Number(run.run_number)} 수집 실행`, `actions/runs/${Number(run.id)}`), date(run.run_started_at || run.created_at), ({ schedule: "정기 예약", workflow_dispatch: "수동 실행" })[run.event] || run.event, labels[run.conclusion || run.status] || "확인 필요"]) : [["실행 내역 없음", "—", "—", "—"]]);
+    const [onbid, court] = await Promise.all([
+      json(`${repo}/actions/workflows/collect-auctions.yml/runs?per_page=4`),
+      json(`${repo}/actions/workflows/collect-court-public.yml/runs?per_page=4`)
+    ]);
+    const runs = [
+      ...(Array.isArray(onbid.workflow_runs) ? onbid.workflow_runs.map(run => ({ ...run, sourceLabel: "온비드" })) : []),
+      ...(Array.isArray(court.workflow_runs) ? court.workflow_runs.map(run => ({ ...run, sourceLabel: "법원 전국목록" })) : [])
+    ].sort((a, b) => Date.parse(b.run_started_at || b.created_at || 0) - Date.parse(a.run_started_at || a.created_at || 0)).slice(0, 8);
+    const labels = { success: "성공", failure: "실패", cancelled: "취소", skipped: "건너뜀", timed_out: "시간 초과", in_progress: "실행 중", queued: "대기 중", waiting: "대기 중" };
+    rows("runRows", runs.length ? runs.map(run => [link(`${run.sourceLabel} #${Number(run.run_number)}`, `actions/runs/${Number(run.id)}`), date(run.run_started_at || run.created_at), ({ schedule: "정기 예약", workflow_dispatch: "수동 실행", push: "수동 트리거" })[run.event] || run.event, labels[run.conclusion || run.status] || "확인 필요"]) : [["실행 내역 없음", "—", "—", "—"]]);
     return true;
   } catch {
     rows("runRows", [["조회 실패", "—", "—", "GitHub API 제한 또는 네트워크 오류. 전체 실행 보기에서 확인해 주세요."]]);
