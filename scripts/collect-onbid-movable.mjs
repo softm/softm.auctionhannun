@@ -67,7 +67,7 @@ function movableAssetDetails(row = {}) {
   const quantityUnit = first(row, ["qntUnitNm", "qntUnit", "unitNm"]);
   const weight = first(row, ["wght", "wt", "prptWght"]);
   const weightUnit = first(row, ["wghtUnitNm", "wghtUnit"]);
-  return {
+  const result = {
     assetName: first(row, ["prptNm", "onbidCltrNm", "cltrNm", "mvastNm"]),
     quantity: [quantity, quantityUnit].filter(Boolean).join(" "),
     weight: [weight, weightUnit].filter(Boolean).join(" "),
@@ -80,6 +80,7 @@ function movableAssetDetails(row = {}) {
     itemName: first(row, ["itemNm", "stockNm", "sctyNm", "mvastKndNm"]),
     note: first(row, ["cltrEtcCont", "etcCont", "rmrk", "rmk"])
   };
+  return Object.values(result).some(Boolean) ? result : null;
 }
 
 export function onbidMovableRecord(row, prptDivCd = "") {
@@ -109,13 +110,14 @@ export function onbidMovableRecord(row, prptDivCd = "") {
     saleDate: date(end), bidStartsAt: time(start), bidEndsAt: time(end),
     appraisal: money(appraisalRaw), minimum: money(minimumRaw), ratio: "-",
     rounds: /^\d+$/.test(first(row, ["usbdNft"])) ? `${Number(first(row, ["usbdNft"]))}회 유찰` : "원문 확인",
-    area: assetDetails.quantity ? `수량 ${assetDetails.quantity}` : assetDetails.weight ? `중량 ${assetDetails.weight}` : "동산 상세 확인",
+    area: assetDetails?.quantity ? `수량 ${assetDetails.quantity}` : assetDetails?.weight ? `중량 ${assetDetails.weight}` : "동산 상세 확인",
     occupancy: "보관장소·인도조건 원문 확인", category: category || "동산", status,
     schedules: [
       { date: date(start), time: clock(start), type: "입찰 시작", place: "온비드", minimum: money(minimumRaw), result: "예정" },
       { date: date(end), time: clock(end), type: "입찰 마감", place: "온비드", minimum: money(minimumRaw), result: status }
     ].filter(value => value.date),
-    assetDetails, sourceUrl: "https://www.onbid.co.kr/", sourceUpdatedAt: first(row, ["mdfcnDt", "updtDt"])
+    ...(assetDetails ? { assetDetails } : {}),
+    sourceUrl: "https://www.onbid.co.kr/", sourceUpdatedAt: first(row, ["mdfcnDt", "updtDt"])
   };
 }
 
@@ -130,13 +132,13 @@ export function onbidMovableEnrichment(items, cltrMngNo) {
   const appraisalOrg = first(combined, ["apslEvlInsttNm", "apslInsttNm", "apslEvlrNm"]);
   const appraisalSummary = {
     valuedAt: /^\d{8}$/.test(appraisalDate) ? `${appraisalDate.slice(0,4)}-${appraisalDate.slice(4,6)}-${appraisalDate.slice(6,8)}` : "",
-    location: assetDetails.storagePlace ? `보관장소: ${assetDetails.storagePlace}` : "",
-    usage: [assetDetails.itemName, assetDetails.assetName].filter(Boolean).join(" · "),
-    other: [appraisalOrg ? `감정평가기관: ${appraisalOrg}` : "", assetDetails.note].filter(Boolean).join(" · ")
+    location: assetDetails?.storagePlace ? `보관장소: ${assetDetails.storagePlace}` : "",
+    usage: [assetDetails?.itemName, assetDetails?.assetName].filter(Boolean).join(" · "),
+    other: [appraisalOrg ? `감정평가기관: ${appraisalOrg}` : "", assetDetails?.note].filter(Boolean).join(" · ")
   };
   return {
     ...(imageUrls.length ? { imageUrls } : {}),
-    ...(Object.values(assetDetails).some(Boolean) ? { assetDetails } : {}),
+    ...(assetDetails ? { assetDetails } : {}),
     ...(Object.values(appraisalSummary).some(Boolean) ? { appraisalSummary } : {})
   };
 }
