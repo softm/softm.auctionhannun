@@ -6,8 +6,6 @@
   "scripts": {
     "start": "node server.mjs",
     "collect": "node scripts/collect-auctions.mjs",
-    "collect:court-public": "node scripts/collect-court-public.mjs",
-    "collect:court-catalog": "node scripts/collect-court-catalog.mjs",
     "collect:court-list": "node scripts/collect-court-list.mjs",
     "collect:onbid": "node scripts/collect-onbid.mjs",
     "collect:onbid:movable": "node scripts/collect-onbid-movable.mjs",
@@ -17,7 +15,9 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check-syntax.mjs && npm run validate:data && npm test"
   },
-  "overrides": { "@grpc/grpc-js": "^1.13.6" },
+  "overrides": {
+    "@grpc/grpc-js": "^1.13.6"
+  },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.0",
     "firebase": "^12.4.0"
