@@ -355,7 +355,8 @@ function renderDetail() {
   const item = getSelected();
   if (!item) return;
   const meta = typeMeta[item.type] || typeMeta.other;
-  $("#detailType").textContent = meta.label;
+  const movable = item.dataBase === "./data/onbid-movable" || Boolean(item.assetDetails);
+  $("#detailType").textContent = movable ? "온비드 동산" : meta.label;
   $("#detailType").className = `status-pill ${meta.className}`;
   $("#registeredActions").hidden = !item.userAdded;
   $("#detailCourt").textContent = item.court;
