@@ -1,0 +1,49 @@
+name: Count court auction inventory
+
+on:
+  push:
+    paths:
+      - ".github/workflows/count-court-inventory.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Count nationwide court auction properties
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          const base="https://www.courtauction.go.kr";
+          const jar=new Map();
+          const ingest=h=>{const a=typeof h.getSetCookie==="function"?h.getSetCookie():[h.get("set-cookie")].filter(Boolean);for(const x of a){const p=String(x).split(";")[0],i=p.indexOf("=");if(i>0)jar.set(p.slice(0,i).trim(),p.slice(i+1).trim())}};
+          const headers=extra=>({
+            "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+            "Accept":"application/json, text/javascript, */*; q=0.01","Accept-Language":"ko-KR,ko;q=0.9,en;q=0.8",
+            "Origin":base,"Referer":base+"/pgj/index.on?w2xPath=/pgj/ui/pgj100/PGJ151F00.xml&pgjId=151F00",
+            "X-Requested-With":"XMLHttpRequest","submissionid":"mf_wfm_mainFrame_sbm_selectGdsDtlSrch","sc-userid":"SYSTEM",
+            ...(jar.size?{"Cookie":[...jar].map(([k,v])=>`${k}=${v}`).join("; ")}:{}),...extra
+          });
+          const warm=await fetch(base+"/pgj/index.on?w2xPath=/pgj/ui/pgj100/PGJ151F00.xml&pgjId=151F00",{headers:headers({}),signal:AbortSignal.timeout(20000)});
+          ingest(warm.headers);
+          await new Promise(r=>setTimeout(r,3000));
+          const search={dma_pageInfo:{pageNo:1,pageSize:10,bfPageNo:"",startRowNo:"",totalCnt:"",totalYn:"Y",groupTotalCount:""},dma_srchGdsDtlSrchInfo:{
+            rletDspslSpcCondCd:"",bidDvsCd:"",mvprpRletDvsCd:"00031R",cortAuctnSrchCondCd:"0004601",rprsAdongSdCd:"",rprsAdongSggCd:"",rprsAdongEmdCd:"",
+            rdnmSdCd:"",rdnmSggCd:"",rdnmNo:"",mvprpDspslPlcAdongSdCd:"",mvprpDspslPlcAdongSggCd:"",mvprpDspslPlcAdongEmdCd:"",rdDspslPlcAdongSdCd:"",
+            rdDspslPlcAdongSggCd:"",rdDspslPlcAdongEmdCd:"",cortOfcCd:"",jdbnCd:"",execrOfcDvsCd:"",lclDspslGdsLstUsgCd:"",mclDspslGdsLstUsgCd:"",
+            sclDspslGdsLstUsgCd:"",cortAuctnMbrsId:"",aeeEvlAmtMin:"",aeeEvlAmtMax:"",lwsDspslPrcRateMin:"",lwsDspslPrcRateMax:"",flbdNcntMin:"",
+            flbdNcntMax:"",objctArDtsMin:"",objctArDtsMax:"",mvprpArtclKndCd:"",mvprpArtclNm:"",mvprpAtchmPlcTypCd:"",notifyLoc:"off",lafjOrderBy:"",
+            pgmId:"PGJ151F01",csNo:"",cortStDvs:"1",statNum:1,bidBgngYmd:"",bidEndYmd:"",dspslDxdyYmd:"",fstDspslHm:"",scndDspslHm:"",thrdDspslHm:"",
+            fothDspslHm:"",dspslPlcNm:"",lwsDspslPrcMin:"",lwsDspslPrcMax:"",grbxTypCd:"",gdsVendNm:"",fuelKndCd:"",carMdyrMax:"",carMdyrMin:"",carMdlNm:"",sideDvsCd:""
+          }};
+          const res=await fetch(base+"/pgj/pgjsearch/searchControllerMain.on",{method:"POST",headers:headers({"Content-Type":"application/json; charset=UTF-8"}),body:JSON.stringify(search),signal:AbortSignal.timeout(30000)});
+          const payload=await res.json(); const data=payload?.data||{};
+          console.log(JSON.stringify({http:res.status,ipcheck:data.ipcheck??null,pageInfo:data.dma_pageInfo||null,count:Array.isArray(data.dlt_srchResult)?data.dlt_srchResult.length:0}));
+          if(!res.ok||data.ipcheck===false)process.exit(2);
+          NODE
