@@ -367,13 +367,62 @@ function renderActiveTab() {
   $("#detailContent").setAttribute("aria-labelledby", `tab-${state.activeTab}`);
 }
 
+function detailSectionHead(iconName, kicker, title, description = "") {
+  return `<div class="detail-section-head"><span class="detail-section-icon">${icon(iconName)}</span><div><small>${escapeHtml(kicker)}</small><h3>${escapeHtml(title)}</h3>${description ? `<p>${escapeHtml(description)}</p>` : ""}</div></div>`;
+}
+
+function renderDetailOverview(item) {
+  const photoCount = Array.isArray(item.imageUrls) ? item.imageUrls.length : 0;
+  const lotCount = Array.isArray(item.propertyLots) ? item.propertyLots.length : 0;
+  const scheduleCount = Array.isArray(item.schedules) ? item.schedules.length : 0;
+  const documentCount = item.documents ? Object.values(item.documents).filter(Boolean).length : 0;
+  const entries = [
+    ["detail-photos", "사진", photoCount ? `${photoCount}장` : "미수집", photoCount > 0],
+    ["detail-basic", "기본정보", "확인", true],
+    ["detail-schedule", item.auctionKind === "onbid" ? "입찰일정" : "기일내역", scheduleCount ? `${scheduleCount}건` : "원문 확인", scheduleCount > 0],
+    ["detail-lots", "물건구성", lotCount ? `${lotCount}건` : "원문 확인", lotCount > 0],
+    ["detail-appraisal", "감정평가", item.appraisalSummary ? "수집됨" : "원문 확인", Boolean(item.appraisalSummary)],
+    ["detail-tenancy", "권리·점유", item.tenancySummary ? "요약 있음" : "원문 확인", Boolean(item.tenancySummary)],
+    ["detail-documents", "공식문서", documentCount ? `${documentCount}건` : "원문 확인", documentCount > 0],
+    ["detail-similar", "유사물건", "비교", true]
+  ];
+  const available = entries.filter(([, , , ok]) => ok).length;
+  return `<section class="detail-overview" aria-label="상세 정보 바로가기">
+    <div class="detail-overview-copy">
+      <span>PROPERTY DETAIL</span>
+      <strong>물건 상세정보</strong>
+      <p>사진·일정·물건 구성·감정평가·권리 기초정보를 한 흐름으로 확인합니다.</p>
+    </div>
+    <div class="detail-overview-score"><b>${available}/${entries.length}</b><span>정보 영역</span></div>
+    <div class="detail-quick-nav">${entries.map(([target, label, value, ok]) => `<button type="button" data-action="jump-detail" data-target="${target}" class="${ok ? "available" : ""}"><span>${escapeHtml(label)}</span><b>${escapeHtml(value)}</b></button>`).join("")}</div>
+  </section>`;
+}
+
+function numericPrice(value) {
+  const number = Number(String(value || "").replace(/[^0-9]/g, ""));
+  return Number.isFinite(number) && number > 0 ? number : Number.POSITIVE_INFINITY;
+}
+
+function renderSimilarCases(item) {
+  const region = regionOf(item);
+  const peers = allCases().filter(candidate => candidate.id !== item.id && candidate.auctionKind === item.auctionKind).map(candidate => {
+    const score = (regionOf(candidate) === region ? 4 : 0) + (candidate.type === item.type ? 3 : 0) + (candidate.category === item.category ? 2 : 0);
+    return { candidate, score };
+  }).filter(({ score }) => score >= 3).sort((a, b) => b.score - a.score || numericPrice(a.candidate.minimum) - numericPrice(b.candidate.minimum) || (a.candidate.saleDate || "9999").localeCompare(b.candidate.saleDate || "9999")).slice(0, 3);
+  return `<section class="summary-card proptech-section" id="detail-similar">
+    ${detailSectionHead("search", "COMPARE", "유사 진행 물건", "현재 수집된 같은 지역·유형의 진행 물건을 비교합니다. 낙찰사례 통계는 아닙니다.")}
+    ${peers.length ? `<div class="similar-property-grid">${peers.map(({ candidate }) => `<button type="button" class="similar-property-card" data-action="related-case" data-case-id="${escapeHtml(candidate.id)}"><span>${escapeHtml(regionOf(candidate) || candidate.court)}</span><b>${escapeHtml(candidate.title)}</b><small>${escapeHtml(candidate.minimum || "가격 확인")} · ${escapeHtml(dateLabel(candidate.saleDate))}</small></button>`).join("")}</div>` : `<p class="detail-empty-copy">현재 수집 범위에서 바로 비교할 유사 물건을 찾지 못했습니다.</p>`}
+  </section>`;
+}
+
 function renderSummary(item) {
   const lastVerified = state.verified[item.id];
   const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.auctionKind === "onbid" ? "한국자산관리공사 온비드 공매 자료입니다. 법원경매가 아니며 법원 3대 서류 공시 기준을 적용하지 않습니다. 공고문·입찰 마감시각·정정 여부를 온비드 원문에서 확인하세요." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
-  return `<div class="demo-banner">${icon("help")}<span>${notice}</span></div>
+  return `${renderDetailOverview(item)}
+    <div class="demo-banner">${icon("help")}<span>${notice}</span></div>
     ${renderImageGallery(item)}
-    <section class="summary-card">
-      <h3>물건 검토 기준정보</h3>
+    <section class="summary-card proptech-section" id="detail-basic">
+      ${detailSectionHead("file", "BASIC", "물건 기본정보", "사건·물건 식별정보와 현재 상태를 먼저 확인합니다.")}
       <dl class="fact-list">
         <div><dt>소재지</dt><dd>${escapeHtml(item.address)}</dd></div>
         <div><dt>물건 구분</dt><dd>${escapeHtml(item.category || typeMeta[item.type]?.label || "기타")}</dd></div>
@@ -386,6 +435,7 @@ function renderSummary(item) {
     </section>
     ${renderCollectedDetails(item)}
     ${renderLandTools(item)}
+    ${renderSimilarCases(item)}
     <div class="step-card"><span>1</span><div><b>공식 물건 원문 찾기</b><small>${item.auctionKind === "onbid" ? "물건관리번호로 온비드에서 검색" : "사건번호·주소로 법원경매정보에서 검색"}</small></div><button type="button" data-action="official">열기</button></div>
     <div class="step-card"><span>2</span><div><b>${item.auctionKind === "onbid" ? "공매 공고·명세 대조" : "3대 서류 대조"}</b><small>${item.auctionKind === "onbid" ? "공고별 입찰·명도·인수조건 확인" : "공시는 매각기일마다 1주일 전까지"}</small></div><button type="button" data-action="tab" data-tab-target="documents">확인</button></div>
     <div class="step-card"><span>3</span><div><b>권리·현장 체크</b><small>등기기록과 현장 점유를 원문과 교차 확인</small></div><button type="button" data-action="tab" data-tab-target="rights">체크</button></div>`;
@@ -399,9 +449,9 @@ function renderImageGallery(item) {
       : item.userAdded
         ? "직접 등록한 사건에는 사진이 저장되지 않았습니다."
         : "법원경매 사진 공급원이 아직 연결되지 않아 공식 사진을 표시할 수 없습니다.";
-    return `<section class="detail-media-empty" role="status"><b>공식 사진 미수집</b><span>${escapeHtml(message)}</span></section>`;
+    return `<section class="detail-media-empty proptech-section" id="detail-photos" role="status"><b>공식 사진 미수집</b><span>${escapeHtml(message)}</span></section>`;
   }
-  return `<section class="detail-gallery" aria-label="${escapeHtml(item.title)} 공식 제공 사진">
+  return `<section class="detail-gallery proptech-section" id="detail-photos" aria-label="${escapeHtml(item.title)} 공식 제공 사진"><div class="detail-gallery-label"><span>PHOTO</span><b>현장·물건 사진</b><small>공식 제공 사진을 좌우로 넘겨 확인하세요.</small></div>
     <div class="detail-gallery-stage"><img data-gallery-main data-gallery-index="0" src="${escapeHtml(images[0])}" alt="${escapeHtml(item.title)} 사진 1/${images.length}" decoding="async" referrerpolicy="no-referrer"><button type="button" data-action="gallery-prev" aria-label="이전 사진">‹</button><button type="button" data-action="gallery-next" aria-label="다음 사진">›</button><span data-gallery-caption>공식 제공 사진 1/${images.length}</span></div>
     ${images.length > 1 ? `<div class="detail-gallery-thumbs" aria-label="사진 선택">${images.map((url, index) => `<button type="button" data-action="gallery-select" data-gallery-index="${index}" aria-label="사진 ${index + 1} 보기" aria-current="${index === 0}"><img src="${escapeHtml(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>`).join("")}</div>` : ""}
   </section>`;
