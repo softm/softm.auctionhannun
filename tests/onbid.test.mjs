@@ -38,12 +38,13 @@ test("온비드 상세정보에서 사진·면적·감정평가를 개인정보 
     utlzPscdCont: "주거용",
     cltrEtcCont: "엘리베이터 있음",
     potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/a.jpg" }],
-    sqmsList: [{ clandCont: "건물>건물", sqmsCont: "59.76", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }],
+    sqmsList: [{ clandCont: "건물>건물", sqmsCont: "59.76㎡", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }, { clandCont: "건물>건물", sqmsCont: "59.76㎡", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }],
     apslEvlClgList: [{ apslEvlYmd: "20261001", apslEvlAmt: 123000000, urlAdr: "https://www.onbid.co.kr/appraisal.pdf" }],
     ocpyRelList: [{ ocpyRelCdNm: "소유자", acpmPrptOcpyIrpsFlnm: "홍길동" }],
     leasInfList: [{ irstDivNm: "전세권", cltrInprNm: "김**" }]
   }], "2026-001-001");
   assert.deepEqual(enrichment.imageUrls, ["https://img.onbid.co.kr/a.jpg"]);
+  assert.equal(enrichment.propertyLots.length, 1);
   assert.equal(enrichment.propertyLots[0].area, "59.76㎡");
   assert.equal(enrichment.appraisalSummary.valuedAt, "2026-10-01");
   assert.equal(enrichment.documents.appraisalReport.url, "https://www.onbid.co.kr/appraisal.pdf");
