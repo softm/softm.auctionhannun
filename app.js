@@ -242,7 +242,9 @@ function renderFilterOptions() {
 }
 
 function propertyIllustration(type) {
-  const building = type === "land"
+  const building = type === "movable"
+    ? '<path d="m33 63 47-23 48 23-48 24Z" fill="#d7e8e3"/><path d="M33 63v52l47 24V87Z" fill="#edf8f6"/><path d="M128 63v52l-48 24V87Z" fill="#b8d8d1"/><path d="m57 51 47 23M80 87v52M49 82l31 16 31-16"/><path d="M62 112h36" stroke-width="3"/>'
+    : type === "land"
     ? '<path d="m20 110 56-32 62 28-57 35Z" fill="#d0dfc8"/><path d="m24 97 54-30 61 26-56 32Z" fill="#e7edce"/><path d="M44 86v-28m-10 2 10-21 10 21Z" fill="#92b39a"/><path d="M121 101V72m-10 3 10-22 10 22Z" fill="#92b39a"/><path d="m55 82 26 14 31-17M81 96v26"/>'
     : type === "commercial"
       ? '<path d="M26 65h105v67H26Z" fill="#fafcfd"/><path d="m22 65 56-28 58 28Z" fill="#bed0dd"/><path d="M37 84h29v48H37Zm43 0h40v28H80Z" fill="#d2e3e8"/><path d="M78 84v28h44V84M101 84v28"/><path d="M27 71h104v10H27Z" fill="#7faea7"/>'
@@ -252,7 +254,8 @@ function propertyIllustration(type) {
 
 function propertyVisual(item, meta) {
   const image = item.imageUrls?.[0];
-  return `<div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(item.type)}${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.textContent='사진을 불러오지 못했습니다'"><small>${item.auctionKind === "onbid" ? "온비드 제공 사진" : "법원경매 제공 사진"}</small>` : "<small>유형 일러스트 · 실제 사진 아님</small>"}</div>`;
+  const movable = item.dataBase === "./data/onbid-movable";
+  return `<div class="property-visual ${meta.className}" aria-hidden="true">${propertyIllustration(movable ? "movable" : item.type)}${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.textContent='사진을 불러오지 못했습니다'"><small>${item.auctionKind === "onbid" ? "온비드 제공 사진" : "법원경매 제공 사진"}</small>` : `<small>${movable ? "동산 물건 · 상세 사진 확인" : "유형 일러스트 · 실제 사진 아님"}</small>`}</div>`;
 }
 
 function renderPins(cases) {
