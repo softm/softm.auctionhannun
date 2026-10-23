@@ -1,4 +1,4 @@
-name: Collect nationwide court auction list
+name: Collect nationwide court auction catalog
 
 on:
   push:
@@ -13,17 +13,19 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: court-nationwide-list
+  group: court-catalog-collection
   cancel-in-progress: false
 
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
     env:
       TZ: Asia/Seoul
-      COURT_LIST_MIN_INTERVAL_MS: 1600
-      COURT_LIST_JITTER_MS: 900
+      COURT_CATALOG_MIN_DELAY_MS: 1800
+      COURT_CATALOG_JITTER_MS: 700
+      COURT_CATALOG_CHECKPOINT_EVERY: 50
+      COURT_CATALOG_CHECKPOINT_PAUSE_MS: 15000
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,24 +36,29 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Collect complete nationwide court list
-        run: npm run collect:court-list
+      - name: Collect nationwide court auction list
+        id: court
+        continue-on-error: true
+        run: npm run collect:court-catalog
       - name: Validate complete snapshot
+        if: steps.court.outcome == 'success'
         run: npm run check
-      - name: Publish verified nationwide snapshot
+      - name: Propose verified nationwide catalog
+        if: steps.court.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          BRANCH="feature/court-list-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          BRANCH="feature/court-catalog-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           git switch -c "$BRANCH"
           node scripts/commit-data.mjs
           if git diff --quiet origin/main HEAD; then
             exit 0
           fi
           git push origin "$BRANCH"
-          PR_URL="$(gh pr create --base main --head "$BRANCH" --title "$(date +%Y%m%d)_data_법원경매전국목록" --body "법원경매정보 전국 17개 시·도 기본목록 전수수집 결과입니다. 각 시·도 totalCnt와 실제 페이지 행수가 모두 일치한 경우에만 생성됩니다. 상세는 물건 클릭 시 별도 API에서 조회합니다.")"
-          gh pr merge "$PR_URL" --squash --delete-branch
+          gh pr create --base main --head "$BRANCH"             --title "$(date +%Y%m%d)_data_법원경매전국목록"             --body "법원경매정보 물건상세검색을 17개 시도·50건 페이지로 전수 순회한 전국 기본목록입니다. 원시 검색 행 98% 이상 완주 검증을 통과한 경우에만 PR을 생성하며, 법원+사건+매물번호로 중복 제거합니다. 상세는 사용자가 물건을 열 때 별도 캐시 API에서 조회합니다."
+      - name: Fail if nationwide collection was incomplete
+        if: steps.court.outcome == 'failure'
+        run: exit 1
