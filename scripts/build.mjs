@@ -35,16 +35,16 @@ await Promise.all([
   cp("robots.txt", "dist/robots.txt"),
   cp("sitemap.xml", "dist/sitemap.xml")
 ]);
-for (const file of [manifest.catalogFile, ...catalog.items.map(item => item.detailFile)]) {
+for (const file of [manifest.catalogFile, ...catalog.items.map(item => item.detailFile).filter(Boolean)]) {
   await mkdir(dirname(`dist/data/${file}`), { recursive: true });
   await cp(`data/${file}`, `dist/data/${file}`);
 }
-for (const file of ["auctions.json", "manifest.json", "collection-status.json", onbid.manifest.catalogFile, ...onbid.catalog.items.map(item => item.detailFile)]) {
+for (const file of ["auctions.json", "manifest.json", "collection-status.json", onbid.manifest.catalogFile, ...onbid.catalog.items.map(item => item.detailFile).filter(Boolean)]) {
   await mkdir(dirname(`dist/data/onbid/${file}`), { recursive: true });
   await cp(`data/onbid/${file}`, `dist/data/onbid/${file}`);
 }
 if (movable) {
-  for (const file of ["auctions.json", "manifest.json", "collection-status.json", movable.manifest.catalogFile, ...movable.catalog.items.map(item => item.detailFile)]) {
+  for (const file of ["auctions.json", "manifest.json", "collection-status.json", movable.manifest.catalogFile, ...movable.catalog.items.map(item => item.detailFile).filter(Boolean)]) {
     await mkdir(dirname(`dist/data/onbid-movable/${file}`), { recursive: true });
     await cp(`data/onbid-movable/${file}`, `dist/data/onbid-movable/${file}`);
   }
