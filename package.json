@@ -7,6 +7,7 @@
     "start": "node server.mjs",
     "collect": "node scripts/collect-auctions.mjs",
     "collect:court-public": "node scripts/collect-court-public.mjs",
+    "collect:court-list": "node scripts/collect-court-list.mjs",
     "collect:onbid": "node scripts/collect-onbid.mjs",
     "collect:onbid:movable": "node scripts/collect-onbid-movable.mjs",
     "probe:onbid": "node scripts/probe-onbid.mjs",
