@@ -1,264 +1,129 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-23T13:53:32.282Z",
-  "lastSuccessAt": "2026-10-23T13:53:32.282Z",
-  "itemCount": 417,
-  "completedPages": 5,
-  "coverage": "법원경매정보 공개 부동산 매각공고 · 202610·202611 · 저빈도 증분수집 · 법원/월 순환 2/60, 2/2",
-  "courtPublic": {
-    "courtIndex": 1,
-    "monthIndex": 1,
-    "noticeOffset": 0,
-    "searchMonths": [
-      "202610",
-      "202611"
-    ],
-    "courtCodes": [
-      {
-        "code": "B000210",
-        "name": "서울중앙지방법원"
-      },
-      {
-        "code": "B000211",
-        "name": "서울동부지방법원"
-      },
-      {
-        "code": "B000212",
-        "name": "서울남부지방법원"
-      },
-      {
-        "code": "B000213",
-        "name": "서울북부지방법원"
-      },
-      {
-        "code": "B000214",
-        "name": "의정부지방법원"
-      },
-      {
-        "code": "B000215",
-        "name": "서울서부지방법원"
-      },
-      {
-        "code": "B000240",
-        "name": "인천지방법원"
-      },
-      {
-        "code": "B000241",
-        "name": "부천지원"
-      },
-      {
-        "code": "B000250",
-        "name": "수원지방법원"
-      },
-      {
-        "code": "B000251",
-        "name": "성남지원"
-      },
-      {
-        "code": "B000252",
-        "name": "여주지원"
-      },
-      {
-        "code": "B000253",
-        "name": "평택지원"
-      },
-      {
-        "code": "B000254",
-        "name": "안양지원"
-      },
-      {
-        "code": "B000260",
-        "name": "춘천지방법원"
-      },
-      {
-        "code": "B000261",
-        "name": "강릉지원"
-      },
-      {
-        "code": "B000262",
-        "name": "원주지원"
-      },
-      {
-        "code": "B000263",
-        "name": "속초지원"
-      },
-      {
-        "code": "B000264",
-        "name": "영월지원"
-      },
-      {
-        "code": "B000270",
-        "name": "청주지방법원"
-      },
-      {
-        "code": "B000271",
-        "name": "충주지원"
-      },
-      {
-        "code": "B000272",
-        "name": "제천지원"
-      },
-      {
-        "code": "B000273",
-        "name": "영동지원"
-      },
-      {
-        "code": "B000280",
-        "name": "대전지방법원"
-      },
-      {
-        "code": "B000281",
-        "name": "홍성지원"
-      },
-      {
-        "code": "B000282",
-        "name": "논산지원"
-      },
-      {
-        "code": "B000283",
-        "name": "천안지원"
-      },
-      {
-        "code": "B000284",
-        "name": "공주지원"
-      },
-      {
-        "code": "B000285",
-        "name": "서산지원"
-      },
-      {
-        "code": "B000310",
-        "name": "대구지방법원"
-      },
-      {
-        "code": "B000311",
-        "name": "안동지원"
-      },
-      {
-        "code": "B000312",
-        "name": "경주지원"
-      },
-      {
-        "code": "B000313",
-        "name": "김천지원"
-      },
-      {
-        "code": "B000314",
-        "name": "상주지원"
-      },
-      {
-        "code": "B000315",
-        "name": "의성지원"
-      },
-      {
-        "code": "B000316",
-        "name": "영덕지원"
-      },
-      {
-        "code": "B000317",
-        "name": "포항지원"
-      },
-      {
-        "code": "B000320",
-        "name": "대구서부지원"
-      },
-      {
-        "code": "B000410",
-        "name": "부산지방법원"
-      },
-      {
-        "code": "B000411",
-        "name": "울산지방법원"
-      },
-      {
-        "code": "B000412",
-        "name": "동부지원"
-      },
-      {
-        "code": "B000414",
-        "name": "부산서부지원"
-      },
-      {
-        "code": "B000420",
-        "name": "창원지방법원"
-      },
-      {
-        "code": "B000421",
-        "name": "진주지원"
-      },
-      {
-        "code": "B000422",
-        "name": "통영지원"
-      },
-      {
-        "code": "B000423",
-        "name": "밀양지원"
-      },
-      {
-        "code": "B000424",
-        "name": "거창지원"
-      },
-      {
-        "code": "B000431",
-        "name": "마산지원"
-      },
-      {
-        "code": "B000510",
-        "name": "광주지방법원"
-      },
-      {
-        "code": "B000511",
-        "name": "목포지원"
-      },
-      {
-        "code": "B000512",
-        "name": "장흥지원"
-      },
-      {
-        "code": "B000513",
-        "name": "순천지원"
-      },
-      {
-        "code": "B000514",
-        "name": "해남지원"
-      },
-      {
-        "code": "B000520",
-        "name": "전주지방법원"
-      },
-      {
-        "code": "B000521",
-        "name": "군산지원"
-      },
-      {
-        "code": "B000522",
-        "name": "정읍지원"
-      },
-      {
-        "code": "B000523",
-        "name": "남원지원"
-      },
-      {
-        "code": "B000530",
-        "name": "제주지방법원"
-      },
-      {
-        "code": "B214804",
-        "name": "남양주지원"
-      },
-      {
-        "code": "B214807",
-        "name": "고양지원"
-      },
-      {
-        "code": "B250826",
-        "name": "안산지원"
-      }
-    ],
-    "callsUsed": 10,
-    "noticesRead": 5,
-    "detailsRead": 5,
-    "batchItems": 473,
-    "lastBatchAt": "2026-10-23T13:53:32.282Z"
-  }
+  "attemptedAt": "2026-10-23T16:40:08.714Z",
+  "lastSuccessAt": "2026-10-23T16:40:08.714Z",
+  "itemCount": 15822,
+  "rawRowCount": 26584,
+  "uniquePropertyCount": 15822,
+  "regionCount": 19,
+  "coveragePercent": 100,
+  "callsUsed": 542,
+  "coverage": "법원경매정보 전국 부동산 공고중 물건 · 19개 시·도 전 페이지 완주 · 원본 26,584행 / 고유 매물 15,822건",
+  "detailStrategy": "on-demand",
+  "regionStats": [
+    {
+      "code": "11",
+      "name": "서울특별시",
+      "totalRows": 2614,
+      "pages": 53
+    },
+    {
+      "code": "12",
+      "name": "전남광주통합특별시",
+      "totalRows": 146,
+      "pages": 3
+    },
+    {
+      "code": "26",
+      "name": "부산광역시",
+      "totalRows": 1702,
+      "pages": 35
+    },
+    {
+      "code": "27",
+      "name": "대구광역시",
+      "totalRows": 444,
+      "pages": 9
+    },
+    {
+      "code": "28",
+      "name": "인천광역시",
+      "totalRows": 1441,
+      "pages": 29
+    },
+    {
+      "code": "29",
+      "name": "광주광역시",
+      "totalRows": 357,
+      "pages": 8
+    },
+    {
+      "code": "30",
+      "name": "대전광역시",
+      "totalRows": 373,
+      "pages": 8
+    },
+    {
+      "code": "31",
+      "name": "울산광역시",
+      "totalRows": 227,
+      "pages": 5
+    },
+    {
+      "code": "36",
+      "name": "세종특별자치시",
+      "totalRows": 397,
+      "pages": 8
+    },
+    {
+      "code": "41",
+      "name": "경기도",
+      "totalRows": 7257,
+      "pages": 146
+    },
+    {
+      "code": "43",
+      "name": "충청북도",
+      "totalRows": 1176,
+      "pages": 24
+    },
+    {
+      "code": "44",
+      "name": "충청남도",
+      "totalRows": 1932,
+      "pages": 39
+    },
+    {
+      "code": "45",
+      "name": "전라북도",
+      "totalRows": 27,
+      "pages": 1
+    },
+    {
+      "code": "46",
+      "name": "전라남도",
+      "totalRows": 1816,
+      "pages": 37
+    },
+    {
+      "code": "47",
+      "name": "경상북도",
+      "totalRows": 1367,
+      "pages": 28
+    },
+    {
+      "code": "48",
+      "name": "경상남도",
+      "totalRows": 2735,
+      "pages": 55
+    },
+    {
+      "code": "50",
+      "name": "제주특별자치도",
+      "totalRows": 856,
+      "pages": 18
+    },
+    {
+      "code": "51",
+      "name": "강원특별자치도",
+      "totalRows": 1140,
+      "pages": 23
+    },
+    {
+      "code": "52",
+      "name": "전북특별자치도",
+      "totalRows": 577,
+      "pages": 12
+    }
+  ]
 }
