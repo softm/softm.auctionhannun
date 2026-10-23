@@ -398,7 +398,7 @@ function renderDetailOverview(item) {
     ["detail-photos", "사진", photoCount ? `${photoCount}장` : "미수집", photoCount > 0],
     ["detail-basic", "기본정보", "확인", true],
     ["detail-schedule", item.auctionKind === "onbid" ? "입찰일정" : "기일내역", scheduleCount ? `${scheduleCount}건` : "원문 확인", scheduleCount > 0],
-    ["detail-lots", "물건구성", lotCount ? `${lotCount}건` : "원문 확인", lotCount > 0],
+    [item.assetDetails ? "detail-asset" : "detail-lots", item.assetDetails ? "동산상세" : "물건구성", item.assetDetails ? "수집됨" : lotCount ? `${lotCount}건` : "원문 확인", Boolean(item.assetDetails) || lotCount > 0],
     ["detail-appraisal", "감정평가", item.appraisalSummary ? "수집됨" : "원문 확인", Boolean(item.appraisalSummary)],
     ["detail-tenancy", "권리·점유", item.tenancySummary ? "요약 있음" : "원문 확인", Boolean(item.tenancySummary)],
     ["detail-documents", "공식문서", documentCount ? `${documentCount}건` : "원문 확인", documentCount > 0],
@@ -492,6 +492,22 @@ function renderCollectedDetails(item) {
     sections.push(`<section class="summary-card collected-detail proptech-section" id="detail-schedule">${detailSectionHead("clock", "SCHEDULE", title, description)}<div class="detail-table-wrap"><table><thead><tr><th>기일</th><th>종류</th><th>장소</th><th>최저가격</th><th>결과</th></tr></thead><tbody>${item.schedules.map(value => `<tr><td>${escapeHtml([value.date, value.time].filter(Boolean).join(" ") || "—")}</td><td>${escapeHtml(value.type || "—")}</td><td>${escapeHtml(value.place || "—")}</td><td>${escapeHtml(value.minimum || "—")}</td><td>${escapeHtml(value.result || "—")}</td></tr>`).join("")}</tbody></table></div></section>`);
   }
   if (Array.isArray(item.propertyLots) && item.propertyLots.length) sections.push(`<section class="summary-card collected-detail proptech-section" id="detail-lots">${detailSectionHead("list", "PROPERTY", "물건 구성·목록내역", "토지·건물의 종별, 면적, 지분과 상세 구성을 확인합니다.")}<div class="property-lot-list">${item.propertyLots.map(value => `<article><div class="lot-number">목록 ${escapeHtml(value.number)}</div><b>${escapeHtml(value.type || "구분 확인")}</b><p>${escapeHtml(value.address || item.address)}</p>${value.area ? `<span>면적 <strong>${escapeHtml(value.area)}</strong></span>` : ""}${value.share ? `<span>지분 <strong>${escapeHtml(value.share)}</strong></span>` : ""}${value.details ? `<small>${escapeHtml(value.details)}</small>` : ""}</article>`).join("")}</div></section>`);
+  if (item.assetDetails) {
+    const rows = factRows([
+      ["재산명", item.assetDetails.assetName],
+      ["수량", item.assetDetails.quantity],
+      ["중량", item.assetDetails.weight],
+      ["제조사", item.assetDetails.manufacturer],
+      ["모델명", item.assetDetails.model],
+      ["생산지", item.assetDetails.origin],
+      ["보관장소", item.assetDetails.storagePlace],
+      ["작품명", item.assetDetails.artworkTitle],
+      ["작가명", item.assetDetails.artist],
+      ["종목명", item.assetDetails.itemName],
+      ["기타사항", item.assetDetails.note]
+    ]);
+    if (rows) sections.push(`<section class="summary-card proptech-section" id="detail-asset">${detailSectionHead("list", "MOVABLE ASSET", "동산 상세정보", "온비드 동산 상세 API의 수량·제조·모델·보관 정보를 구조화해 표시합니다.")}<dl class="fact-list asset-facts">${rows}</dl></section>`);
+  }
   if (item.appraisalSummary) {
     const labels = { valuedAt: "감정평가일", location: "위치", transport: "교통", surroundings: "주변환경", usage: "이용상태", structure: "건물구조", facilities: "설비", landUse: "토지이용계획", other: "기타" };
     const rows = factRows(Object.entries(labels).map(([key, label]) => [label, item.appraisalSummary[key]]));
