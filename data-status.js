@@ -38,11 +38,16 @@ export function collectionRow(name, manifest, status) {
   if (!publishedManifest(manifest)) return [name, "확인 불가", "—", "—", "확인 불가", "—", "—", "배포 매니페스트 확인 필요"];
   const sameSnapshot = matchesPublishedSnapshot(manifest, status);
   const verified = sameSnapshot && Number.isInteger(status.expectedCount) && status.expectedCount > 0 && status.itemCount <= status.expectedCount;
+  const nationwideCoverage = sameSnapshot && manifest.lazyDetails === true && Number.isFinite(status.coveragePercent) ? status.coveragePercent : null;
   const labels = { ready: "정상", unconfigured: "공급원 미연결", failed: "실패 · 이전 정상 자료 유지", error: "실패 · 이전 정상 자료 유지" };
-  const propertyCount = Number.isSafeInteger(manifest.distinctProperties) && manifest.distinctProperties >= 0 ? manifest.distinctProperties : null;
+  const propertyCount = Number.isSafeInteger(manifest.distinctProperties) && manifest.distinctProperties >= 0 ? manifest.distinctProperties : Number.isSafeInteger(manifest.uniquePropertyCount) && manifest.uniquePropertyCount >= 0 ? manifest.uniquePropertyCount : null;
   const photoCount = publishedPhotoCount(manifest, status);
   const photoCoverage = photoCount == null ? "—" : `${number(photoCount)}건${propertyCount > 0 ? ` (${Math.floor(photoCount / propertyCount * 1000) / 10}%)` : ""}`;
-  return [name, number(manifest.itemCount), number(propertyCount), photoCoverage, verified ? `${number(status.itemCount)} / ${number(status.expectedCount)}건 (${Math.floor(status.itemCount / status.expectedCount * 1000) / 10}%)` : "— (비교 대상 없음)", sameSnapshot ? number(status.completedPages) : "—", date(manifest.collectedAt), `${labels[status?.state] || "상태 확인 필요"}${status?.attemptedAt ? ` · ${date(status.attemptedAt)}` : ""}`];
+  const coverage = nationwideCoverage != null
+    ? `전국 기본목록 ${nationwideCoverage}% · 원본 ${number(status.rawRowCount)}행`
+    : verified ? `${number(status.itemCount)} / ${number(status.expectedCount)}건 (${Math.floor(status.itemCount / status.expectedCount * 1000) / 10}%)` : "— (비교 대상 없음)";
+  const completed = manifest.lazyDetails === true ? `${number(status.regionCount)}개 시·도` : sameSnapshot ? number(status.completedPages) : "—";
+  return [name, number(manifest.itemCount), number(propertyCount), photoCoverage, coverage, completed, date(manifest.collectedAt), `${labels[status?.state] || "상태 확인 필요"}${status?.attemptedAt ? ` · ${date(status.attemptedAt)}` : ""}`];
 }
 async function json(url) {
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12000) });
@@ -96,8 +101,10 @@ async function loadPublished() {
   const courtStatus = results[2]?.status;
   document.getElementById("courtDetailStatus").textContent = courtStatus?.state === "unconfigured" && court?.itemCount === 0
     ? "법원 경매 공급원 미연결 · 사건·사진·상세자료 미수집"
-    : court?.itemCount > 0 ? "물건별 제공 자료 확인 필요 · 수집 건수만으로 상세자료 확보를 뜻하지 않습니다."
-      : "법원 상세자료 확보 상태 확인 필요";
+    : court?.lazyDetails === true && court?.itemCount > 0
+      ? `전국 기본목록 ${number(court.itemCount)}건 확보 · 물건 선택 시 사건·물건 상세를 조회하고 CDN 캐시합니다.`
+      : court?.itemCount > 0 ? "물건별 제공 자료 확인 필요 · 수집 건수만으로 상세자료 확보를 뜻하지 않습니다."
+        : "법원 상세자료 확보 상태 확인 필요";
   document.getElementById("scope").textContent = results.map(x => `${x.name} 수집 범위: ${x.manifest?.coverage || "확인 불가"}`).join("\n");
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   document.getElementById("notice").textContent = `${local ? "로컬 미리보기 자료 기준 (운영 배포본과 다를 수 있음)" : "현재 사이트에서 제공 중인 자료 기준"} · 확인 ${date(new Date())} KST${results.some(x => !x.manifest || !x.status) ? " · 일부 자료를 불러오지 못했습니다. 새로고침해 주세요." : ""}`;
