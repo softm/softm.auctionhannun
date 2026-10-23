@@ -22,10 +22,8 @@ jobs:
     timeout-minutes: 45
     env:
       TZ: Asia/Seoul
-      COURT_CATALOG_MIN_DELAY_MS: 1800
-      COURT_CATALOG_JITTER_MS: 700
-      COURT_CATALOG_CHECKPOINT_EVERY: 50
-      COURT_CATALOG_CHECKPOINT_PAUSE_MS: 15000
+      COURT_LIST_MIN_INTERVAL_MS: 1600
+      COURT_LIST_JITTER_MS: 900
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,7 +37,7 @@ jobs:
       - name: Collect nationwide court auction list
         id: court
         continue-on-error: true
-        run: npm run collect:court-catalog
+        run: npm run collect:court-list
       - name: Validate complete snapshot
         if: steps.court.outcome == 'success'
         run: npm run check
