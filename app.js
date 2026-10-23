@@ -394,7 +394,7 @@ function renderDetailOverview(item) {
       <p>사진·일정·물건 구성·감정평가·권리 기초정보를 한 흐름으로 확인합니다.</p>
     </div>
     <div class="detail-overview-score"><b>${available}/${entries.length}</b><span>정보 영역</span></div>
-    <div class="detail-quick-nav">${entries.map(([target, label, value, ok]) => `<button type="button" data-action="jump-detail" data-target="${target}" class="${ok ? "available" : ""}"><span>${escapeHtml(label)}</span><b>${escapeHtml(value)}</b></button>`).join("")}</div>
+    <div class="detail-quick-nav">${entries.map(([target, label, value, ok]) => `<button type="button" data-action="jump-detail" data-target="${target}" class="${ok ? "available" : ""}" ${ok ? "" : "disabled"}><span>${escapeHtml(label)}</span><b>${escapeHtml(value)}</b></button>`).join("")}</div>
   </section>`;
 }
 
@@ -464,26 +464,31 @@ function factRows(values) {
 function renderCollectedDetails(item) {
   const sections = [];
   if (item.caseDetails) {
-    const rows = factRows([["사건접수일", item.caseDetails.filedAt], ["경매개시결정일", item.caseDetails.commencedAt], ["배당요구종기", item.caseDetails.distributionDeadline], ["청구금액", item.caseDetails.claimAmount]]);
-    if (rows) sections.push(`<section class="summary-card"><h3>사건 기본정보</h3><dl class="fact-list">${rows}</dl></section>`);
+    const distributionLabel = item.auctionKind === "onbid" ? "배분요구종기" : "배당요구종기";
+    const rows = factRows([["사건접수일", item.caseDetails.filedAt], ["경매개시결정일", item.caseDetails.commencedAt], [distributionLabel, item.caseDetails.distributionDeadline], ["청구금액", item.caseDetails.claimAmount]]);
+    if (rows) sections.push(`<section class="summary-card proptech-section" id="detail-case">${detailSectionHead("file", item.auctionKind === "onbid" ? "PUBLIC SALE" : "CASE", item.auctionKind === "onbid" ? "공매 기본정보" : "사건 기본정보", "공식 상세자료에서 확인된 사건·공매 기준정보입니다.")}<dl class="fact-list">${rows}</dl></section>`);
   }
-  if (Array.isArray(item.schedules) && item.schedules.length) sections.push(`<section class="summary-card collected-detail"><h3>기일내역</h3><div class="detail-table-wrap"><table><thead><tr><th>기일</th><th>종류</th><th>장소</th><th>최저가격</th><th>결과</th></tr></thead><tbody>${item.schedules.map(value => `<tr><td>${escapeHtml([value.date, value.time].filter(Boolean).join(" ") || "—")}</td><td>${escapeHtml(value.type || "—")}</td><td>${escapeHtml(value.place || "—")}</td><td>${escapeHtml(value.minimum || "—")}</td><td>${escapeHtml(value.result || "—")}</td></tr>`).join("")}</tbody></table></div></section>`);
-  if (Array.isArray(item.propertyLots) && item.propertyLots.length) sections.push(`<section class="summary-card collected-detail"><h3>목록내역</h3><div class="property-lot-list">${item.propertyLots.map(value => `<article><b>목록 ${escapeHtml(value.number)} · ${escapeHtml(value.type || "구분 확인")}</b><p>${escapeHtml(value.address || item.address)}</p>${value.area ? `<span>면적 ${escapeHtml(value.area)}</span>` : ""}${value.share ? `<span>지분 ${escapeHtml(value.share)}</span>` : ""}${value.details ? `<small>${escapeHtml(value.details)}</small>` : ""}</article>`).join("")}</div></section>`);
+  if (Array.isArray(item.schedules) && item.schedules.length) {
+    const title = item.auctionKind === "onbid" ? "입찰 일정" : "기일내역";
+    const description = item.auctionKind === "onbid" ? "입찰 시작과 마감 시각, 현재 진행상태를 확인합니다." : "매각기일·매각결정기일과 유찰·변경 등 진행 이력을 확인합니다.";
+    sections.push(`<section class="summary-card collected-detail proptech-section" id="detail-schedule">${detailSectionHead("clock", "SCHEDULE", title, description)}<div class="detail-table-wrap"><table><thead><tr><th>기일</th><th>종류</th><th>장소</th><th>최저가격</th><th>결과</th></tr></thead><tbody>${item.schedules.map(value => `<tr><td>${escapeHtml([value.date, value.time].filter(Boolean).join(" ") || "—")}</td><td>${escapeHtml(value.type || "—")}</td><td>${escapeHtml(value.place || "—")}</td><td>${escapeHtml(value.minimum || "—")}</td><td>${escapeHtml(value.result || "—")}</td></tr>`).join("")}</tbody></table></div></section>`);
+  }
+  if (Array.isArray(item.propertyLots) && item.propertyLots.length) sections.push(`<section class="summary-card collected-detail proptech-section" id="detail-lots">${detailSectionHead("list", "PROPERTY", "물건 구성·목록내역", "토지·건물의 종별, 면적, 지분과 상세 구성을 확인합니다.")}<div class="property-lot-list">${item.propertyLots.map(value => `<article><div class="lot-number">목록 ${escapeHtml(value.number)}</div><b>${escapeHtml(value.type || "구분 확인")}</b><p>${escapeHtml(value.address || item.address)}</p>${value.area ? `<span>면적 <strong>${escapeHtml(value.area)}</strong></span>` : ""}${value.share ? `<span>지분 <strong>${escapeHtml(value.share)}</strong></span>` : ""}${value.details ? `<small>${escapeHtml(value.details)}</small>` : ""}</article>`).join("")}</div></section>`);
   if (item.appraisalSummary) {
     const labels = { valuedAt: "감정평가일", location: "위치", transport: "교통", surroundings: "주변환경", usage: "이용상태", structure: "건물구조", facilities: "설비", landUse: "토지이용계획", other: "기타" };
     const rows = factRows(Object.entries(labels).map(([key, label]) => [label, item.appraisalSummary[key]]));
-    if (rows) sections.push(`<section class="summary-card"><h3>감정평가 요약</h3><dl class="fact-list appraisal-facts">${rows}</dl></section>`);
+    if (rows) sections.push(`<section class="summary-card proptech-section" id="detail-appraisal">${detailSectionHead("search", "APPRAISAL", "감정평가 핵심 요약", "위치·교통·이용상태·구조·설비 등 감정평가 핵심 내용을 읽기 쉽게 정리합니다.")}<dl class="fact-list appraisal-facts">${rows}</dl></section>`);
   }
   if (item.tenancySummary) {
     const rows = factRows([["조사 상태", item.tenancySummary.status], ["확인된 점유 주체 수", item.tenancySummary.occupantCount], ["비식별 요약", item.tenancySummary.note]]);
-    if (rows) sections.push(`<section class="summary-card"><h3>점유·임차관계 요약</h3><dl class="fact-list">${rows}</dl><p class="legal-note">개인 이름·연락처·주민등록번호는 저장하지 않습니다. 원문과 최신 전입·배당 상태를 직접 대조하세요.</p></section>`);
+    if (rows) sections.push(`<section class="summary-card proptech-section" id="detail-tenancy">${detailSectionHead("shield", "RIGHTS & OCCUPANCY", "권리·점유 기초정보", "등기·배분요구·점유·임대차 공개정보를 개인 식별정보 없이 요약합니다.")}<dl class="fact-list">${rows}</dl><p class="legal-note">개인 이름·연락처·주민등록번호는 저장하지 않습니다. 권리순위와 대항력·배당 상태는 반드시 최신 원문과 등기기록을 직접 대조하세요.</p></section>`);
   }
   if (item.documents && Object.keys(item.documents).length) {
     const labels = { saleSpecification: "매각물건명세서", fieldReport: "현황조사보고서", appraisalReport: "감정평가서" };
-    sections.push(`<section class="summary-card collected-documents"><h3>공식 공개문서</h3>${Object.entries(labels).map(([key, label]) => {
+    sections.push(`<section class="summary-card collected-documents proptech-section" id="detail-documents">${detailSectionHead("external", "DOCUMENTS", "공식 공개문서", "수집된 공식 문서를 바로 열어 원문과 현재 정보를 대조합니다.")}${Object.entries(labels).map(([key, label]) => {
       const document = item.documents[key];
       if (!document) return "";
-      return `<div><span><b>${label}</b><small>${document.publishedAt ? `공시 ${escapeHtml(document.publishedAt)}` : "공시일 확인 필요"}</small></span>${document.url ? `<a href="${escapeHtml(document.url)}" target="_blank" rel="noopener noreferrer">원문 열기 ↗</a>` : "<em>공식 사이트 확인</em>"}</div>`;
+      return `<div><span><b>${label}</b><small>${document.publishedAt ? `공시 ${escapeHtml(document.publishedAt)}` : "공시일 확인 필요"}</small></span>${document.url ? `<a href="${escapeHtml(document.url)}" target="_blank" rel="noopener noreferrer">원문 열기 ${icon("external")}</a>` : "<em>공식 사이트 확인</em>"}</div>`;
     }).join("")}</section>`);
   }
   return sections.join("");
@@ -506,7 +511,7 @@ function renderLandTools(item) {
   const selected = parcelSelections.get(item.id);
   const pnu = selected?.pnu || item.pnu;
   const url = eumUrl(pnu);
-  return `<section class="summary-card land-tools"><h3>위치·필지·토지이용계획</h3>
+  return `<section class="summary-card land-tools proptech-section" id="detail-land">${detailSectionHead("map", "MAP & PARCEL", "위치·필지·토지이용계획", "지도 위치와 필지 후보를 확인하고 지적 경계를 공식 원문과 대조합니다.")}
     <p>주소 확인 시 소재지를 네이버에, 필지 찾기 시 소재지를 VWorld에 전송합니다. 메모·사건번호는 전송하지 않습니다.</p>
     <div class="land-actions"><button type="button" data-action="locate">지도에서 주소 확인</button><button type="button" data-action="parcel-search">필지 찾기</button></div>
     <div id="parcelResults" aria-live="polite"></div>
@@ -843,6 +848,12 @@ $("#detailContent").addEventListener("click", event => {
   const action = event.target.closest("[data-action]");
   if (!action) return;
   if (action.dataset.action.startsWith("gallery-")) { setGalleryImage(action); return; }
+  if (action.dataset.action === "jump-detail") {
+    const target = document.getElementById(action.dataset.target);
+    if (target) target.scrollIntoView({ block: "start", behavior: "smooth" });
+    return;
+  }
+  if (action.dataset.action === "related-case") { selectCase(action.dataset.caseId); return; }
   if (action.dataset.action === "locate") void locateSelected();
   if (action.dataset.action === "parcel-search") void findSelectedParcel();
   if (action.dataset.action === "parcel-map") void showSelectedParcel();
