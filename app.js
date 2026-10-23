@@ -439,7 +439,7 @@ function renderSimilarCases(item) {
 
 function renderSummary(item) {
   const lastVerified = state.verified[item.id];
-  const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.auctionKind === "onbid" ? "한국자산관리공사 온비드 공매 자료입니다. 법원경매가 아니며 법원 3대 서류 공시 기준을 적용하지 않습니다. 공고문·입찰 마감시각·정정 여부를 온비드 원문에서 확인하세요." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
+  const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.auctionKind === "onbid" ? "한국자산관리공사 온비드 공매 자료입니다. 법원경매가 아니며 법원 3대 서류 공시 기준을 적용하지 않습니다. 공고문·입찰 마감시각·정정 여부를 온비드 원문에서 확인하세요." : item.detailLevel === "list" ? "전국 목록 기본정보를 먼저 표시하고 있습니다. 법원 사건·물건 상세를 불러오는 중이며, 실패해도 목록 정보와 공식 원문 연결은 유지됩니다." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
   return `${renderDetailOverview(item)}
     <div class="demo-banner">${icon("help")}<span>${notice}</span></div>
     ${renderImageGallery(item)}
