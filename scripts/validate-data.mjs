@@ -22,11 +22,17 @@ if (catalogHash !== manifest.catalogHash || catalog.items.length !== manifest.it
 if (new Set(catalog.items.map(item => item.id)).size !== catalog.items.length) throw new Error("검색 인덱스 중복");
 const expected = new Map(dataset.items.map(item => [item.id, item]));
 for (const item of catalog.items) {
+  const full = expected.get(item.id);
+  const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = full;
+  if (manifest.lazyDetails === true && full.auctionKind === "court" && full.detailLevel !== "full") {
+    if (item.detailFile) throw new Error("지연 상세 법원 목록에 상세 파일이 포함되었습니다.");
+    if (JSON.stringify(item) !== JSON.stringify(summary)) throw new Error("지연 상세 검색 목록과 원본 요약이 다릅니다.");
+    continue;
+  }
   if (!safeDataPath(item.detailFile, "detail")) throw new Error("상세 경로 오류");
   const detail = JSON.parse(await readFile(resolve(dataDir, item.detailFile), "utf8"));
   const detailHash = createHash("sha256").update(JSON.stringify(detail)).digest("hex");
-  if (item.detailFile !== `details/${detailHash}.json` || JSON.stringify(expected.get(item.id)) !== JSON.stringify(detail)) throw new Error("상세 데이터가 원본과 일치하지 않습니다.");
-  const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = detail;
+  if (item.detailFile !== `details/${detailHash}.json` || JSON.stringify(full) !== JSON.stringify(detail)) throw new Error("상세 데이터가 원본과 일치하지 않습니다.");
   if (JSON.stringify(item) !== JSON.stringify({ ...summary, detailFile: item.detailFile })) throw new Error("검색 목록과 상세 자료가 다릅니다.");
 }
 return { manifest, catalog, count: normalized.items.length };
