@@ -9,7 +9,7 @@ import { validateData } from "../scripts/validate-data.mjs";
 import { normalizeDataset } from "../scripts/collect-auctions.mjs";
 import { filterAndSortCases, reviewMetrics } from "../auction-utils.js";
 
-const row = { cltrMngNo: "test-only-001", pbctCdtnNo: 12, onbidCltrNm: "서울특별시 테스트구 산2-45", cltrUsgMclsCtgrNm: "토지", cltrUsgSclsCtgrNm: "임야", cltrBidBgngDt: "202610190900", cltrBidEndDt: "202610261700", ltnoPnu: "1153010700100020045", apslEvlAmt: 100000000, lowstBidPrcIndctCont: "비공개" };
+const row = { cltrMngNo: "test-only-001", pbctCdtnNo: 12, onbidCltrNm: "서울특별시 테스트구 산2-45", cltrUsgMclsCtgrNm: "토지", cltrUsgSclsCtgrNm: "임야", cltrBidBgngDt: "202610190900", cltrBidEndDt: "202610261700", ltnoPnu: "1153010700100020045", apslEvlAmt: 100000000, lowstBidPrcIndctCont: "비공개", pbctStatNm: "입찰준비중" };
 
 test("차세대 온비드 공식 주소·필수값과 키 인코딩을 사용한다", () => {
   const url = onbidListUrl("fake%2Bkey%3D");
@@ -41,7 +41,10 @@ test("온비드 상세정보에서 사진·면적·감정평가를 개인정보 
     sqmsList: [{ clandCont: "건물>건물", sqmsCont: "59.76㎡", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }, { clandCont: "건물>건물", sqmsCont: "59.76㎡", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }],
     apslEvlClgList: [{ apslEvlYmd: "20261001", apslEvlAmt: 123000000, urlAdr: "https://www.onbid.co.kr/appraisal.pdf" }],
     ocpyRelList: [{ ocpyRelCdNm: "소유자", acpmPrptOcpyIrpsFlnm: "홍길동" }],
-    leasInfList: [{ irstDivNm: "전세권", cltrInprNm: "김**" }]
+    leasInfList: [{ irstDivNm: "전세권", cltrInprNm: "김**" }],
+    rgstPrmrInfList: [{ irstDivNm: "근저당권", cltrInprNm: "박**" }],
+    dtbtRqrMtrsList: [{ rgtRelCdNm: "근저당권", acpmPrptBondDclFlnm: "주*****" }],
+    dtbtRqrEdtmCont: "20261130"
   }], "2026-001-001");
   assert.deepEqual(enrichment.imageUrls, ["https://img.onbid.co.kr/a.jpg"]);
   assert.equal(enrichment.propertyLots.length, 1);
@@ -49,6 +52,9 @@ test("온비드 상세정보에서 사진·면적·감정평가를 개인정보 
   assert.equal(enrichment.appraisalSummary.valuedAt, "2026-10-01");
   assert.equal(enrichment.documents.appraisalReport.url, "https://www.onbid.co.kr/appraisal.pdf");
   assert.equal(enrichment.tenancySummary.occupantCount, 1);
+  assert.match(enrichment.tenancySummary.note, /등기 주요정보 1건/);
+  assert.match(enrichment.tenancySummary.note, /배분요구사항 1건/);
+  assert.equal(enrichment.caseDetails.distributionDeadline, "2026-11-30");
   assert.equal(JSON.stringify(enrichment).includes("홍길동"), false);
   assert.equal(JSON.stringify(enrichment).includes("김**"), false);
 });
@@ -60,6 +66,7 @@ test("온비드 물건은 법원 사건으로 변환하지 않고 마감시각·
   assert.equal(item.minimum, "비공개");
   assert.equal(item.rounds, "원문 확인", "유찰 누락값을 0회로 만들지 않는다");
   assert.equal(item.pnu, null, "0/1 산 코드가 섞인 원본을 표준 PNU로 오인하지 않는다");
+  assert.deepEqual(item.schedules.map(value => [value.type, value.date, value.time]), [["입찰 시작", "2026-10-19", "09:00"], ["입찰 마감", "2026-10-26", "17:00"]]);
   const normalized = normalizeDataset({ metadata: { reviewed: true, demo: false, datasetKind: "onbid-public-sale", sourceUrl: "https://www.onbid.co.kr/" }, items: [item] });
   assert.equal(normalized.items[0].auctionKind, "onbid");
   assert.equal(normalized.items[0].bidEndsAt, item.bidEndsAt);
