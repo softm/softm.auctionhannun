@@ -1,9 +1,11 @@
-import { cp, mkdir, rm } from "node:fs/promises";
+import { cp, mkdir, rm, access } from "node:fs/promises";
 import { dirname } from "node:path";
 import { validateData } from "./validate-data.mjs";
 
 const { manifest, catalog } = await validateData();
 const onbid = await validateData("data/onbid");
+let movable = null;
+try { await access("data/onbid-movable/manifest.json"); movable = await validateData("data/onbid-movable"); } catch (error) { if (error?.code !== "ENOENT") throw error; }
 for (let attempt = 0; attempt < 3; attempt += 1) {
   try {
     await rm("dist", { recursive: true, force: true, maxRetries: 2, retryDelay: 50 });
@@ -40,5 +42,11 @@ for (const file of [manifest.catalogFile, ...catalog.items.map(item => item.deta
 for (const file of ["auctions.json", "manifest.json", "collection-status.json", onbid.manifest.catalogFile, ...onbid.catalog.items.map(item => item.detailFile)]) {
   await mkdir(dirname(`dist/data/onbid/${file}`), { recursive: true });
   await cp(`data/onbid/${file}`, `dist/data/onbid/${file}`);
+}
+if (movable) {
+  for (const file of ["auctions.json", "manifest.json", "collection-status.json", movable.manifest.catalogFile, ...movable.catalog.items.map(item => item.detailFile)]) {
+    await mkdir(dirname(`dist/data/onbid-movable/${file}`), { recursive: true });
+    await cp(`data/onbid-movable/${file}`, `dist/data/onbid-movable/${file}`);
+  }
 }
 console.log("GitHub Pages 산출물 생성 완료: dist/");
