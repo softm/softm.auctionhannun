@@ -1,0 +1,72 @@
+name: Probe Onbid movable APIs
+
+on:
+  push:
+    paths:
+      - ".github/workflows/probe-onbid-movable.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Probe movable list and detail
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          const decodeKey = value => /%[0-9a-f]{2}/i.test(value || "") ? decodeURIComponent(value) : value;
+          const key = decodeKey(process.env.ONBID_SERVICE_KEY || "");
+          if (!key) throw new Error("ONBID_SERVICE_KEY missing");
+          const req = async url => {
+            const r = await fetch(url, { headers: { accept: "application/json" } });
+            const body = await r.text();
+            let json = null;
+            try { json = JSON.parse(body); } catch {}
+            return { status: r.status, json, body: json ? "" : body.slice(0,200) };
+          };
+          const listUrl = new URL("https://apis.data.go.kr/B010003/OnbidMvastListSrvc2/getMvastCltrList2");
+          listUrl.search = new URLSearchParams({ serviceKey:key, pageNo:"1", numOfRows:"1", resultType:"json", prptDivCd:"0005", pvctTrgtYn:"N" });
+          const list = await req(listUrl);
+          const env = list.json?.response || list.json || {};
+          const item = Array.isArray(env.body?.items?.item) ? env.body.items.item[0] : env.body?.items?.item;
+          console.log(JSON.stringify({
+            phase:"list", httpStatus:list.status, resultCode:String(env.header?.resultCode || "UNKNOWN"),
+            totalCount:Number(env.body?.totalCount || 0), itemKeys:item ? Object.keys(item).sort() : [],
+            sample:item ? {
+              cltrMngNo:item.cltrMngNo, pbctCdtnNo:item.pbctCdtnNo, onbidCltrNm:item.onbidCltrNm,
+              prptDivCd:item.prptDivCd, prptDivNm:item.prptDivNm, orgNm:item.orgNm,
+              cltrBidBgngDt:item.cltrBidBgngDt, cltrBidEndDt:item.cltrBidEndDt,
+              apslEvlAmt:item.apslEvlAmt, lowstBidPrcIndctCont:item.lowstBidPrcIndctCont,
+              sido:item.sido, sgg:item.sgg, addr:item.addr, zadrNm:item.zadrNm,
+              cltrUsgMclsCtgrNm:item.cltrUsgMclsCtgrNm, cltrUsgSclsCtgrNm:item.cltrUsgSclsCtgrNm,
+              pbctStatNm:item.pbctStatNm
+            } : null
+          }));
+          if (!(list.status === 200 && String(env.header?.resultCode) === "00" && item?.cltrMngNo)) process.exit(2);
+
+          const detailUrl = new URL("https://apis.data.go.kr/B010003/OnbidMvastDtlSrvc2/getMvastDtlInf2");
+          detailUrl.search = new URLSearchParams({ serviceKey:key, pageNo:"1", numOfRows:"100", resultType:"json", cltrMngNo:String(item.cltrMngNo) });
+          const detail = await req(detailUrl);
+          const denv = detail.json?.response || detail.json || {};
+          const ditems = denv.body?.items?.item;
+          const drow = Array.isArray(ditems) ? ditems[0] : ditems;
+          console.log(JSON.stringify({
+            phase:"detail", httpStatus:detail.status, resultCode:String(denv.header?.resultCode || "UNKNOWN"),
+            itemKeys:drow ? Object.keys(drow).sort() : [],
+            sample:drow ? {
+              cltrMngNo:drow.cltrMngNo, prptNm:drow.prptNm, qnt:drow.qnt, wght:drow.wght,
+              mnfctNm:drow.mnfctNm, mdlNm:drow.mdlNm, prdcPlc:drow.prdcPlc, strgPlc:drow.strgPlc,
+              apslEvlAmt:drow.apslEvlAmt, potoUrlList:drow.potoUrlList
+            } : null
+          }));
+          if (!(detail.status === 200 && String(denv.header?.resultCode) === "00")) process.exit(3);
+          NODE
