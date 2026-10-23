@@ -70,6 +70,9 @@ const state = {
   onbidDataset: null,
   onbidStatus: null,
   onbidError: "",
+  onbidMovableDataset: null,
+  onbidMovableStatus: null,
+  onbidMovableError: "",
   collection: null,
   dataError: "",
   added: storage.get("cases", []),
@@ -161,20 +164,35 @@ async function loadCollectedCases() {
     state.onbidDataset = onbid.metadata;
     state.collected.push(...onbid.items);
     state.onbidStatus = await loadCollectionStatus("./data/onbid");
-  } catch (error) { state.onbidError = `온비드 자료 읽기 실패: ${error.message}`; }
+  } catch (error) { state.onbidError = `온비드 부동산 자료 읽기 실패: ${error.message}`; }
+  try {
+    const movable = await loadCatalog("./data/onbid-movable", "onbid");
+    state.onbidMovableDataset = movable.metadata;
+    state.collected.push(...movable.items);
+    state.onbidMovableStatus = await loadCollectionStatus("./data/onbid-movable");
+  } catch (error) {
+    if (!/HTTP 404/.test(error.message)) state.onbidMovableError = `온비드 동산 자료 읽기 실패: ${error.message}`;
+  }
   renderDatasetStatus();
 }
 
 function renderDatasetStatus() {
-  const onbidCount = state.collected.filter(item => item.auctionKind === "onbid").length;
-  const courtCount = state.collected.length - onbidCount;
-  $("#datasetStatus").textContent = `법원경매 ${courtCount}건${state.collection?.state === "unconfigured" ? " (미연결)" : ""} · 온비드 공매 ${onbidCount.toLocaleString()}입찰건`;
-  $("#datasetNotice").textContent = onbidCount
-    ? `한국자산관리공사 온비드 공식 API 자료 · ${state.onbidDataset.coverage}. ${state.onbidDataset.distinctProperties?.toLocaleString() || ""}개 물건의 공매조건·일정별 자료이며 법원경매가 아닙니다. 공고문과 최신 상태를 온비드에서 확인하세요.`
-    : state.dataError || state.onbidError || "현재 수집된 실제 물건은 0건입니다. 예시 물건으로 대체하지 않습니다.";
-  $("#collectionHealth").textContent = `법원: ${state.dataError ? "자료 오류" : state.collection?.state === "unconfigured" ? "공급원 미연결" : state.collection?.state || "미확인"} · 온비드: ${state.onbidStatus?.state === "ready" ? "수집 정상" : state.onbidStatus?.state === "error" ? "최근 수집 실패 / 마지막 정상 자료" : "미확인"} ${state.onbidStatus?.lastSuccessAt ? new Intl.DateTimeFormat("ko-KR", { dateStyle: "short", timeStyle: "short" }).format(new Date(state.onbidStatus.lastSuccessAt)) : ""}`;
+  const onbidItems = state.collected.filter(item => item.auctionKind === "onbid");
+  const movableCount = state.onbidMovableDataset?.itemCount || 0;
+  const realEstateCount = Math.max(0, onbidItems.length - movableCount);
+  const courtCount = state.collected.length - onbidItems.length;
+  $("#datasetStatus").textContent = `법원경매 ${courtCount}건${state.collection?.state === "unconfigured" ? " (미연결)" : ""} · 온비드 부동산 ${realEstateCount.toLocaleString()}건 · 동산 ${movableCount.toLocaleString()}건`;
+  const coverage = [
+    state.onbidDataset?.coverage ? `부동산: ${state.onbidDataset.coverage}` : "",
+    state.onbidMovableDataset?.coverage ? `동산: ${state.onbidMovableDataset.coverage}` : ""
+  ].filter(Boolean).join(" · ");
+  $("#datasetNotice").textContent = onbidItems.length
+    ? `한국자산관리공사 온비드 공식 API 자료 · ${coverage || "공매 물건 수집 범위 확인 필요"}. 공고문과 최신 상태를 온비드에서 다시 확인하세요.`
+    : state.dataError || state.onbidError || state.onbidMovableError || "현재 수집된 실제 물건은 0건입니다. 예시 물건으로 대체하지 않습니다.";
+  const onbidState = state.onbidStatus?.state === "ready" ? "부동산 정상" : state.onbidStatus?.state === "error" ? "부동산 최근 실패" : "부동산 미확인";
+  const movableState = state.onbidMovableStatus?.state === "ready" ? "동산 정상" : state.onbidMovableError ? "동산 미연결" : "동산 미수집";
+  $("#collectionHealth").textContent = `법원: ${state.dataError ? "자료 오류" : state.collection?.state === "unconfigured" ? "공급원 미연결" : state.collection?.state || "미확인"} · 온비드: ${onbidState} / ${movableState}`;
 }
-
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
 }
