@@ -171,7 +171,7 @@ async function loadCollectedCases() {
     state.collected.push(...movable.items);
     state.onbidMovableStatus = await loadCollectionStatus("./data/onbid-movable");
   } catch (error) {
-    if (!/HTTP 404/.test(error.message)) state.onbidMovableError = `온비드 동산 자료 읽기 실패: ${error.message}`;
+    state.onbidMovableError = /HTTP 404/.test(error.message) ? "온비드 동산 API 미연결" : `온비드 동산 자료 읽기 실패: ${error.message}`;
   }
   renderDatasetStatus();
 }
