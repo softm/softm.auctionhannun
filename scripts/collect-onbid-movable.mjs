@@ -16,8 +16,8 @@ const first = (obj, keys) => keys.map(key => text(obj?.[key])).find(Boolean) || 
 const hash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
 export const MOVABLE_PROPERTY_CODES = {
-  "0001":"국유재산", "0002":"공유재산", "0003":"금융권담보재산", "0004":"불용품", "0005":"기타일반재산",
-  "0006":"유입자산", "0007":"압류재산", "0008":"수탁재산", "0009":"유동화유입자산", "0010":"국유재산(캠코)"
+  "0002":"공유재산", "0003":"금융권담보재산", "0004":"불용품", "0005":"기타일반재산",
+  "0007":"압류재산", "0010":"국유재산(캠코)"
 };
 
 function decodeKey(value) {
@@ -47,12 +47,14 @@ export function onbidMovableDetailUrl(key, cltrMngNo) {
 
 export function onbidMovablePage(payload) {
   const data = payload?.response || payload;
-  if (String(data?.header?.resultCode) !== "00") throw new Error("온비드 동산 목록 API 응답 오류");
-  const value = data?.body?.items?.item;
+  const code = String(data?.header?.resultCode || "");
+  const body = data?.body;
+  if (code !== "00" && !(body && Number(body.totalCount || 0) === 0)) throw new Error(`온비드 동산 목록 API 응답 오류: ${code || "UNKNOWN"}`);
+  const value = body?.items?.item;
   const rows = Array.isArray(value) ? value : value ? [value] : [];
-  const total = Number(data?.body?.totalCount);
+  const total = Number(body?.totalCount || 0);
   if (!Number.isSafeInteger(total) || total < 0) throw new Error("온비드 동산 전체 건수 오류");
-  return { rows, total, pageNo: Number(data.body?.pageNo), numOfRows: Number(data.body?.numOfRows) };
+  return { rows, total, pageNo: Number(body?.pageNo || 1), numOfRows: Number(body?.numOfRows || 500) };
 }
 
 export function onbidMovableDetailItems(payload) {
