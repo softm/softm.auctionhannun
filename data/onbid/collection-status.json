@@ -1,18 +1,19 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-23T12:40:52.580Z",
-  "lastSuccessAt": "2026-10-23T12:40:52.580Z",
+  "attemptedAt": "2026-10-23T13:24:42.668Z",
+  "lastSuccessAt": "2026-10-23T13:24:42.668Z",
   "itemCount": 3643,
   "expectedCount": 3643,
   "completedPages": 8,
   "photoProperties": 837,
   "photoEnrichment": {
-    "attempted": 500,
-    "requested": 500,
-    "added": 257,
+    "attempted": 1,
+    "requested": 250,
+    "added": 0,
     "denied": 0,
-    "errors": 243,
-    "state": "partial-error"
+    "rateLimited": 1,
+    "errors": 0,
+    "state": "rate-limited"
   },
   "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-23~2026-10-30 / 공매조건·마감일별 입찰건"
 }
