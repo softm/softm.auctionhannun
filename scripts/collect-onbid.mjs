@@ -244,6 +244,7 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
     let photoProperties = 0;
     let photoDetailDenied = 0;
     let photoDetailErrors = 0;
+    let photoRateLimited = 0;
     let photoAttempted = 0;
     for (const [cltrMngNo, rows] of targets) {
       try {
@@ -258,17 +259,22 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
           console.warn(`온비드 사진·상세 보강 중단: 부동산 물건상세 API 활용 권한을 확인하세요. · ${error.message}`);
           break;
         }
+        if (/HTTP\s*429/i.test(error.message)) {
+          photoRateLimited++;
+          console.warn(`온비드 상세 보강 중단: 제공기관 호출 제한(HTTP 429) · 다음 수집에서 이어서 보강합니다.`);
+          break;
+        }
         photoDetailErrors++;
         console.warn(`온비드 사진 보강 생략: ${cltrMngNo} · ${error.message}`);
       }
-      await new Promise(resolve => setTimeout(resolve, 120));
+      await new Promise(resolve => setTimeout(resolve, 350));
     }
     const photoPropertiesTotal = records.filter(item => item.imageUrls?.length).reduce((set, item) => set.add(item.caseNumber), new Set()).size;
     const metadata = { demo: false, reviewed: true, datasetKind: "onbid-public-sale", redistributionAllowed: true, sourceType: "onbid-official-api", sourceUrl: "https://www.data.go.kr/data/15157207/openapi.do", detailSourceUrl: "https://www.data.go.kr/data/15157247/openapi.do", coverage: `전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 ${startDate}~${endDate} / 공매조건·마감일별 입찰건`, snapshotId: `onbid-${startedAt}`, photoProperties: photoPropertiesTotal };
     const dataset = normalizeDataset({ metadata, items: records }, previous, now);
     dataset.metadata.distinctProperties = new Set(records.map(item => item.caseNumber)).size;
     await publishDataset(dataset, dataDir);
-    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: photoAttempted, requested: targets.length, added: photoProperties, denied: photoDetailDenied, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
+    const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: photoAttempted, requested: targets.length, added: photoProperties, denied: photoDetailDenied, rateLimited: photoRateLimited, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoRateLimited ? "rate-limited" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
     await saveStatus(status);
     await writeFile(resolve(archive, "checkpoint.json"), JSON.stringify({ ...status, complete: true }, null, 2));
     console.log(`온비드 상세 보강 ${photoAttempted}건 확인 · 신규 사진 물건 ${photoProperties}건 · 배포 사진 물건 누계 ${photoPropertiesTotal}건`);
@@ -280,7 +286,7 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
+  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 250) })
     .then(data => console.log(`실제 온비드 ${data.items.length}입찰건 / ${data.metadata.distinctProperties}물건 수집 완료`))
     .catch(error => { console.error(error.message); process.exitCode = 1; });
 }
