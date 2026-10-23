@@ -213,7 +213,7 @@ export default async function handler(req, res) {
   const caseNo = clean(req.query.case, 80);
   const seq = clean(req.query.seq, 20);
   const requestId = clean(req.query.id, 180);
-  if (!/^B\\d{6}$/.test(court) || !/^\\d{4}타경\\d+$/.test(caseNo) || !/^\\d+$/.test(seq)) {
+  if (!/^B\d{6}$/.test(court) || !/^\d{4}타경\d+$/.test(caseNo) || !/^\d+$/.test(seq)) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(400).json({ ok:false, message:"법원코드·사건번호·물건번호 형식이 올바르지 않습니다." });
   }
@@ -235,6 +235,6 @@ export default async function handler(req, res) {
     if (error?.message === "COURT_BLOCKED") {
       return res.status(503).json({ok:false,message:"법원경매정보가 현재 상세 자동조회를 제한하고 있습니다. 우회하지 않고 중단했습니다."});
     }
-    return res.status(502).json({ok:false,message:"법원 상세정보를 가져오지 못했습니다. 목록 기본정보과 공식 원문을 이용해 주세요."});
+    return res.status(502).json({ok:false,message:"법원 상세정보를 가져오지 못했습니다. 목록 기본정보와 공식 원문을 이용해 주세요."});
   }
 }
