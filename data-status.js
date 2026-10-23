@@ -31,8 +31,7 @@ export function publishedPhotoCount(manifest, status) {
   return manifest.itemCount === 0 ? 0 : null;
 }
 export function publishedPhotoTotal(results) {
-  const published = results.filter(({ manifest }) => publishedManifest(manifest));
-  const counts = published.map(({ manifest, status }) => publishedPhotoCount(manifest, status));
+  const counts = results.map(({ manifest, status }) => publishedPhotoCount(manifest, status));
   return counts.length && counts.every(value => value != null) ? counts.reduce((sum, value) => sum + value, 0) : null;
 }
 export function collectionRow(name, manifest, status) {
@@ -70,9 +69,9 @@ function link(label, path) {
   return a;
 }
 async function loadPublished() {
-  const results = await Promise.all(datasets.map(async ({ name, base }) => {
+  const results = await Promise.all(datasets.map(async ({ name, base, optional = false }) => {
     const [manifest, status] = await Promise.allSettled([json(`${base}/manifest.json`), json(`${base}/collection-status.json`)]);
-    return { name, manifest: manifest.status === "fulfilled" ? manifest.value : null, status: status.status === "fulfilled" ? status.value : null };
+    return { name, optional, manifest: manifest.status === "fulfilled" ? manifest.value : null, status: status.status === "fulfilled" ? status.value : null };
   }));
   rows("collectionRows", results.map(x => collectionRow(x.name, x.manifest, x.status)));
   const onbid = results[0]?.manifest?.demo === false ? results[0].manifest : null;
@@ -83,7 +82,7 @@ async function loadPublished() {
   document.getElementById("onbidCount").textContent = number(onbidCount);
   document.getElementById("propertyCount").textContent = number(propertyCount);
   document.getElementById("courtCount").textContent = number(court?.itemCount);
-  const photoTotal = publishedPhotoTotal(results);
+  const photoTotal = publishedPhotoTotal(results.filter(x => !(x.optional && !publishedManifest(x.manifest))));
   document.getElementById("photoCount").textContent = number(photoTotal);
   const onbidStatus = results[0]?.status;
   document.getElementById("photoNote").textContent = onbidStatus?.photoEnrichment?.state === "detail-api-access-required"
