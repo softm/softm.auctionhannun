@@ -109,6 +109,13 @@ function normalizeTenancySummary(value = {}) {
   return result.status || result.note || occupantCount != null ? result : null;
 }
 
+function normalizeAssetDetails(value = {}) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const keys = ["assetName", "quantity", "weight", "manufacturer", "model", "origin", "storagePlace", "artworkTitle", "artist", "itemName", "note"];
+  const result = Object.fromEntries(keys.map(key => [key, clean(value[key], key === "note" ? 1500 : 300)]));
+  return Object.values(result).some(Boolean) ? result : null;
+}
+
 export function containsSensitiveData(value) {
   if (typeof value === "string") return residentNumberPattern.test(value);
   if (Array.isArray(value)) return value.some(containsSensitiveData);
@@ -134,6 +141,7 @@ export function normalizeItem(item, index) {
   const appraisalSummary = normalizeAppraisalSummary(item.appraisalSummary);
   const documents = normalizeDocuments(item.documents);
   const tenancySummary = normalizeTenancySummary(item.tenancySummary);
+  const assetDetails = normalizeAssetDetails(item.assetDetails);
   return {
     id: requireText(item, "id"),
     demo: Boolean(item.demo),
@@ -165,6 +173,7 @@ export function normalizeItem(item, index) {
     ...(appraisalSummary ? { appraisalSummary } : {}),
     ...(documents ? { documents } : {}),
     ...(tenancySummary ? { tenancySummary } : {}),
+    ...(assetDetails ? { assetDetails } : {}),
     sourceUrl: validateSourceUrl(item.sourceUrl)
   };
 }
@@ -186,7 +195,7 @@ export function normalizeDataset(input, previous = null, now = new Date()) {
     demo: input.metadata?.demo !== false,
     reviewed: true,
     sourceType: clean(input.metadata?.sourceType, 60) || "reviewed-json",
-    datasetKind: input.metadata?.datasetKind === "onbid-public-sale" ? "onbid-public-sale" : "court-auction",
+    datasetKind: ["onbid-public-sale", "onbid-public-sale-movable"].includes(input.metadata?.datasetKind) ? input.metadata.datasetKind : "court-auction",
     sourceUrl: validateSourceUrl(input.metadata?.sourceUrl || items[0]?.sourceUrl),
     coverage: clean(input.metadata?.coverage, 200) || "제공 범위 미확인",
     snapshotId: clean(input.metadata?.snapshotId, 120),
