@@ -1,9 +1,6 @@
 name: Collect approved court and official Onbid data
 
 on:
-  push:
-    paths:
-      - ".github/workflows/collect-auctions.yml"
   schedule:
     - cron: "20 21 * * *"
   workflow_dispatch:
