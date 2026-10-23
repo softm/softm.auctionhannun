@@ -1,4 +1,13 @@
 const COURT_ORIGIN = "https://www.courtauction.go.kr";
+const inFlight = globalThis.__auctionhannunCourtDetailInFlight ||= new Map();
+let lastUpstreamAt = globalThis.__auctionhannunCourtDetailLastUpstreamAt || 0;
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function throttleUpstream() {
+  const elapsed = Date.now() - lastUpstreamAt;
+  if (elapsed < 1200) await wait(1200 - elapsed);
+  lastUpstreamAt = Date.now();
+  globalThis.__auctionhannunCourtDetailLastUpstreamAt = lastUpstreamAt;
+}
 const ALLOWED_ORIGINS = new Set([
   "https://auctionhannun.designboard.net",
   "https://softm.github.io",
@@ -99,7 +108,7 @@ function normalizeAppraisal(result) {
   return Object.keys(out).length ? out : null;
 }
 
-function normalizeDetail(result, requestId) {
+export function normalizeDetail(result, requestId) {
   const base = result.csBaseInfo || {};
   const info = result.dspslGdsDxdyInfo || {};
   const dstrt = list(result.dstrtDemnInfo)[0] || {};
@@ -147,20 +156,8 @@ function setCors(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
 
-export default async function handler(req, res) {
-  setCors(req, res);
-  if (req.method === "OPTIONS") return res.status(204).end();
-  if (req.method !== "GET") return res.status(405).json({ ok:false, message:"GET만 지원합니다." });
-
-  const court = clean(req.query.court, 20);
-  const caseNo = clean(req.query.case, 80);
-  const seq = clean(req.query.seq, 20);
-  const requestId = clean(req.query.id, 180);
-  if (!/^B\d{6}$/.test(court) || !/^\d{4}타경\d+$/.test(caseNo) || !/^\d+$/.test(seq)) {
-    res.setHeader("Cache-Control", "no-store");
-    return res.status(400).json({ ok:false, message:"법원코드·사건번호·물건번호 형식이 올바르지 않습니다." });
-  }
-
+async function fetchCourtDetail(court, caseNo, seq, requestId) {
+  await throttleUpstream();
   const jar = new Map();
   const ingest = headers => {
     const values = typeof headers.getSetCookie === "function" ? headers.getSetCookie() : [headers.get("set-cookie")].filter(Boolean);
@@ -178,39 +175,66 @@ export default async function handler(req, res) {
     "Referer":COURT_ORIGIN + "/pgj/index.on?w2xPath=/pgj/ui/pgj100/PGJ15BM01.xml&pgjId=15BM01",
     "X-Requested-With":"XMLHttpRequest"
   };
+  const warm = await fetch(COURT_ORIGIN + "/pgj/index.on?w2xPath=/pgj/ui/pgj100/PGJ15BM01.xml&pgjId=15BM01", {
+    headers: common, redirect: "manual", signal: AbortSignal.timeout(8000)
+  });
+  ingest(warm.headers);
+  await wait(700);
+  const upstream = await fetch(COURT_ORIGIN + "/pgj/pgj15B/selectAuctnCsSrchRslt.on", {
+    method:"POST",
+    headers:{...common,"Content-Type":"application/json; charset=UTF-8",...(jar.size?{Cookie:cookies()}:{})},
+    body:JSON.stringify({dma_srchGdsDtlSrch:{csNo:caseNo,cortOfcCd:court,dspslGdsSeq:seq,pgmId:"PGJ15BM01",srchInfo:""}}),
+    redirect:"manual",
+    signal:AbortSignal.timeout(12000)
+  });
+  if ([401,403,429].includes(upstream.status)) {
+    const error = new Error("COURT_BLOCKED");
+    error.status = 503;
+    throw error;
+  }
+  if (!upstream.ok) throw new Error(`upstream HTTP ${upstream.status}`);
+  const payload = await upstream.json();
+  if (payload?.data?.ipcheck === false) {
+    const error = new Error("COURT_BLOCKED");
+    error.status = 503;
+    throw error;
+  }
+  const result = payload?.data?.dma_result;
+  if (!result || typeof result !== "object") throw new Error("상세 응답 구조를 확인할 수 없습니다.");
+  return normalizeDetail(result, requestId);
+}
 
+export default async function handler(req, res) {
+  setCors(req, res);
+  if (req.method === "OPTIONS") return res.status(204).end();
+  if (req.method !== "GET") return res.status(405).json({ ok:false, message:"GET만 지원합니다." });
+
+  const court = clean(req.query.court, 20);
+  const caseNo = clean(req.query.case, 80);
+  const seq = clean(req.query.seq, 20);
+  const requestId = clean(req.query.id, 180);
+  if (!/^B\\d{6}$/.test(court) || !/^\\d{4}타경\\d+$/.test(caseNo) || !/^\\d+$/.test(seq)) {
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(400).json({ ok:false, message:"법원코드·사건번호·물건번호 형식이 올바르지 않습니다." });
+  }
+
+  const key = `${court}|${caseNo}|${seq}`;
   try {
-    const warm = await fetch(COURT_ORIGIN + "/pgj/index.on?w2xPath=/pgj/ui/pgj100/PGJ15BM01.xml&pgjId=15BM01", {
-      headers: common, redirect: "manual", signal: AbortSignal.timeout(8000)
-    });
-    ingest(warm.headers);
-    await new Promise(resolve => setTimeout(resolve, 900));
-
-    const upstream = await fetch(COURT_ORIGIN + "/pgj/pgj15B/selectAuctnCsSrchRslt.on", {
-      method:"POST",
-      headers:{...common,"Content-Type":"application/json; charset=UTF-8",...(jar.size?{Cookie:cookies()}:{})},
-      body:JSON.stringify({dma_srchGdsDtlSrch:{csNo:caseNo,cortOfcCd:court,dspslGdsSeq:seq,pgmId:"PGJ15BM01",srchInfo:""}}),
-      redirect:"manual",
-      signal:AbortSignal.timeout(12000)
-    });
-
-    if ([401,403,429].includes(upstream.status)) {
-      res.setHeader("Cache-Control","no-store");
-      return res.status(503).json({ok:false,message:"법원경매정보가 현재 상세 자동조회를 제한하고 있습니다. 공식 원문을 확인해 주세요."});
+    let task = inFlight.get(key);
+    if (!task) {
+      task = fetchCourtDetail(court, caseNo, seq, requestId);
+      inFlight.set(key, task);
+      task.finally(() => inFlight.delete(key)).catch(() => {});
     }
-    if (!upstream.ok) throw new Error(`upstream HTTP ${upstream.status}`);
-    const payload = await upstream.json();
-    if (payload?.data?.ipcheck === false) {
-      res.setHeader("Cache-Control","no-store");
-      return res.status(503).json({ok:false,message:"법원경매정보가 현재 상세 자동조회를 제한하고 있습니다. 우회하지 않고 중단했습니다."});
-    }
-    const result = payload?.data?.dma_result;
-    if (!result || typeof result !== "object") throw new Error("상세 응답 구조를 확인할 수 없습니다.");
-
+    const payload = await task;
     res.setHeader("Cache-Control","public, s-maxage=21600, stale-while-revalidate=86400");
-    return res.status(200).json(normalizeDetail(result, requestId));
+    res.setHeader("CDN-Cache-Control","public, s-maxage=21600, stale-while-revalidate=86400");
+    return res.status(200).json(payload);
   } catch (error) {
     res.setHeader("Cache-Control","no-store");
-    return res.status(502).json({ok:false,message:"법원 상세정보를 가져오지 못했습니다. 목록 기본정보와 공식 원문을 이용해 주세요."});
+    if (error?.message === "COURT_BLOCKED") {
+      return res.status(503).json({ok:false,message:"법원경매정보가 현재 상세 자동조회를 제한하고 있습니다. 우회하지 않고 중단했습니다."});
+    }
+    return res.status(502).json({ok:false,message:"법원 상세정보를 가져오지 못했습니다. 목록 기본정보과 공식 원문을 이용해 주세요."});
   }
 }
