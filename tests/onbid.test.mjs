@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onbidListUrl, probeOnbid } from "../scripts/probe-onbid.mjs";
-import { onbidRecord, onbidPage, onbidDetailUrl, onbidDetailItems, onbidPhotoUrls, collectOnbid } from "../scripts/collect-onbid.mjs";
+import { onbidRecord, onbidPage, onbidDetailUrl, onbidDetailItems, onbidPhotoUrls, onbidDetailEnrichment, collectOnbid } from "../scripts/collect-onbid.mjs";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -28,6 +28,28 @@ test("온비드 공식 상세 API의 사진 목록만 추출한다", () => {
   const payload = { header: { resultCode: "00" }, body: { items: { item: { potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/a.jpg" }, { urlAdr: "https://img.onbid.co.kr/b.jpg" }] } } } };
   assert.deepEqual(onbidPhotoUrls(onbidDetailItems(payload)[0]), ["https://img.onbid.co.kr/a.jpg", "https://img.onbid.co.kr/b.jpg"]);
   assert.deepEqual(onbidPhotoUrls({ potoUrlList: "https://img.onbid.co.kr/a.jpg|https://img.onbid.co.kr/b.jpg" }), ["https://img.onbid.co.kr/a.jpg", "https://img.onbid.co.kr/b.jpg"]);
+});
+
+test("온비드 상세정보에서 사진·면적·감정평가를 개인정보 없이 보강한다", () => {
+  const enrichment = onbidDetailEnrichment([{
+    cltrMngNo: "2026-001-001",
+    zadrNm: "경기도 테스트시 테스트로 1",
+    locVntyPscdCont: "테스트역 인근",
+    utlzPscdCont: "주거용",
+    cltrEtcCont: "엘리베이터 있음",
+    potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/a.jpg" }],
+    sqmsList: [{ clandCont: "건물>건물", sqmsCont: "59.76", pursAlcCont: "전부", dtlCltrNm: "테스트동 101호" }],
+    apslEvlClgList: [{ apslEvlYmd: "20261001", apslEvlAmt: 123000000, urlAdr: "https://www.onbid.co.kr/appraisal.pdf" }],
+    ocpyRelList: [{ ocpyRelCdNm: "소유자", acpmPrptOcpyIrpsFlnm: "홍길동" }],
+    leasInfList: [{ irstDivNm: "전세권", cltrInprNm: "김**" }]
+  }], "2026-001-001");
+  assert.deepEqual(enrichment.imageUrls, ["https://img.onbid.co.kr/a.jpg"]);
+  assert.equal(enrichment.propertyLots[0].area, "59.76㎡");
+  assert.equal(enrichment.appraisalSummary.valuedAt, "2026-10-01");
+  assert.equal(enrichment.documents.appraisalReport.url, "https://www.onbid.co.kr/appraisal.pdf");
+  assert.equal(enrichment.tenancySummary.occupantCount, 1);
+  assert.equal(JSON.stringify(enrichment).includes("홍길동"), false);
+  assert.equal(JSON.stringify(enrichment).includes("김**"), false);
 });
 
 test("온비드 물건은 법원 사건으로 변환하지 않고 마감시각·비공개 가격을 보존한다", () => {
@@ -67,7 +89,7 @@ test("온비드 전체 페이지를 검증하고 실패·키 누락 시 정상 �
 test("수집기가 마감 임박 물건을 상세 조회해 공식 사진을 보강한다", async () => {
   const root = await mkdtemp(join(tmpdir(), "onbid-photos-"));
   const list = { response: { header: { resultCode: "00" }, body: { pageNo: 1, numOfRows: 500, totalCount: 1, items: { item: [row] } } } };
-  const detail = { header: { resultCode: "00" }, body: { items: { item: { potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/property.jpg" }] } } } };
+  const detail = { header: { resultCode: "00" }, body: { items: { item: { cltrMngNo: row.cltrMngNo, potoUrlList: [{ urlAdr: "https://img.onbid.co.kr/property.jpg" }] } } } };
   const data = await collectOnbid({
     key: "test-only-key", dataDir: join(root, "data"), rawDir: join(root, "raw"), imageLimit: 1,
     now: new Date("2026-10-19T09:00:00Z"),
