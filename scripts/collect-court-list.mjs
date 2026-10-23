@@ -168,7 +168,7 @@ export function buildCourtSearchBody(sdCode,pageNo) {
   return {dma_pageInfo:{pageNo:String(pageNo),pageSize:String(PAGE_SIZE),bfPageNo:"",startRowNo:String((pageNo-1)*PAGE_SIZE+1),totalCnt:"0",totalYn:pageNo===1?"Y":"N",groupTotalCount:""},dma_srchGdsDtlSrchInfo:searchInfo(sdCode)};
 }
 
-export async function collectCourtList({dataDir="data",now=new Date(),client=new Client(),minRegions=17,minUniqueItems=5000}={}) {
+export async function collectCourtList({dataDir="data",now=new Date(),client=new Client(),minRegions=19,minUniqueItems=5000}={}) {
   await mkdir(dataDir,{recursive:true});
   let previous=null, previousStatus={};
   try{previous=JSON.parse(await readFile(resolve(dataDir,"auctions.json"),"utf8"));}catch{}

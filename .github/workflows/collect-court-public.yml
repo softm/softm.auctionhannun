@@ -56,7 +56,7 @@ jobs:
             exit 0
           fi
           git push origin "$BRANCH"
-          gh pr create --base main --head "$BRANCH"             --title "$(date +%Y%m%d)_data_법원경매전국목록"             --body "법원경매정보 물건상세검색을 17개 시도·50건 페이지로 전수 순회한 전국 기본목록입니다. 원시 검색 행 98% 이상 완주 검증을 통과한 경우에만 PR을 생성하며, 법원+사건+매물번호로 중복 제거합니다. 상세는 사용자가 물건을 열 때 별도 캐시 API에서 조회합니다."
+          gh pr create --base main --head "$BRANCH"             --title "$(date +%Y%m%d)_data_법원경매전국목록"             --body "법원경매정보 물건상세검색을 19개 시·도·50건 페이지로 전수 순회한 전국 기본목록입니다. 각 시·도의 수집 행 수가 법원 응답 totalCnt와 정확히 일치하고 전체 검증을 통과한 경우에만 PR을 생성하며, 법원+사건+매물번호로 중복 제거합니다. 상세는 사용자가 물건을 열 때 별도 캐시 API에서 조회합니다."
       - name: Fail if nationwide collection was incomplete
         if: steps.court.outcome == 'failure'
         run: exit 1
