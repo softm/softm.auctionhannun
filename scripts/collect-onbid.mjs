@@ -56,6 +56,33 @@ function httpsOnly(value) {
   } catch { return ""; }
 }
 
+function onbidArea(value) {
+  const normalized = text(value).replace(/㎡+$/u, "").trim();
+  return normalized ? `${normalized}㎡` : "";
+}
+
+function dedupeOnbidLots(values) {
+  if (!Array.isArray(values)) return [];
+  const seen = new Set();
+  const result = [];
+  for (const value of values) {
+    const cleaned = {
+      number: "",
+      type: text(value?.type),
+      address: text(value?.address),
+      area: onbidArea(value?.area),
+      share: text(value?.share),
+      details: text(value?.details)
+    };
+    const key = JSON.stringify([cleaned.type, cleaned.address, cleaned.area, cleaned.share, cleaned.details]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    cleaned.number = String(result.length + 1);
+    result.push(cleaned);
+  }
+  return result;
+}
+
 export function onbidDetailEnrichment(items, cltrMngNo) {
   const requested = text(cltrMngNo);
   const matching = (Array.isArray(items) ? items : []).filter(item => text(item?.cltrMngNo) === requested);
@@ -63,14 +90,13 @@ export function onbidDetailEnrichment(items, cltrMngNo) {
   const first = key => matching.map(item => text(item?.[key])).find(Boolean) || "";
   const imageUrls = [...new Set(matching.flatMap(onbidPhotoUrls))].slice(0, 8);
   const sqms = matching.flatMap(item => detailList(item?.sqmsList));
-  const propertyLots = sqms.slice(0, 50).map((value, index) => ({
-    number: String(index + 1),
+  const propertyLots = dedupeOnbidLots(sqms.slice(0, 50).map(value => ({
     type: text(value?.clandCont),
     address: first("zadrNm") || first("cltrRadr"),
-    area: text(value?.sqmsCont) ? `${text(value.sqmsCont)}㎡` : "",
+    area: onbidArea(value?.sqmsCont),
     share: text(value?.pursAlcCont),
     details: text(value?.dtlCltrNm)
-  })).filter(value => value.type || value.area || value.share || value.details);
+  })).filter(value => value.type || value.area || value.share || value.details));
   const appraisals = matching.flatMap(item => detailList(item?.apslEvlClgList));
   const appraisal = appraisals[0] || {};
   const appraisalSummary = {
@@ -182,7 +208,7 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
     if (previous?.items?.length && !total) throw new Error("온비드 응답이 갑자기 0건으로 바뀌어 자동 반영을 중단합니다.");
     const previousDetails = new Map((previous?.items || []).map(item => [item.caseNumber, {
       ...(item.imageUrls?.length ? { imageUrls: item.imageUrls } : {}),
-      ...(item.propertyLots?.length ? { propertyLots: item.propertyLots } : {}),
+      ...(item.propertyLots?.length ? { propertyLots: dedupeOnbidLots(item.propertyLots) } : {}),
       ...(item.appraisalSummary ? { appraisalSummary: item.appraisalSummary } : {}),
       ...(item.documents ? { documents: item.documents } : {}),
       ...(item.tenancySummary ? { tenancySummary: item.tenancySummary } : {})
