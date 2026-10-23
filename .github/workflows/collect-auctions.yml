@@ -26,6 +26,7 @@ jobs:
       AUCTION_FEED_TOKEN: ${{ secrets.AUCTION_FEED_TOKEN }}
       ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
       ONBID_IMAGE_ENRICH_LIMIT: ${{ vars.ONBID_IMAGE_ENRICH_LIMIT || 250 }}
+      ONBID_MOVABLE_DETAIL_LIMIT: ${{ vars.ONBID_MOVABLE_DETAIL_LIMIT || 100 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,10 +42,14 @@ jobs:
         id: collect
         continue-on-error: true
         run: npm run collect
-      - name: Collect Onbid separately
+      - name: Collect Onbid real estate
         id: onbid
         continue-on-error: true
         run: npm run collect:onbid
+      - name: Collect Onbid movable properties
+        id: onbid_movable
+        continue-on-error: true
+        run: npm run collect:onbid:movable
       - run: npm run check
       - name: Propose verified catalog or failure status
         env:
@@ -62,5 +67,5 @@ jobs:
           git push origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" --title "$(date +%Y%m%d)_data_경매수집결과" --body "검증된 목록·상세·수집 상태입니다. 실패 시 마지막 정상 자료를 유지합니다. 공급 범위와 원본 이용 권한을 확인한 후 병합해 주세요. 병합 후 Pages가 배포됩니다."
       - name: Report collection failure
-        if: steps.collect.outcome == 'failure' || steps.onbid.outcome == 'failure'
+        if: steps.collect.outcome == 'failure' || steps.onbid.outcome == 'failure' || steps.onbid_movable.outcome == 'failure'
         run: exit 1
