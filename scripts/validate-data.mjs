@@ -9,9 +9,9 @@ import { safeDataPath } from "../auction-data.js";
 export async function validateData(dataDir = "data") {
 const dataset = JSON.parse(await readFile(resolve(dataDir, "auctions.json"), "utf8"));
 const normalized = normalizeDataset(dataset, dataset);
-const actualHash = createHash("sha256").update(JSON.stringify(normalized.items)).digest("hex");
-if (dataset.metadata?.contentHash !== actualHash) throw new Error("data/auctions.json contentHash가 일치하지 않습니다.");
-if (dataset.metadata?.itemCount !== normalized.items.length) throw new Error("data/auctions.json itemCount가 일치하지 않습니다.");
+const actualHash = createHash("sha256").update(JSON.stringify(dataset.items)).digest("hex");
+if (dataset.metadata?.contentHash !== actualHash) throw new Error("data/auctions.json contentHash가 저장된 items와 일치하지 않습니다.");
+if (dataset.metadata?.itemCount !== dataset.items.length || normalized.items.length !== dataset.items.length) throw new Error("data/auctions.json itemCount가 일치하지 않습니다.");
 if (dataset.metadata.demo !== false || dataset.items.some(item => item.demo)) throw new Error("운영 자료에 예시가 있습니다.");
 const manifest = JSON.parse(await readFile(resolve(dataDir, "manifest.json"), "utf8"));
 if (![2, 3].includes(manifest.schemaVersion) || !safeDataPath(manifest.catalogFile, "catalog")) throw new Error("매니페스트 경로 오류");
