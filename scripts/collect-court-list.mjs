@@ -53,7 +53,7 @@ function propertyKey(row) {
   const seq=clean(row.maemulSer || row.dspslGdsSeq || row.mokmulSer,20) || "1";
   return court && caseNo ? `${court}|${caseNo}|${seq}` : "";
 }
-function normalizeSearchRow(row, collectedAt) {
+export function normalizeCourtSearchRow(row, collectedAt = new Date().toISOString()) {
   const courtCode=clean(row.boCd || row.cortOfcCd,20);
   const caseNumber=clean(row.srnSaNo || row.printCsNo || row.csNo,80);
   const itemSeq=clean(row.maemulSer || row.dspslGdsSeq || row.mokmulSer,20) || "1";
@@ -164,11 +164,11 @@ function searchInfo(sdCode="") {
   Object.assign(info,{mvprpRletDvsCd:"00031R",cortAuctnSrchCondCd:"0004601",rprsAdongSdCd:sdCode,notifyLoc:"Y",pgmId:"PGJ151M01",cortStDvs:sdCode?"2":"1",statNum:"1"});
   return info;
 }
-function searchBody(sdCode,pageNo) {
+export function buildCourtSearchBody(sdCode,pageNo) {
   return {dma_pageInfo:{pageNo:String(pageNo),pageSize:String(PAGE_SIZE),bfPageNo:"",startRowNo:String((pageNo-1)*PAGE_SIZE+1),totalCnt:"0",totalYn:pageNo===1?"Y":"N",groupTotalCount:""},dma_srchGdsDtlSrchInfo:searchInfo(sdCode)};
 }
 
-export async function collectCourtList({dataDir="data",now=new Date(),client=new Client()}={}) {
+export async function collectCourtList({dataDir="data",now=new Date(),client=new Client(),minRegions=17,minUniqueItems=5000}={}) {
   await mkdir(dataDir,{recursive:true});
   let previous=null, previousStatus={};
   try{previous=JSON.parse(await readFile(resolve(dataDir,"auctions.json"),"utf8"));}catch{}
@@ -180,7 +180,7 @@ export async function collectCourtList({dataDir="data",now=new Date(),client=new
     const sidoPayload=await client.post(SIDO_PATH,{pbancMidYn:"Y",srchDvsCd:"O",pbancDvsCd:"FB"});
     const rawSido=Array.isArray(sidoPayload?.data?.adongSdLst)?sidoPayload.data.adongSdLst:[];
     const sidos=rawSido.map(r=>({code:clean(r.code||r.adongSdCd,10),name:clean(r.name||r.adongSdNm,80)})).filter(r=>r.code&&r.name);
-    if(sidos.length<17) throw new Error(`시·도 코드가 ${sidos.length}개뿐이라 전수수집을 중단합니다.`);
+    if(sidos.length<minRegions) throw new Error(`시·도 코드가 ${sidos.length}개뿐이라 전수수집을 중단합니다. 최소 ${minRegions}개 필요`);
 
     const properties=new Map();
     const regionStats=[];
@@ -188,7 +188,7 @@ export async function collectCourtList({dataDir="data",now=new Date(),client=new
     for(const sd of sidos){
       let page=1,total=null,seen=0;
       while(true){
-        const payload=await client.post(SEARCH_PATH,searchBody(sd.code,page),{submissionid:"mf_wfm_mainFrame_sbm_selectGdsDtlSrch","sc-userid":"SYSTEM"});
+        const payload=await client.post(SEARCH_PATH,buildCourtSearchBody(sd.code,page),{submissionid:"mf_wfm_mainFrame_sbm_selectGdsDtlSrch","sc-userid":"SYSTEM"});
         const data=payload?.data||{};
         const rows=Array.isArray(data.dlt_srchResult)?data.dlt_srchResult:[];
         const info=data.dma_pageInfo||{};
@@ -199,7 +199,7 @@ export async function collectCourtList({dataDir="data",now=new Date(),client=new
         seen+=rows.length; rawRowCount+=rows.length;
         for(const row of rows){
           const key=propertyKey(row); if(!key) continue;
-          const item=normalizeSearchRow(row,collectedAt); if(!item) continue;
+          const item=normalizeCourtSearchRow(row,collectedAt); if(!item) continue;
           properties.set(key,mergeProperty(properties.get(key),item));
         }
         console.log(`법원 전국목록 ${sd.name} ${page}/${Math.max(1,Math.ceil(total/PAGE_SIZE))} · ${seen}/${total}행 · 고유 ${properties.size}건`);
@@ -214,7 +214,7 @@ export async function collectCourtList({dataDir="data",now=new Date(),client=new
 
     if(regionStats.length!==sidos.length) throw new Error("전국 17개 시·도 완주 실패");
     const items=[...properties.values()];
-    if(items.length<5000) throw new Error(`고유 진행물건 ${items.length}건은 전국 전수수집 결과로 보기 어렵습니다.`);
+    if(items.length<minUniqueItems) throw new Error(`고유 진행물건 ${items.length}건은 전국 전수수집 결과로 보기 어렵습니다. 최소 ${minUniqueItems}건 필요`);
     const coveragePercent=100;
     const metadata={
       schemaVersion:3,demo:false,reviewed:true,datasetKind:"court-auction",sourceType:"court-auction-public-search",
