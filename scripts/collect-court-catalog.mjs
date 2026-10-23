@@ -200,7 +200,7 @@ export async function collectCourtCatalog({
     if(rawRows < requiredRows) throw new Error(`법원 목록 누락 의심: 수집 ${rawRows}/예상 ${totalExpected}`);
     const items=[];
     for(const row of unique.values()){try{items.push(normalizeCourtSearchRow(row))}catch(e){console.warn(`법원 목록 정규화 생략: ${clean(row.srnSaNo||row.saNo,80)} · ${e.message}`)}}
-    if(items.length < 100 && regions.length>1)throw new Error(`법원 고유 물건이 비정상적으로 적습니다: ${items.length}`);
+    if(maxRegions === 0 && items.length < 5000) throw new Error(`법원 고유 물건이 비정상적으로 적습니다: ${items.length}`);
     const coveragePercent=totalExpected?Math.min(100,Math.round(rawRows/totalExpected*10000)/100):0;
     const metadata={
       demo:false,reviewed:true,datasetKind:"court-auction",sourceType:"court-auction-public-search",
