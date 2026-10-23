@@ -1,0 +1,30 @@
+name: Probe court detail API
+
+on:
+  push:
+    paths:
+      - ".github/workflows/probe-court-detail-api.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify on-demand court detail
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="$(curl -Gs -o /tmp/detail.json -w '%{url_effective}'             --data-urlencode 'court=B000210'             --data-urlencode 'case=2026타경100888'             --data-urlencode 'seq=1'             --data-urlencode 'id=probe'             'https://softm-auctionhannun-api.vercel.app/api/court-detail')"
+          STATUS="$(curl -Gs -o /tmp/detail2.json -w '%{http_code}'             -H 'Origin: https://auctionhannun.designboard.net'             --data-urlencode 'court=B000210'             --data-urlencode 'case=2026타경100888'             --data-urlencode 'seq=1'             --data-urlencode 'id=probe'             'https://softm-auctionhannun-api.vercel.app/api/court-detail')"
+          cat /tmp/detail2.json
+          echo
+          echo "HTTP=$STATUS URL=$URL"
+          STATUS="$STATUS" node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+          const payload=JSON.parse(await readFile("/tmp/detail2.json","utf8"));
+          if(process.env.STATUS!=="200"||payload.ok!==true||payload.detail?.detailLevel!=="full")process.exit(1);
+          console.log(JSON.stringify({ok:payload.ok,level:payload.detail.detailLevel,caseDetails:Boolean(payload.detail.caseDetails),schedules:payload.detail.schedules?.length||0,lots:payload.detail.propertyLots?.length||0,appraisal:Boolean(payload.detail.appraisalSummary)}));
+          NODE
