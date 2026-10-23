@@ -36,6 +36,69 @@ export function onbidPhotoUrls(item) {
   return [...new Set(values.map(text).filter(Boolean))];
 }
 
+const date8 = value => /^\d{8}$/.test(text(value)) ? `${String(value).slice(0,4)}-${String(value).slice(4,6)}-${String(value).slice(6,8)}` : "";
+
+function detailList(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value !== "object") return [];
+  for (const key of ["item", "items", "listItem"]) {
+    if (Array.isArray(value[key])) return value[key];
+    if (value[key] && typeof value[key] === "object") return [value[key]];
+  }
+  return [value];
+}
+
+function httpsOnly(value) {
+  try {
+    const url = new URL(text(value));
+    return url.protocol === "https:" && !url.username && !url.password ? url.href : "";
+  } catch { return ""; }
+}
+
+export function onbidDetailEnrichment(items, cltrMngNo) {
+  const requested = text(cltrMngNo);
+  const matching = (Array.isArray(items) ? items : []).filter(item => text(item?.cltrMngNo) === requested);
+  if (!matching.length) throw new Error("온비드 상세 응답의 물건관리번호가 요청값과 일치하지 않습니다.");
+  const first = key => matching.map(item => text(item?.[key])).find(Boolean) || "";
+  const imageUrls = [...new Set(matching.flatMap(onbidPhotoUrls))].slice(0, 8);
+  const sqms = matching.flatMap(item => detailList(item?.sqmsList));
+  const propertyLots = sqms.slice(0, 50).map((value, index) => ({
+    number: String(index + 1),
+    type: text(value?.clandCont),
+    address: first("zadrNm") || first("cltrRadr"),
+    area: text(value?.sqmsCont) ? `${text(value.sqmsCont)}㎡` : "",
+    share: text(value?.pursAlcCont),
+    details: text(value?.dtlCltrNm)
+  })).filter(value => value.type || value.area || value.share || value.details);
+  const appraisals = matching.flatMap(item => detailList(item?.apslEvlClgList));
+  const appraisal = appraisals[0] || {};
+  const appraisalSummary = {
+    valuedAt: date8(appraisal.apslEvlYmd),
+    location: first("locVntyPscdCont"),
+    usage: first("utlzPscdCont"),
+    other: [first("cltrEtcCont"), first("icdlCdtnCont")].filter(Boolean).join(" · ")
+  };
+  const appraisalUrl = appraisals.map(value => httpsOnly(value?.urlAdr)).find(Boolean) || "";
+  const documents = appraisals.length ? {
+    appraisalReport: { available: true, publishedAt: date8(appraisal.apslEvlYmd), url: appraisalUrl }
+  } : null;
+  const occupantCount = Math.max(0, ...matching.map(item => detailList(item?.ocpyRelList).length));
+  const leaseCount = Math.max(0, ...matching.map(item => detailList(item?.leasInfList).length));
+  const tenancySummary = occupantCount || leaseCount ? {
+    status: "온비드 상세정보 수집",
+    occupantCount,
+    note: [occupantCount ? `점유관계 ${occupantCount}건` : "", leaseCount ? `임대차정보 ${leaseCount}건` : ""].filter(Boolean).join(" · ")
+  } : null;
+  return {
+    imageUrls,
+    ...(propertyLots.length ? { propertyLots } : {}),
+    ...(Object.values(appraisalSummary).some(Boolean) ? { appraisalSummary } : {}),
+    ...(documents ? { documents } : {}),
+    ...(tenancySummary ? { tenancySummary } : {})
+  };
+}
+
 export function onbidRecord(row) {
   if (!row.cltrMngNo || !row.pbctCdtnNo || !row.onbidCltrNm || !date(row.cltrBidEndDt)) throw new Error("온비드 필수 물건번호·물건명·마감일 누락");
   const category = [row.cltrUsgMclsCtgrNm, row.cltrUsgSclsCtgrNm].map(text).filter(Boolean).join(" · ");
@@ -117,14 +180,21 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
     let previous;
     try { previous = JSON.parse(await readFile(resolve(dataDir, "auctions.json"), "utf8")); } catch {}
     if (previous?.items?.length && !total) throw new Error("온비드 응답이 갑자기 0건으로 바뀌어 자동 반영을 중단합니다.");
-    const previousImages = new Map((previous?.items || []).filter(item => item.imageUrls?.length).map(item => [item.caseNumber, item.imageUrls]));
+    const previousDetails = new Map((previous?.items || []).map(item => [item.caseNumber, {
+      ...(item.imageUrls?.length ? { imageUrls: item.imageUrls } : {}),
+      ...(item.propertyLots?.length ? { propertyLots: item.propertyLots } : {}),
+      ...(item.appraisalSummary ? { appraisalSummary: item.appraisalSummary } : {}),
+      ...(item.documents ? { documents: item.documents } : {}),
+      ...(item.tenancySummary ? { tenancySummary: item.tenancySummary } : {})
+    }]));
     const recordsByProperty = new Map();
     for (const record of records) {
-      record.imageUrls = previousImages.get(record.caseNumber) || [];
+      Object.assign(record, previousDetails.get(record.caseNumber) || {});
       if (!recordsByProperty.has(record.caseNumber)) recordsByProperty.set(record.caseNumber, []);
       recordsByProperty.get(record.caseNumber).push(record);
     }
-    const targets = [...recordsByProperty.entries()].filter(([, rows]) => !rows[0].imageUrls.length).sort((a, b) => (a[1][0].bidEndsAt || "9999").localeCompare(b[1][0].bidEndsAt || "9999")).slice(0, Math.max(0, imageLimit));
+    const hasDetail = record => Boolean(record.imageUrls?.length || record.propertyLots?.length || record.appraisalSummary || record.documents || record.tenancySummary);
+    const targets = [...recordsByProperty.entries()].filter(([, rows]) => !hasDetail(rows[0])).sort((a, b) => (a[1][0].bidEndsAt || "9999").localeCompare(b[1][0].bidEndsAt || "9999")).slice(0, Math.max(0, imageLimit));
     let photoProperties = 0;
     let photoDetailDenied = 0;
     let photoDetailErrors = 0;
@@ -133,11 +203,9 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
       try {
         photoAttempted++;
         const detail = await requestFeed(onbidDetailUrl(detailKey, cltrMngNo), { fetcher });
-        const imageUrls = [...new Set(onbidDetailItems(detail).flatMap(onbidPhotoUrls))].slice(0, 8);
-        if (imageUrls.length) {
-          rows.forEach(record => { record.imageUrls = imageUrls; });
-          photoProperties++;
-        }
+        const enrichment = onbidDetailEnrichment(onbidDetailItems(detail), cltrMngNo);
+        rows.forEach(record => Object.assign(record, enrichment));
+        if (enrichment.imageUrls?.length) photoProperties++;
       } catch (error) {
         if (/HTTP\s*(401|403)|SERVICE_ACCESS_DENIED|PERMISSION_DENIED/i.test(error.message)) {
           photoDetailDenied++;
@@ -157,6 +225,7 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
     const status = { state: "ready", attemptedAt: startedAt, lastSuccessAt: startedAt, itemCount: records.length, expectedCount: total, completedPages: pageCount, photoProperties: photoPropertiesTotal, photoEnrichment: { attempted: photoAttempted, requested: targets.length, added: photoProperties, denied: photoDetailDenied, errors: photoDetailErrors, state: photoDetailDenied ? "detail-api-access-required" : photoDetailErrors ? "partial-error" : targets.length ? "checked" : "not-requested" }, coverage: metadata.coverage };
     await saveStatus(status);
     await writeFile(resolve(archive, "checkpoint.json"), JSON.stringify({ ...status, complete: true }, null, 2));
+    console.log(`온비드 상세 보강 ${photoAttempted}건 확인 · 신규 사진 물건 ${photoProperties}건 · 배포 사진 물건 누계 ${photoPropertiesTotal}건`);
     return dataset;
   } catch (error) {
     await saveStatus({ state: key ? "error" : "unconfigured", attemptedAt: startedAt, lastSuccessAt: previousStatus.lastSuccessAt || null, message: "온비드 수집·검증 실패. 마지막 정상 자료를 유지합니다." });
@@ -165,7 +234,7 @@ export async function collectOnbid({ key, detailKey = key, dataDir = "data/onbid
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, detailKey: process.env.ONBID_DETAIL_SERVICE_KEY || process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
+  collectOnbid({ key: process.env.ONBID_SERVICE_KEY || process.env.DATA_GO_KR_SERVICE_KEY, days: Number(process.env.ONBID_HORIZON_DAYS || 7), imageLimit: Number(process.env.ONBID_IMAGE_ENRICH_LIMIT || 80) })
     .then(data => console.log(`실제 온비드 ${data.items.length}입찰건 / ${data.metadata.distinctProperties}물건 수집 완료`))
     .catch(error => { console.error(error.message); process.exitCode = 1; });
 }
