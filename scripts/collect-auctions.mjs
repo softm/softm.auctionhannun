@@ -152,6 +152,10 @@ export function normalizeItem(item, index) {
     court: requireText(item, "court"),
     caseNumber: requireText(item, "caseNumber"),
     itemNumber: clean(item.itemNumber, 40),
+    courtCode: clean(item.courtCode, 20),
+    itemSeq: clean(item.itemSeq, 20),
+    documentId: clean(item.documentId, 120),
+    detailLevel: item.detailLevel === "full" ? "full" : item.detailLevel === "list" ? "list" : "",
     saleDate,
     bidStartsAt: clean(item.bidStartsAt, 40),
     bidEndsAt: clean(item.bidEndsAt, 40),
@@ -202,6 +206,11 @@ export function normalizeDataset(input, previous = null, now = new Date()) {
     collectedAt: unchanged && previous.metadata.collectedAt ? previous.metadata.collectedAt : now.toISOString(),
     itemCount: items.length,
     ...(Number.isSafeInteger(input.metadata?.photoProperties) && input.metadata.photoProperties >= 0 ? { photoProperties: input.metadata.photoProperties } : {}),
+    ...(input.metadata?.lazyDetails === true ? { lazyDetails: true } : {}),
+    ...(Number.isSafeInteger(input.metadata?.rawRowCount) && input.metadata.rawRowCount >= 0 ? { rawRowCount: input.metadata.rawRowCount } : {}),
+    ...(Number.isSafeInteger(input.metadata?.uniquePropertyCount) && input.metadata.uniquePropertyCount >= 0 ? { uniquePropertyCount: input.metadata.uniquePropertyCount } : {}),
+    ...(Number.isSafeInteger(input.metadata?.regionCount) && input.metadata.regionCount >= 0 ? { regionCount: input.metadata.regionCount } : {}),
+    ...(Number.isFinite(input.metadata?.coveragePercent) && input.metadata.coveragePercent >= 0 && input.metadata.coveragePercent <= 100 ? { coveragePercent: input.metadata.coveragePercent } : {}),
     contentHash
   };
   return { metadata, items };
