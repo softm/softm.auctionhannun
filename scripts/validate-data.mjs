@@ -26,7 +26,7 @@ for (const item of catalog.items) {
   const detail = JSON.parse(await readFile(resolve(dataDir, item.detailFile), "utf8"));
   const detailHash = createHash("sha256").update(JSON.stringify(detail)).digest("hex");
   if (item.detailFile !== `details/${detailHash}.json` || JSON.stringify(expected.get(item.id)) !== JSON.stringify(detail)) throw new Error("상세 데이터가 원본과 일치하지 않습니다.");
-  const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, ...summary } = detail;
+  const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = detail;
   if (JSON.stringify(item) !== JSON.stringify({ ...summary, detailFile: item.detailFile })) throw new Error("검색 목록과 상세 자료가 다릅니다.");
 }
 return { manifest, catalog, count: normalized.items.length };
@@ -34,6 +34,14 @@ return { manifest, catalog, count: normalized.items.length };
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const result = await validateData();
   const onbid = await validateData("data/onbid");
-  if (onbid.manifest.datasetKind !== "onbid-public-sale" || onbid.catalog.items.some(item => item.auctionKind !== "onbid")) throw new Error("온비드 데이터 종류 오류");
-  console.log(`법원경매 ${result.count}건 / 온비드 공매 ${onbid.count}입찰건 검증 완료`);
+  if (onbid.manifest.datasetKind !== "onbid-public-sale" || onbid.catalog.items.some(item => item.auctionKind !== "onbid")) throw new Error("온비드 부동산 데이터 종류 오류");
+  let movableCount = 0;
+  try {
+    const movable = await validateData("data/onbid-movable");
+    if (movable.manifest.datasetKind !== "onbid-public-sale-movable" || movable.catalog.items.some(item => item.auctionKind !== "onbid")) throw new Error("온비드 동산 데이터 종류 오류");
+    movableCount = movable.count;
+  } catch (error) {
+    if (!/ENOENT|no such file/i.test(String(error?.message || error))) throw error;
+  }
+  console.log(`법원경매 ${result.count}건 / 온비드 부동산 ${onbid.count}입찰건 / 온비드 동산 ${movableCount}입찰건 검증 완료`);
 }
