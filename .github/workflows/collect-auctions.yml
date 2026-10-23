@@ -1,6 +1,9 @@
 name: Collect approved court and official Onbid data
 
 on:
+  push:
+    paths:
+      - ".github/collect-now"
   schedule:
     - cron: "20 21 * * *"
   workflow_dispatch:
@@ -22,7 +25,6 @@ jobs:
       AUCTION_FEED_URL: ${{ secrets.AUCTION_FEED_URL || vars.AUCTION_FEED_URL }}
       AUCTION_FEED_TOKEN: ${{ secrets.AUCTION_FEED_TOKEN }}
       ONBID_SERVICE_KEY: ${{ secrets.ONBID_SERVICE_KEY }}
-      ONBID_DETAIL_SERVICE_KEY: ${{ secrets.ONBID_DETAIL_SERVICE_KEY }}
       ONBID_IMAGE_ENRICH_LIMIT: ${{ vars.ONBID_IMAGE_ENRICH_LIMIT || 80 }}
     steps:
       - uses: actions/checkout@v4
