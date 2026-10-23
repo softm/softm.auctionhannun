@@ -9,7 +9,7 @@ const files = [...new Set(git(["ls-files", "--modified", "--deleted", "--others"
 const groups = new Map();
 const oversized = [];
 for (const file of files) {
-  if (!/^data\/(?:onbid\/)?(auctions\.json|manifest\.json|collection-status\.json|catalog\/[a-f0-9]{64}\.json\.gz|details\/[a-f0-9]{64}\.json)$/.test(file)) continue;
+  if (!/^data\/(?:onbid(?:-movable)?\/)?(auctions\.json|manifest\.json|collection-status\.json|catalog\/[a-f0-9]{64}\.json\.gz|details\/[a-f0-9]{64}\.json)$/.test(file)) continue;
   try { if ((await stat(file)).size >= 31457280) { oversized.push(file); continue; } } catch (error) { if (error.code !== "ENOENT") throw error; }
   const parent = dirname(file);
   if (!groups.has(parent)) groups.set(parent, []);
