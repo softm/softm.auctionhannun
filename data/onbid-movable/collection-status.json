@@ -1,0 +1,18 @@
+{
+  "state": "ready",
+  "attemptedAt": "2026-10-23T13:25:03.984Z",
+  "lastSuccessAt": "2026-10-23T13:25:03.984Z",
+  "itemCount": 4709,
+  "completedPages": 13,
+  "photoProperties": 68,
+  "detailEnrichment": {
+    "attempted": 100,
+    "requested": 100,
+    "added": 100,
+    "denied": 0,
+    "rateLimited": 0,
+    "errors": 0,
+    "state": "checked"
+  },
+  "coverage": "온비드 동산(차량 제외) 현재 입찰 중·입찰예정 물건 / 재산유형 전체 / 수의계약 대상 제외"
+}

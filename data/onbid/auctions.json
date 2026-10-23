@@ -7,11 +7,11 @@
     "datasetKind": "onbid-public-sale",
     "sourceUrl": "https://www.data.go.kr/data/15157207/openapi.do",
     "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-23~2026-10-30 / 공매조건·마감일별 입찰건",
-    "snapshotId": "onbid-2026-10-23T12:40:52.580Z",
-    "collectedAt": "2026-10-23T12:40:52.580Z",
+    "snapshotId": "onbid-2026-10-23T13:24:42.668Z",
+    "collectedAt": "2026-10-23T13:24:42.668Z",
     "itemCount": 3643,
     "photoProperties": 837,
-    "contentHash": "72078e4a9f2fc908cdcc88e13dab6ca35723adf3cb78b2bcc7abd6dc5cbdfb1d",
+    "contentHash": "0036b4ef6a9b4a62b133c438c9c88ee95ac9bb23e5505a4e16e41e7a9aa1c23c",
     "distinctProperties": 3643
   },
   "items": [
@@ -50613,12 +50613,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063774&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063774&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -50703,12 +50697,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035475&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035475&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -50792,12 +50780,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045354&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045354&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -50881,12 +50863,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082363&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082363&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -50978,12 +50954,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044383&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044383&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-09",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51068,12 +51038,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17062701&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17062701&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51158,12 +51122,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074108&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074108&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51246,12 +51204,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034632&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034632&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-01-05",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51347,12 +51299,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052589&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052589&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-23",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51475,12 +51421,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033971&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033971&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51571,12 +51511,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034093&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034093&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51667,12 +51601,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033972&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033972&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51763,12 +51691,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034051&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034051&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51859,12 +51781,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033973&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033973&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -51955,12 +51871,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034071&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034071&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52051,12 +51961,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034004&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034004&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52147,12 +52051,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033974&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033974&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52244,12 +52142,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065288&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065288&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52342,12 +52234,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065219&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065219&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52439,12 +52325,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065244&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065244&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52537,12 +52417,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076636&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076636&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52635,12 +52509,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084163&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084163&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52728,12 +52596,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076093&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076093&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52834,12 +52696,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034052&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034052&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -52935,12 +52791,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052968&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052968&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53027,12 +52877,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058959&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058959&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53116,12 +52960,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096525&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096525&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2025-12-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53209,12 +53047,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065161&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065161&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53313,12 +53145,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053577&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053577&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-01-19",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53412,12 +53238,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075365&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075365&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53510,12 +53330,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083883&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083883&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2025-11-24",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53603,12 +53417,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074307&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074307&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53690,12 +53498,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074326&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074326&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53783,12 +53585,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074314&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074314&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53876,12 +53672,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074345&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074345&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -53963,12 +53753,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044134&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044134&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54055,12 +53839,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054206&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054206&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54163,12 +53941,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052525&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052525&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54252,12 +54024,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083722&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083722&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54343,12 +54109,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033334&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033334&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54436,12 +54196,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083451&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083451&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54523,12 +54277,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058938&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058938&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54612,12 +54360,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076115&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076115&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54710,12 +54452,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076132&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076132&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54802,12 +54538,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053657&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053657&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -54902,12 +54632,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053578&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053578&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55001,12 +54725,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053677&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053677&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55100,12 +54818,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053620&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053620&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55200,12 +54912,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053640&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053640&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55297,12 +55003,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075341&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075341&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55386,12 +55086,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043298&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043298&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55483,12 +55177,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043224&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043224&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55579,12 +55267,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17098087&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17098087&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-09",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55677,12 +55359,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082573&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082573&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55775,12 +55451,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17067665&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17067665&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -55868,12 +55538,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17088830&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17088830&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56046,12 +55710,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034729&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034729&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2025-12-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56147,12 +55805,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065220&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065220&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56239,12 +55891,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084127&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084127&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56331,12 +55977,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084119&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084119&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56420,12 +56060,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097169&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097169&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56525,12 +56159,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084129&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084129&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56618,12 +56246,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17087250&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17087250&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56715,12 +56337,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045529&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045529&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-01-05",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56807,12 +56423,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076076&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076076&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56896,12 +56506,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065289&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065289&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -56986,12 +56590,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076153&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076153&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57076,12 +56674,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033503&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033503&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-23",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57173,12 +56765,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043199&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043199&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57263,12 +56849,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042219&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042219&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57352,12 +56932,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082251&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082251&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57442,12 +57016,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076446&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076446&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57538,12 +57106,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078346&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078346&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57634,12 +57196,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078335&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078335&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57729,12 +57285,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078354&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078354&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57824,12 +57374,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078358&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078358&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -57919,12 +57463,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033504&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033504&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2025-12-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58010,12 +57548,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17070814&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17070814&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-09",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58114,12 +57646,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075822&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075822&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58204,12 +57730,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073730&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073730&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58301,12 +57821,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043163&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043163&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58390,12 +57904,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076039&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076039&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58480,12 +57988,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076059&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076059&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58576,12 +58078,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044928&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044928&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58665,12 +58161,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043200&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043200&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58761,12 +58251,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076060&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17076060&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58857,12 +58341,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17081899&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17081899&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -58944,12 +58422,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042410&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042410&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59037,12 +58509,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084164&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084164&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59135,12 +58601,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034722&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034722&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59223,12 +58683,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035012&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035012&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59312,12 +58766,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097129&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097129&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59412,12 +58860,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065245&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065245&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59502,12 +58944,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064466&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064466&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59593,12 +59029,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053237&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053237&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59691,12 +59121,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083299&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083299&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59782,12 +59206,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083261&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083261&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59878,12 +59296,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073673&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073673&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-23",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -59968,12 +59380,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097406&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097406&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-09",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60057,12 +59463,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043225&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043225&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60154,12 +59554,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059951&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059951&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60247,12 +59641,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065270&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065270&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60353,12 +59741,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034993&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034993&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60457,12 +59839,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084146&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084146&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60545,12 +59921,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065162&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065162&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60636,12 +60006,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054195&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054195&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60726,12 +60090,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034473&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034473&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60834,12 +60192,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035437&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17035437&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -60925,12 +60277,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097378&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097378&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61063,12 +60409,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078724&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17078724&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61159,12 +60499,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054003&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054003&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61251,12 +60585,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043164&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043164&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61351,12 +60679,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043281&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043281&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61451,12 +60773,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043299&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043299&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61551,12 +60867,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043165&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043165&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61650,12 +60960,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043241&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043241&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61750,12 +61054,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043201&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043201&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61850,12 +61148,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043166&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043166&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -61948,12 +61240,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097130&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17097130&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62038,12 +61324,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049452&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049452&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62128,12 +61408,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049428&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049428&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-16",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62219,12 +61493,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049446&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17049446&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-16",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62309,12 +61577,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17081932&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17081932&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62407,12 +61669,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17062259&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17062259&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62512,12 +61768,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054269&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054269&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62612,12 +61862,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17098077&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17098077&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62700,12 +61944,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17040270&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17040270&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62790,12 +62028,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054181&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054181&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62880,12 +62112,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082839&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082839&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-02-23",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -62968,12 +62194,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044149&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044149&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63061,12 +62281,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084120&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084120&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63158,12 +62372,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074596&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074596&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63248,12 +62456,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084100&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084100&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63338,12 +62540,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034924&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034924&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63426,12 +62622,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084075&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084075&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63519,12 +62709,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033696&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033696&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63620,12 +62804,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033680&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033680&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63721,12 +62899,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033713&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033713&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63822,12 +62994,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033730&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033730&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -63923,12 +63089,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033731&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033731&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64024,12 +63184,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033783&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033783&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64125,12 +63279,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033697&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033697&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64226,12 +63374,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033801&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033801&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64327,12 +63469,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033771&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033771&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64428,12 +63564,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033752&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033752&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64529,12 +63659,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033714&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033714&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64626,12 +63750,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075647&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075647&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64747,12 +63865,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083452&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083452&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64834,12 +63946,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042412&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17042412&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -64923,12 +64029,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084076&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17084076&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-30",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65016,12 +64116,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033518&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033518&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65117,12 +64211,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034017&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034017&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65206,12 +64294,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043940&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043940&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65294,12 +64376,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17079477&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17079477&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65399,12 +64475,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044422&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044422&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65489,12 +64559,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034267&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034267&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65577,12 +64641,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045321&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045321&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65673,12 +64731,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045533&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045533&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65769,12 +64821,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045511&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045511&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65865,12 +64911,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045322&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045322&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -65961,12 +65001,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045478&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045478&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66057,12 +65091,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045357&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045357&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66153,12 +65181,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045413&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045413&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66249,12 +65271,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045449&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045449&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66345,12 +65361,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045414&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17045414&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66446,12 +65456,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058834&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058834&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66545,12 +65549,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058820&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058820&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66644,12 +65642,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058804&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058804&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66744,12 +65736,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058773&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058773&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66843,12 +65829,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058774&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058774&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -66942,12 +65922,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058788&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058788&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67040,12 +66014,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058835&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058835&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67139,12 +66107,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058745&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058745&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67238,12 +66200,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058805&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058805&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67337,12 +66293,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058789&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058789&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67436,12 +66386,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058732&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058732&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67534,12 +66478,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058790&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058790&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67633,12 +66571,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058806&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058806&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67732,12 +66664,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058821&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058821&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67831,12 +66757,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058733&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058733&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -67929,12 +66849,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058791&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058791&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68027,12 +66941,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058836&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058836&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68125,12 +67033,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058775&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058775&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68223,12 +67125,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058734&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058734&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68323,12 +67219,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058792&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058792&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68422,12 +67312,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058807&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058807&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68521,12 +67405,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058837&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058837&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68619,12 +67497,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058756&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058756&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68718,12 +67590,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058757&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058757&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68816,12 +67682,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058735&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058735&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -68914,12 +67774,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058838&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058838&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69012,12 +67866,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058758&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058758&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69110,12 +67958,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058839&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058839&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69208,12 +68050,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058840&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058840&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69306,12 +68142,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058736&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058736&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69404,12 +68234,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058808&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058808&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69502,12 +68326,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058759&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058759&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69600,12 +68418,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058737&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058737&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69698,12 +68510,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058809&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058809&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69796,12 +68602,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058822&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058822&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69894,12 +68694,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058841&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058841&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -69992,12 +68786,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058793&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058793&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70089,12 +68877,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059292&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059292&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70186,12 +68968,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073692&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073692&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70275,12 +69051,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073693&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17073693&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-28",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70367,12 +69137,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083484&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083484&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-03-16",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70457,12 +69221,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083527&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083527&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70562,12 +69320,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034753&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034753&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70649,12 +69401,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063414&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063414&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70741,12 +69487,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096855&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096855&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70830,12 +69570,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082252&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082252&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -70920,12 +69654,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075796&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075796&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71020,12 +69748,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058987&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058987&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71115,12 +69837,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058981&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058981&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71210,12 +69926,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058988&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17058988&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71308,12 +70018,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034245&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034245&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71408,12 +70112,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075811&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075811&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71501,12 +70199,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044367&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044367&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71599,12 +70291,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034633&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034633&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71712,12 +70398,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064356&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064356&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71801,12 +70481,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063860&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063860&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71890,12 +70564,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089091&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089091&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -71979,12 +70647,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083724&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17083724&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-08",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72068,12 +70730,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089042&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089042&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72156,12 +70812,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063426&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063426&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72245,12 +70895,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052354&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052354&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-31",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72335,12 +70979,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053659&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053659&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72433,12 +71071,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053579&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17053579&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72529,12 +71161,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052540&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052540&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72618,12 +71244,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096853&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17096853&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72709,12 +71329,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034952&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034952&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-03",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72801,12 +71415,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074315&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17074315&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72906,12 +71514,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059955&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17059955&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -72994,12 +71596,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054287&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054287&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73084,12 +71680,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063839&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063839&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73173,12 +71763,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044135&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17044135&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-06",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73263,12 +71847,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063263&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17063263&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73352,12 +71930,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054270&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054270&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73441,12 +72013,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054196&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054196&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73531,12 +72097,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034760&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034760&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73627,12 +72187,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065223&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065223&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73715,12 +72269,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065248&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065248&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-07-20",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73804,12 +72352,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064382&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064382&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73901,12 +72443,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064494&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17064494&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -73994,12 +72530,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034761&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17034761&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74081,12 +72611,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043441&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17043441&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74172,12 +72696,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033683&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17033683&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-01",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74271,12 +72789,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082832&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082832&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-08-18",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74359,12 +72871,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075537&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075537&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74452,12 +72958,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052607&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052607&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74545,12 +73045,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052620&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17052620&atchSn=9&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-06-22",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74632,12 +73126,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054583&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054583&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-13",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74724,12 +73212,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054020&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17054020&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74811,12 +73293,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075538&atchSn=2&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17075538&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-05-11",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74899,12 +73375,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065185&atchSn=3&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17065185&atchSn=4&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-09-14",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -74989,12 +73459,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089408&atchSn=5&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17089408&atchSn=6&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-04-27",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
@@ -75089,12 +73553,6 @@
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082202&atchSn=7&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM",
         "https://www.onbid.co.kr/op/cm/syc/filemng/filemngprcs/FileMngPrcsController/dnldFile.do?atchFileLstNo=17082202&atchSn=8&hashCrpsNo=APJAONJNCNOIBNOKBHAJOOGOFIBJHGFBLDFCINIKIFNAOCEPJJPBNHFOIINCDDGN&downloadImageKind=THNL_NM"
       ],
-      "caseDetails": {
-        "filedAt": "",
-        "commencedAt": "",
-        "distributionDeadline": "2026-10-12",
-        "claimAmount": ""
-      },
       "schedules": [
         {
           "date": "2026-10-26",
