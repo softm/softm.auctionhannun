@@ -1,5 +1,9 @@
 const repo = "https://api.github.com/repos/softm/softm.auctionhannun";
-export const datasets = [{ name: "온비드 공매", base: "./data/onbid" }, { name: "법원 경매", base: "./data" }];
+export const datasets = [
+  { name: "온비드 부동산", base: "./data/onbid" },
+  { name: "온비드 동산", base: "./data/onbid-movable", optional: true },
+  { name: "법원 경매", base: "./data" }
+];
 export function number(value) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value.toLocaleString("ko-KR") : "—";
 }
@@ -27,7 +31,8 @@ export function publishedPhotoCount(manifest, status) {
   return manifest.itemCount === 0 ? 0 : null;
 }
 export function publishedPhotoTotal(results) {
-  const counts = results.map(({ manifest, status }) => publishedPhotoCount(manifest, status));
+  const published = results.filter(({ manifest }) => publishedManifest(manifest));
+  const counts = published.map(({ manifest, status }) => publishedPhotoCount(manifest, status));
   return counts.length && counts.every(value => value != null) ? counts.reduce((sum, value) => sum + value, 0) : null;
 }
 export function collectionRow(name, manifest, status) {
@@ -70,9 +75,13 @@ async function loadPublished() {
     return { name, manifest: manifest.status === "fulfilled" ? manifest.value : null, status: status.status === "fulfilled" ? status.value : null };
   }));
   rows("collectionRows", results.map(x => collectionRow(x.name, x.manifest, x.status)));
-  const [onbid, court] = results.map(x => x.manifest?.demo === false ? x.manifest : null);
-  document.getElementById("onbidCount").textContent = number(onbid?.itemCount);
-  document.getElementById("propertyCount").textContent = number(onbid?.distinctProperties);
+  const onbid = results[0]?.manifest?.demo === false ? results[0].manifest : null;
+  const movable = results[1]?.manifest?.demo === false ? results[1].manifest : null;
+  const court = results[2]?.manifest?.demo === false ? results[2].manifest : null;
+  const onbidCount = [onbid?.itemCount, movable?.itemCount].filter(Number.isFinite).reduce((sum, value) => sum + value, 0);
+  const propertyCount = [onbid?.distinctProperties, movable?.distinctProperties].filter(Number.isFinite).reduce((sum, value) => sum + value, 0);
+  document.getElementById("onbidCount").textContent = number(onbidCount);
+  document.getElementById("propertyCount").textContent = number(propertyCount);
   document.getElementById("courtCount").textContent = number(court?.itemCount);
   const photoTotal = publishedPhotoTotal(results);
   document.getElementById("photoCount").textContent = number(photoTotal);
@@ -85,7 +94,7 @@ async function loadPublished() {
   const publishedDates = results.filter(x => publishedManifest(x.manifest) && x.manifest.itemCount > 0)
     .map(x => x.manifest.collectedAt).filter(value => value && Number.isFinite(Date.parse(value))).sort();
   document.getElementById("lastCollectedAt").textContent = date(publishedDates.at(-1));
-  const courtStatus = results[1]?.status;
+  const courtStatus = results[2]?.status;
   document.getElementById("courtDetailStatus").textContent = courtStatus?.state === "unconfigured" && court?.itemCount === 0
     ? "법원 경매 공급원 미연결 · 사건·사진·상세자료 미수집"
     : court?.itemCount > 0 ? "물건별 제공 자료 확인 필요 · 수집 건수만으로 상세자료 확보를 뜻하지 않습니다."
