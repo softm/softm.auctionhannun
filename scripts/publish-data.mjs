@@ -11,7 +11,7 @@ export async function publishDataset(dataset, dataDir = "data") {
   for (const item of dataset.items) {
     const detailFile = `details/${hash(item)}.json`;
     await writeFile(resolve(dataDir, detailFile), `${JSON.stringify(item)}\n`);
-    const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, ...summary } = item;
+    const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = item;
     items.push({ ...summary, detailFile });
   }
   const catalogHash = hash(items);
