@@ -45,14 +45,14 @@
       <div class="callout"><b>사진·상세자료 연결에 필요한 공식 경로</b><br>
         온비드 부동산: <a href="https://www.data.go.kr/data/15157247/openapi.do" target="_blank" rel="noopener noreferrer">부동산 물건상세 조회서비스 활용신청 ↗</a> — 사진목록·면적상세·감정평가정보 등 제공.<br>
         온비드 동산: <a href="https://www.data.go.kr/data/15157232/openapi.do" target="_blank" rel="noopener noreferrer">동산 물건목록 조회서비스 ↗</a> · <a href="https://www.data.go.kr/data/15157245/openapi.do" target="_blank" rel="noopener noreferrer">동산 물건상세 조회서비스 ↗</a> — 수량·중량·제조사·모델·보관장소·사진 등 제공.<br>
-        법원: <a href="https://www.courtauction.go.kr/" target="_blank" rel="noopener noreferrer">대한민국 법원경매정보 ↗</a> — 별도 기관 API 연계 없이 일반 공개 매각공고를 저빈도 증분수집하며, 상세 문서·사진은 공식 원문 연결을 우선합니다.
+        법원: <a href="https://www.courtauction.go.kr/" target="_blank" rel="noopener noreferrer">대한민국 법원경매정보 ↗</a> — 전국 17개 시·도 기본목록을 전 페이지 수집하고, 사건·물건 상세는 사용자가 물건을 열 때 별도 조회 API로 보강합니다.
       </div>
     </section>
     <section><p class="eyebrow">WHERE · WHAT · HOW · WHEN</p><h2>출처·수집 방식·시점</h2>
       <div class="table-wrap" tabindex="0" role="region" aria-label="데이터 출처와 수집 방식 표"><table class="wide"><thead><tr><th scope="col">구분 / 어디서</th><th scope="col">무엇을</th><th scope="col">어떻게</th><th scope="col">언제</th><th scope="col">건수 집계 기준·상태</th></tr></thead><tbody>
         <tr><th scope="row"><a href="https://www.data.go.kr/data/15157207/openapi.do">온비드 부동산 API</a></th><td>부동산 물건번호, 소재지, 용도, 가격, 입찰 조건·기간</td><td><code>OnbidRlstListSrvc2/getRlstCltrList2</code><br>상세: <code>OnbidRlstDtlSrvc2/getRlstDtlInf2</code></td><td>매일 06:20 예약 + 수동 실행</td><td>입찰건과 고유 물건을 별도 집계</td></tr>
         <tr><th scope="row"><a href="https://www.data.go.kr/data/15157232/openapi.do">온비드 동산 API</a></th><td>동산(차량 제외) 물건명, 재산유형, 가격, 입찰기간, 수량·제조사·모델·보관장소 등</td><td><code>OnbidMvastListSrvc2/getMvastCltrList2</code><br>상세: <code>OnbidMvastDtlSrvc2/getMvastDtlInf2</code></td><td>매일 06:20 예약 + 수동 실행</td><td>별도 데이터셋으로 수집 후 검색 화면에서 부동산과 통합</td></tr>
-        <tr><th scope="row"><a href="https://www.courtauction.go.kr/">법원 경매정보</a></th><td>사건번호, 물건번호, 용도, 소재지, 감정가, 최저가, 매각기일, 공고 비고</td><td>법원 공개 매각공고 목록·상세 JSON을 저빈도 증분 수집. 세션 10회 이하·요청 간격 2.6초 이상·차단 신호 시 즉시 중단</td><td>하루 4회 법원/월 순환 증분수집</td><td>현재 배포 건수와 수집 커서는 위 표 참조. 실패 시 마지막 정상 자료 유지</td></tr>
+        <tr><th scope="row"><a href="https://www.courtauction.go.kr/">법원 경매정보</a></th><td>사건번호, 물건번호, 용도, 소재지, 감정가, 최저가, 유찰횟수, 매각기일, 좌표·면적 요약</td><td>물건상세검색을 17개 시·도로 분할해 페이지당 50건씩 끝까지 수집. 각 시·도의 totalCnt와 실제 행수를 대조하고 하나라도 불일치하면 새 스냅샷을 배포하지 않음</td><td>매일 04:10 KST 전국 기본목록 전수수집 + 수동 실행</td><td>목록은 고유 사건·물건 기준으로 중복 제거. 상세는 물건 선택 시 Vercel 조회 API로 요청하고 CDN 캐시</td></tr>
         <tr><th scope="row"><a href="https://data.iros.go.kr/rp/oa/openOapiIntro.do">인터넷등기소</a></th><td>등기 관련 통계 등 검토 대상</td><td>현재 수집기 미연결</td><td>실행 일정 없음</td><td>수집 0건. 개별 경매 물건의 공급원으로 사용하지 않음</td></tr>
         <tr><th scope="row">NAVER Maps</th><td>기본 지도·주소 좌표</td><td>지도 SDK·주소 변환 기능</td><td>페이지 진입 시 지도 표시, 목록 선택 시 해당 주소 조회</td><td>요청 시 조회. 경매 수집 건수에 합산하지 않음</td></tr>
         <tr><th scope="row"><a href="https://www.vworld.kr/">VWorld</a></th><td>배경지도, 연속지적도, 주소 후보, 선택한 필지의 경계</td><td>XYZ 타일·WMS·검색·공간정보 API, 운영·로컬 전용 웹 키 분리</td><td>지적도 전환·화면 이동·주소 후보 선택·필지 조회 시</td><td>누적 건수 미집계. localhost:3000에서 배경지도·WMS 필지 경계·지번 표시 확인. 운영 주소는 새 코드 배포 후 검증 필요 (2026-10-21 점검)</td></tr>
@@ -66,16 +66,16 @@
     </section>
     <section><p class="eyebrow">COLLECTION → PUBLICATION</p><h2>자동 갱신 정책과 반영 순서</h2>
       <div class="table-wrap" tabindex="0" role="region" aria-label="자동 갱신 정책 표"><table><thead><tr><th scope="col">단계</th><th scope="col">시점·장소</th><th scope="col">처리·검증 기준</th></tr></thead><tbody>
-        <tr><th scope="row">1. 수집 시작</th><td>GitHub Actions · 온비드 매일 06:20 KST · 법원 하루 4회</td><td>온비드는 공식 API, 법원은 공개 매각공고를 법원/월 단위로 순환 증분수집. 예약 실행은 지연될 수 있음</td></tr>
-        <tr><th scope="row">2. 조회·검증</th><td>수집 실행 중</td><td>온비드는 API 페이지·건수·중복 ID 검증. 법원은 세션 쿠키를 정상 발급받은 뒤 한 세션 최대 10회만 호출하고 ipcheck=false·403·429 발생 시 우회 없이 중단</td></tr>
-        <tr><th scope="row">3. 가공·저장</th><td>검증 후</td><td>목록용 압축 파일·물건별 상세 JSON·매니페스트 생성. 실패 시 마지막 정상 자료 유지</td></tr>
-        <tr><th scope="row">4. 변경 PR</th><td>데이터 또는 상태 변경 시 자동 생성</td><td>변경 검토 대기. 수집 실행 성공만으로 운영 데이터가 교체되지는 않음</td></tr>
-        <tr><th scope="row">5. 서비스 반영</th><td>PR 병합 후 Pages 배포 성공 시</td><td>웹·앱이 배포된 목록을 읽고 상세 선택 시 해당 JSON 추가 조회</td></tr>
+        <tr><th scope="row">1. 수집 시작</th><td>GitHub Actions · 법원 매일 04:10 KST · 온비드 매일 06:20 KST</td><td>법원은 17개 시·도 기본목록 전 페이지를 한 실행에서 수집하고, 온비드는 공식 API를 사용합니다. 예약 실행은 지연될 수 있습니다.</td></tr>
+        <tr><th scope="row">2. 조회·검증</th><td>수집 실행 중</td><td>법원은 시·도별 첫 페이지 totalCnt와 실제 누적 행수를 대조하고 17개 시·도 완주를 확인합니다. ipcheck=false·403·429 발생 시 우회하지 않고 중단하며 마지막 정상 스냅샷을 유지합니다.</td></tr>
+        <tr><th scope="row">3. 가공·저장</th><td>전국 목록 검증 후</td><td>고유 사건·물건으로 중복 제거한 압축 목록 JSON과 매니페스트를 생성합니다. 법원 상세 JSON 1.7만 개를 미리 만들지 않습니다.</td></tr>
+        <tr><th scope="row">4. 목록 반영</th><td>전국 검증 성공 시</td><td>전국 기본목록 PR을 생성·병합하고 Pages 배포를 실행합니다. 전수수집 실패 시 기존 정상 목록을 교체하지 않습니다.</td></tr>
+        <tr><th scope="row">5. 상세 조회</th><td>사용자가 법원 물건을 선택할 때</td><td>목록 기본정보는 즉시 표시하고, 상세가 필요하면 서울 리전 Vercel Function이 법원 사건·물건 상세를 1회 조회합니다. 성공 응답은 6시간 CDN 캐시하고 실패 시 기본정보와 법원 원문 링크를 유지합니다.</td></tr>
       </tbody></table></div>
     </section>
     <section><h2>사용자 행위와 API 연계</h2><div class="table-wrap" tabindex="0" role="region" aria-label="사용자 행위별 연계 표"><table><thead><tr><th scope="col">사용자 행위</th><th scope="col">처리·연계</th><th scope="col">저장·집계</th></tr></thead><tbody>
       <tr><th scope="row">목록 검색·필터</th><td>Pages의 수집 목록 조회</td><td>사용자별 온비드 API 호출 없음</td></tr>
-      <tr><th scope="row">물건 상세 열기</th><td>물건별 상세 JSON 추가 로딩</td><td>배포된 정적 데이터</td></tr>
+      <tr><th scope="row">법원 물건 상세 열기</th><td>전국 목록 기본정보를 즉시 표시한 뒤, 미확보 상세는 <code>/api/court-detail</code>에서 사건·물건 단위로 조회</td><td>DB 없음 · 브라우저 메모리 캐시 + CDN 6시간 캐시 · 차단/실패 시 원문 연결 유지</td></tr>
       <tr><th scope="row">지도·지적도 보기</th><td>NAVER 기본 지도 자동 표시. 목록 선택 시 위치 이동. 지적도 버튼은 VWorld 배경지도·연속지적도(WMS)로 전환</td><td>지도 조회는 수집 물건 수에 포함하지 않음</td></tr>
       <tr><th scope="row">필지 경계 확인</th><td>주소 후보 확인 후 VWorld 필지 경계 요청</td><td>선택한 필지 기준 조회</td></tr>
       <tr><th scope="row">토지이용계획 보기</th><td>토지이음 원문으로 이동</td><td>원문 링크, 일괄 수집 아님</td></tr>
@@ -83,6 +83,6 @@
     </tbody></table></div></section>
   </main>
   <footer>경매한눈 · 공공자료 기반 독립 서비스 <a href="./privacy.html">개인정보처리방침</a></footer>
-  <script type="module" src="./data-status.js?v=20261023-5"></script>
+  <script type="module" src="./data-status.js?v=20261024-1"></script>
 </body>
 </html>
