@@ -26,7 +26,8 @@ export async function publishDataset(dataset, dataDir = "data") {
   const manifest = { ...dataset.metadata, status: dataset.items.length ? "ready" : "empty", catalogFile, catalogHash };
   for (const [name, value] of [["auctions.json", dataset], ["manifest.json", manifest]]) {
     const path = resolve(dataDir, name);
-    await writeFile(`${path}.tmp`, `${JSON.stringify(value, null, 2)}\n`);
+    const json = dataset.metadata?.lazyDetails && name === "auctions.json" ? JSON.stringify(value) : JSON.stringify(value, null, 2);
+    await writeFile(`${path}.tmp`, `${json}\n`);
     await rename(`${path}.tmp`, path);
   }
   return manifest;
