@@ -8,10 +8,15 @@ export async function publishDataset(dataset, dataDir = "data") {
   await mkdir(resolve(dataDir, "catalog"), { recursive: true });
   await mkdir(resolve(dataDir, "details"), { recursive: true });
   const items = [];
+  const lazyDetails = dataset.metadata?.lazyDetails === true;
   for (const item of dataset.items) {
+    const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = item;
+    if (lazyDetails && item.auctionKind === "court" && item.detailLevel !== "full") {
+      items.push(summary);
+      continue;
+    }
     const detailFile = `details/${hash(item)}.json`;
     await writeFile(resolve(dataDir, detailFile), `${JSON.stringify(item)}\n`);
-    const { occupancy, ratio, rounds, category, caseDetails, schedules, propertyLots, appraisalSummary, documents, tenancySummary, assetDetails, ...summary } = item;
     items.push({ ...summary, detailFile });
   }
   const catalogHash = hash(items);
