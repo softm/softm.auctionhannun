@@ -203,8 +203,13 @@ export async function collectOnbidMovable({
       if (!byProperty.has(record.caseNumber)) byProperty.set(record.caseNumber, []);
       byProperty.get(record.caseNumber).push(record);
     }
+    const hasUsefulDetail = record => Boolean(
+      record.imageUrls?.length ||
+      record.appraisalSummary ||
+      ["quantity","weight","manufacturer","model","origin","storagePlace","artworkTitle","artist","itemName","note"].some(key => record.assetDetails?.[key])
+    );
     const targets = [...byProperty.entries()]
-      .filter(([, rows]) => !(rows[0].imageUrls?.length || rows[0].assetDetails || rows[0].appraisalSummary))
+      .filter(([, rows]) => !hasUsefulDetail(rows[0]))
       .sort((a,b)=>(a[1][0].bidEndsAt || "9999").localeCompare(b[1][0].bidEndsAt || "9999"))
       .slice(0, Math.max(0, detailLimit));
     let detailAttempted = 0, detailAdded = 0, detailDenied = 0, detailRateLimited = 0, detailErrors = 0;
