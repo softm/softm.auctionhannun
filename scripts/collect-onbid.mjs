@@ -11,6 +11,7 @@ const hash = data => createHash("sha256").update(JSON.stringify(data)).digest("h
 const text = value => String(value ?? "").replace(/\s+/g, " ").trim();
 const money = value => /^\d+$/.test(text(value)) ? `${Number(value).toLocaleString("ko-KR")}원` : text(value) || "원문 확인";
 const date = value => /^\d{12}$/.test(text(value)) ? `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}` : "";
+const clock = value => /^\d{12}$/.test(text(value)) ? `${value.slice(8, 10)}:${value.slice(10, 12)}` : "";
 const time = value => date(value) ? `${date(value)}T${value.slice(8, 10)}:${value.slice(10, 12)}:00+09:00` : "";
 
 export function onbidDetailUrl(key, cltrMngNo) {
@@ -99,6 +100,7 @@ export function onbidDetailEnrichment(items, cltrMngNo) {
   })).filter(value => value.type || value.area || value.share || value.details));
   const appraisals = matching.flatMap(item => detailList(item?.apslEvlClgList));
   const appraisal = appraisals[0] || {};
+  const paps = matching.flatMap(item => detailList(item?.papsInf))[0] || {};
   const appraisalSummary = {
     valuedAt: date8(appraisal.apslEvlYmd),
     location: first("locVntyPscdCont"),
@@ -111,13 +113,27 @@ export function onbidDetailEnrichment(items, cltrMngNo) {
   } : null;
   const occupantCount = Math.max(0, ...matching.map(item => detailList(item?.ocpyRelList).length));
   const leaseCount = Math.max(0, ...matching.map(item => detailList(item?.leasInfList).length));
-  const tenancySummary = occupantCount || leaseCount ? {
-    status: "온비드 상세정보 수집",
+  const registryCount = Math.max(0, ...matching.map(item => detailList(item?.rgstPrmrInfList).length));
+  const distributionCount = Math.max(0, ...matching.map(item => detailList(item?.dtbtRqrMtrsList).length));
+  const tenancySummary = occupantCount || leaseCount || registryCount || distributionCount ? {
+    status: "온비드 권리·점유 기초정보",
     occupantCount,
-    note: [occupantCount ? `점유관계 ${occupantCount}건` : "", leaseCount ? `임대차정보 ${leaseCount}건` : ""].filter(Boolean).join(" · ")
+    note: [
+      registryCount ? `등기 주요정보 ${registryCount}건` : "",
+      distributionCount ? `배분요구사항 ${distributionCount}건` : "",
+      occupantCount ? `점유관계 ${occupantCount}건` : "",
+      leaseCount ? `임대차정보 ${leaseCount}건` : ""
+    ].filter(Boolean).join(" · ")
   } : null;
+  const caseDetails = {
+    filedAt: "",
+    commencedAt: "",
+    distributionDeadline: date8(first("dtbtRqrEdtmCont")) || date8(paps?.dtbtRqrEdtmYmd),
+    claimAmount: ""
+  };
   return {
     imageUrls,
+    ...(caseDetails.distributionDeadline ? { caseDetails } : {}),
     ...(propertyLots.length ? { propertyLots } : {}),
     ...(Object.values(appraisalSummary).some(Boolean) ? { appraisalSummary } : {}),
     ...(documents ? { documents } : {}),
@@ -139,6 +155,10 @@ export function onbidRecord(row) {
     rounds: /^\d+$/.test(text(row.usbdNft)) ? `${Number(row.usbdNft)}회 유찰` : "원문 확인",
     area: [Number(row.landSqms) > 0 ? `토지 ${row.landSqms}㎡` : "", Number(row.bldSqms) > 0 ? `건물 ${row.bldSqms}㎡` : ""].filter(Boolean).join(" · ") || "원문 확인",
     category, status: text(row.pbctStatNm) || "온비드 원문 확인", occupancy: "공고문·명도 책임 원문 확인",
+    schedules: [
+      { date: date(row.cltrBidBgngDt), time: clock(row.cltrBidBgngDt), type: "입찰 시작", place: "온비드", minimum: money(row.lowstBidPrcIndctCont), result: "예정" },
+      { date: date(row.cltrBidEndDt), time: clock(row.cltrBidEndDt), type: "입찰 마감", place: "온비드", minimum: money(row.lowstBidPrcIndctCont), result: text(row.pbctStatNm) || "상태 확인" }
+    ].filter(value => value.date),
     // Observed Onbid ltnoPnu uses 0/1 at the mountain flag, unlike standard PNU 1/2.
     // Do not guess a conversion: user confirms a VWorld parcel candidate before opening EUM.
     pnu: null,
