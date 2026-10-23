@@ -196,7 +196,8 @@ export async function collectCourtCatalog({
       perRegion.push({code:region.code,name:region.name,rows:regionRows,unique:[...unique.keys()].length});
       console.log(`법원 목록 ${region.name} 완료 · 원시 ${regionRows}행 · 전국 고유 누계 ${unique.size}건`);
     }
-    if(rawRows < Math.max(100,Math.floor(totalExpected*0.98))) throw new Error(`법원 목록 누락 의심: 수집 ${rawRows}/예상 ${totalExpected}`);
+    const requiredRows = totalExpected < 100 ? totalExpected : Math.floor(totalExpected * 0.98);
+    if(rawRows < requiredRows) throw new Error(`법원 목록 누락 의심: 수집 ${rawRows}/예상 ${totalExpected}`);
     const items=[];
     for(const row of unique.values()){try{items.push(normalizeCourtSearchRow(row))}catch(e){console.warn(`법원 목록 정규화 생략: ${clean(row.srnSaNo||row.saNo,80)} · ${e.message}`)}}
     if(items.length < 100 && regions.length>1)throw new Error(`법원 고유 물건이 비정상적으로 적습니다: ${items.length}`);
