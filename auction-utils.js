@@ -13,7 +13,7 @@ export function filterAndSortCases(items, { query = "", filter = "all", region =
   const normalized = query.trim().toLowerCase();
   const matches = items.filter(item => {
     const typeMatch = filter === "all" || (filter === "favorite" ? favorites.has(item.id) : filter === "registered" ? item.userAdded === true : item.type === filter);
-    const text = `${item.title} ${item.address} ${item.court} ${item.caseNumber}`.toLowerCase();
+    const text = `${item.title} ${item.address} ${item.court} ${item.caseNumber} ${item.itemNumber || ""} ${item.category || ""} ${item.status || ""}`.toLowerCase();
     return typeMatch && (kind === "all" || (item.auctionKind || "court") === kind) && (region === "all" || regionOf(item) === region)
       && (court === "all" || item.court === court) && (!normalized || text.includes(normalized));
   });
