@@ -36,7 +36,7 @@ export async function loadCatalog(base = "./data", kind = "court") {
 export async function loadDetail(item) {
   if (item.userAdded || !item.detailFile) return item;
   if (!safeDataPath(item.detailFile, "detail")) throw new Error("상세 경로 오류");
-  const base = item.auctionKind === "onbid" ? "./data/onbid" : "./data";
+  const base = item.dataBase || (item.auctionKind === "onbid" ? "./data/onbid" : "./data");
   const detail = await load(`${base}/${item.detailFile}`);
   if (detail.id !== item.id || detail.demo) throw new Error("상세 물건 식별자 오류");
   cache.set(item.id, detail);
