@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/court-detail.js": {
+      "maxDuration": 20
+    }
+  }
+}
