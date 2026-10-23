@@ -1,0 +1,59 @@
+name: Collect public court auction data
+
+on:
+  push:
+    paths:
+      - ".github/court-collect-now"
+  schedule:
+    - cron: "10 0,6,12,18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: court-public-data-collection
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Seoul
+      COURT_PUBLIC_MAX_CALLS: 10
+      COURT_PUBLIC_MIN_DELAY_MS: 2600
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Collect public court auction increment
+        id: court
+        continue-on-error: true
+        run: npm run collect:court-public
+      - run: npm run check
+      - name: Propose verified court catalog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="feature/court-data-refresh-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git switch -c "$BRANCH"
+          node scripts/commit-data.mjs
+          if git diff --quiet origin/main HEAD; then
+            exit 0
+          fi
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" --title "$(date +%Y%m%d)_data_법원경매증분수집" --body "법원경매정보 공개 화면의 저빈도 증분수집 결과입니다. 한 세션 10회 이하, 요청 간격 2.6초 이상, 차단 신호 발생 시 즉시 중단하고 마지막 정상 자료를 유지합니다."
+      - name: Report collection failure
+        if: steps.court.outcome == 'failure'
+        run: exit 1
