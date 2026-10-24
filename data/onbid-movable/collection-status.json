@@ -1,10 +1,10 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-23T13:25:03.984Z",
-  "lastSuccessAt": "2026-10-23T13:25:03.984Z",
-  "itemCount": 4709,
+  "attemptedAt": "2026-10-24T23:28:10.694Z",
+  "lastSuccessAt": "2026-10-24T23:28:10.694Z",
+  "itemCount": 4708,
   "completedPages": 13,
-  "photoProperties": 68,
+  "photoProperties": 87,
   "detailEnrichment": {
     "attempted": 100,
     "requested": 100,
