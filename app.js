@@ -756,10 +756,16 @@ function addCase(form) {
     occupancy: "현황조사서 확인",
     category: typeMeta[String(data.get("type"))]?.label || "기타"
   };
-  state.added.unshift(item);
-  if (!storage.set("cases", state.added)) return;
-  state.flows[item.id] = createCaseFlow(item);
-  if (!storage.set("flows", state.flows)) return;
+  try {
+    const next = workspace.snapshot();
+    next.cases.unshift(item);
+    next.flows[item.id] = createCaseFlow(item);
+    workspace.commit(next);
+    applyWorkspace(next);
+  } catch (error) {
+    showToast(`사건을 저장하지 못했습니다: ${error.message}`);
+    return;
+  }
   form.reset();
   $("#addCaseDialog").close();
   state.filter = "all";
@@ -781,7 +787,7 @@ function openCaseEditor(edit = false) {
   const form = $("#addCaseForm"); form.reset();
   $("#caseFormError").textContent = "";
   $("#addCaseTitle").textContent = edit ? "등록 사건 정보 수정" : "검토할 사건 추가";
-  $("#caseFormIntro").textContent = edit ? "법원·사건번호·소재지·유형·기일을 수정합니다. 기존 메모·관심·체크 기록은 유지됩니다. 주소 변경 시 지도 위치와 선택 필지는 다시 확인해야 합니다." : "공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.";
+  $("#caseFormIntro").textContent = edit ? "법원·사건번호·소재지·유형·기일을 수정합니다. 기존 메모·관심·체크 기록은 유지됩니다. 주소 변경 시 지도 위치와 선택 필지는 다시 확인해야 합니다." : "공식 사이트에서 확인한 물건을 직접 등록하면 내 경매 Case가 함께 생성됩니다. 분석 유형과 확인 항목은 작업실에서 바꿀 수 있습니다.";
   $(".dialog-submit", form).textContent = edit ? "수정 내용 저장" : "검토 목록에 추가";
   if (item) for (const key of ["court", "caseNumber", "address", "type", "saleDate"]) form.elements.namedItem(key).value = item[key] || "";
   openDialog("#addCaseDialog");
