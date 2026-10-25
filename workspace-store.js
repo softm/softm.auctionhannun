@@ -3,7 +3,7 @@ import { validateCaseFlows } from "./case-flow.js";
 export const KEYS = ["cases", "favorites", "checks", "notes", "verified", "flows"];
 export const emptyWorkspace = () => ({ cases: [], favorites: [], checks: {}, notes: {}, verified: {}, flows: {} });
 const plain = value => value && typeof value === "object" && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype;
-const safeId = value => typeof value === "string" && /^[\\p{L}\\p{N}:._-]{1,180}$/u.test(value) && !["__proto__", "constructor", "prototype"].includes(value);
+const safeId = value => typeof value === "string" && /^[\p{L}\p{N}:._-]{1,180}$/u.test(value) && !["__proto__", "constructor", "prototype"].includes(value);
 export function validateWorkspace(value) {
   if (!plain(value) || Object.keys(value).some(key => !KEYS.includes(key))) throw new Error("저장 자료 형식이 올바르지 않습니다.");
   const data = { ...emptyWorkspace(), ...value };
