@@ -1,6 +1,7 @@
+import { validateCaseFlows } from "./case-flow.js";
 // Account data is never written into the legacy guest storage namespace.
-export const KEYS = ["cases", "favorites", "checks", "notes", "verified"];
-export const emptyWorkspace = () => ({ cases: [], favorites: [], checks: {}, notes: {}, verified: {} });
+export const KEYS = ["cases", "favorites", "checks", "notes", "verified", "flows"];
+export const emptyWorkspace = () => ({ cases: [], favorites: [], checks: {}, notes: {}, verified: {}, flows: {} });
 const plain = value => value && typeof value === "object" && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype;
 const safeId = value => typeof value === "string" && /^[a-zA-Z0-9:_-]{1,180}$/.test(value) && !["__proto__", "constructor", "prototype"].includes(value);
 export function validateWorkspace(value) {
@@ -23,13 +24,14 @@ export function validateWorkspace(value) {
       } else if (typeof v !== "string" || v.length > (key === "notes" ? 3000 : 100)) throw new Error("메모·확인 기록 길이를 확인해 주세요.");
     }
   }
-  if (new TextEncoder().encode(JSON.stringify(data)).length > 200000) throw new Error("계정 작업 정보는 200KB까지 저장할 수 있습니다. 백업 후 불필요한 기록을 정리해 주세요.");
+  data.flows = validateCaseFlows(data.flows || {});
+  if (new TextEncoder().encode(JSON.stringify(data)).length > 400000) throw new Error("계정 작업 정보는 400KB까지 저장할 수 있습니다. 백업 후 불필요한 기록을 정리해 주세요.");
   return structuredClone(data);
 }
 export function mergeGuest(remote, guest) {
   const cloud = validateWorkspace(remote), local = validateWorkspace(guest);
   // Existing cloud records win on collision. The guest copy remains untouched.
-  return validateWorkspace({ cases: [...cloud.cases, ...local.cases.filter(x => !cloud.cases.some(y => y.id === x.id))], favorites: [...new Set([...cloud.favorites, ...local.favorites])], checks: { ...local.checks, ...cloud.checks }, notes: { ...local.notes, ...cloud.notes }, verified: { ...local.verified, ...cloud.verified } });
+  return validateWorkspace({ cases: [...cloud.cases, ...local.cases.filter(x => !cloud.cases.some(y => y.id === x.id))], favorites: [...new Set([...cloud.favorites, ...local.favorites])], checks: { ...local.checks, ...cloud.checks }, notes: { ...local.notes, ...cloud.notes }, verified: { ...local.verified, ...cloud.verified }, flows: { ...local.flows, ...cloud.flows } });
 }
 export function createWorkspaceStore(storage) {
   let uid = null, data = emptyWorkspace(), locked = false;
