@@ -311,8 +311,10 @@ function renderCases() {
   // Keep the ad and its iframe connected: moving an existing iframe resets its
   // browsing context. Only replace the cards on either side of the fixed slot.
   $("#caseListBeforeAd").innerHTML = cases.length ? cards.slice(0, after).join("") : `<div class="empty-state">${state.filter === "managed" && !Object.keys(state.flows).length ? "아직 분석을 시작한 경매물건이 없습니다.<br />후보 물건에서 ‘분석 시작’을 눌러 내 경매 Case를 만드세요." : state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
-  $("#caseListAfterAd").innerHTML = cards.slice(after).join("");
-  if (infeedAd) infeedAd.hidden = visibleCases.length < after || infeedAd.dataset.state === "failed";
+  $("#caseListAfterAd").innerHTML = cards.slice(after, 12).join("");
+  $("#caseListAfterAd2").innerHTML = cards.slice(12, 18).join("");
+  $("#caseListAfterAd3").innerHTML = cards.slice(18).join("");
+  [[infeedAd,after],["#infeedAd2",12],["#infeedAd3",18]].forEach(([target,position])=>{const ad=typeof target==="string"?$(target):target;if(ad)ad.hidden=visibleCases.length<=position||ad.dataset.state==="failed";});
   document.dispatchEvent(new CustomEvent("auctionhannun:ads-updated"));
   updateFavoriteBadge();
   renderMetrics();

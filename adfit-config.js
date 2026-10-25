@@ -10,10 +10,12 @@ window.AUCTIONHANNUN_AD_CONFIG = Object.freeze({
       delayMs: 900, cooldownHours: 24
     }),
     infeed: Object.freeze({
-      after: 5,
+      after: 6,
       mobile: Object.freeze({unit: "DAN-5I0qVPgviCSNBEcc", width: 320, height: 100}),
       desktop: Object.freeze({unit: "DAN-CuNtEfgzRE9ZSmn1", width: 728, height: 90})
     }),
+    infeed2: Object.freeze({after: 12, unit: "DAN-5I0qVPgviCSNBEcc", width: 320, height: 100}),
+    infeed3: Object.freeze({after: 18, unit: "DAN-5I0qVPgviCSNBEcc", width: 320, height: 100}),
     bottom: Object.freeze({
       mobile: Object.freeze({unit: "DAN-ZqOFrLPUmlI5AWvH", width: 320, height: 100}),
       desktop: Object.freeze({unit: "DAN-5dClDD1g2RiGnJwR", width: 728, height: 90})

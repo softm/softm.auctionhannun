@@ -55,8 +55,8 @@
       || viewportHeight < MIN_AD_VIEWPORT_HEIGHT;
   }
   function eligible(state) {
-    if (state.placement !== "infeed") return true;
-    const after = Math.max(1, Number(config().placements?.infeed?.after) || 5);
+    if (!state.placement.startsWith("infeed")) return true;
+    const after = Math.max(1, Number(config().placements?.[state.placement]?.after) || 6);
     return root.document.querySelectorAll("#caseList .case-card").length >= after;
   }
   function syncSpace() {
@@ -120,7 +120,7 @@
     for (const state of [...pendingScripts]) {
       if (state.failed || !state.ad) { pendingScripts.delete(state); continue; }
       if (state.zone.hidden || state.host.hidden || root.document.hidden || busy() || !eligible(state) || state.slot.width > availableWidth(state)
-        || state.placement === "bottom" && bottomCollapsed || state.placement === "infeed" && !state.near) {
+        || state.placement === "bottom" && bottomCollapsed || state.placement.startsWith("infeed") && !state.near) {
         root.clearTimeout(state.timeout);
         state.timeout = 0;
         continue;
@@ -211,8 +211,8 @@
       zone.hidden = true;
       return;
     }
-    if (!state.requested && (placement !== "infeed" || state.near)) request(state, slot);
-    if (!state.requested && placement === "infeed" && !state.observing) {
+    if (!state.requested && (!placement.startsWith("infeed") || state.near)) request(state, slot);
+    if (!state.requested && placement.startsWith("infeed") && !state.observing) {
       state.observing = true;
       state.observer?.observe(zone);
     }
@@ -234,9 +234,9 @@
       states.delete(placement);
     }
     if (!zone || !host) return;
-    const state = {zone, host, placement, requested: false, failed: false, loaded: false, near: placement !== "infeed" || !root.IntersectionObserver, observing: false, timeout: 0, ad: null, slot: null, observer: null};
+    const state = {zone, host, placement, requested: false, failed: false, loaded: false, near: !placement.startsWith("infeed") || !root.IntersectionObserver, observing: false, timeout: 0, ad: null, slot: null, observer: null};
     states.set(placement, state);
-    if (placement === "infeed" && root.IntersectionObserver) {
+    if (placement.startsWith("infeed") && root.IntersectionObserver) {
       state.observer = new root.IntersectionObserver(entries => {
         state.near = entries.some(entry => entry.isIntersecting);
         sync();
@@ -288,7 +288,9 @@
     register("entryAd", "entry");
     register("bottomAd", "bottom");
     register("infeedAd", "infeed");
-    root.document.addEventListener("auctionhannun:ads-updated", () => register("infeedAd", "infeed"));
+    register("infeedAd2", "infeed2");
+    register("infeedAd3", "infeed3");
+    root.document.addEventListener("auctionhannun:ads-updated", () => {register("infeedAd", "infeed");register("infeedAd2", "infeed2");register("infeedAd3", "infeed3");});
     root.document.addEventListener("visibilitychange", sync);
     root.document.addEventListener("focusin", sync);
     root.document.addEventListener("focusout", () => root.setTimeout(sync, 0));
