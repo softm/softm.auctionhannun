@@ -149,7 +149,7 @@ test("the popup banner is never requested or opened without explicit placement a
   assert.ok(h.requested.every(ad => ad.dataset.adWidth !== "300"));
 });
 
-test("the fifth-card ad waits for visibility and uses the column width, without refreshing the bottom unit", () => {
+test("the sixth-card ad waits for visibility and uses the column width, without refreshing the bottom unit", () => {
   const h = harness({width: 1280, infeedWidth: 590, cards: 10}); h.loadSdk();
   assert.equal(h.requested.length, 1);
   assert.equal(h.requested[0].dataset.adWidth, "728");
@@ -167,7 +167,7 @@ test("empty and short lists never create an infeed request or a blank ad panel",
   const h = harness({cards: 4}); h.loadSdk(); h.intersect(); h.flush();
   assert.equal(h.requested.length, 1);
   assert.equal(h.nodes.get("infeedAd").hidden, true);
-  h.document.cards = 5; h.document.emit("auctionhannun:ads-updated"); h.intersect(); h.flush();
+  h.document.cards = 7; h.document.emit("auctionhannun:ads-updated"); h.intersect(); h.flush();
   assert.equal(h.requested.length, 2);
   h.document.cards = 0; h.document.emit("auctionhannun:ads-updated");
   assert.equal(h.nodes.get("infeedAd").hidden, true);
