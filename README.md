@@ -60,7 +60,7 @@ Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입�
 - 프로젝트: `android/`
 - 패키지: `softm.realestate.auctionhannun`
 - 기기 표시명: `경매한눈`
-- 버전: `1.0.1 (2)`
+- 버전: `1.0.2 (3)`
 - SDK: minSdk 24 / targetSdk 36 / compileSdk 36
 - 개인정보처리방침: `https://softm.github.io/softm.auctionhannun/privacy.html`
 - Play 등록 문구와 데이터 보안 기준: `android/store/`
