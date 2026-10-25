@@ -27,7 +27,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
-    private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.1";
+    private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.2";
     private static final String TRUSTED_HOST = "auctionhannun.designboard.net";
     private static final String TRUSTED_PATH = "/";
 
