@@ -431,3 +431,14 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
 .case-timeline{display:grid;gap:0;margin:0;padding:8px 16px 4px;list-style:none}.case-timeline li{position:relative;display:grid;grid-template-columns:125px 1fr;gap:12px;padding:10px 0 10px 16px;border-left:2px solid #c8dfda}.case-timeline li::before{position:absolute;left:-5px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--green);content:""}.case-timeline time{color:var(--ink-2);font-size:10px}.case-timeline span{font-size:12px;line-height:1.45}
 .case-remove-flow{margin:8px 16px 16px;padding:9px 12px;border:1px solid #e3c6c6;border-radius:5px;background:#fff8f8;color:var(--danger);font-size:11px}
 .property-visual.movable{background:#eaf4f1}
+
+@media(max-width:767px){
+  .case-card-actions{width:100%;margin-top:8px}.case-card-actions button{flex:1}
+  .case-bottom{align-items:flex-start;flex-direction:column}
+  .case-cta{align-items:flex-start;flex-direction:column}.case-cta button{width:100%}
+  .case-workspace-hero{align-items:flex-start}.case-progress-ring{width:76px;height:76px;border-width:6px}.case-progress-ring b{font-size:17px}
+  .case-workspace-controls,.case-money-grid{grid-template-columns:1fr}
+  .case-workspace-summary>div{padding:10px 8px}.case-workspace-summary b{font-size:11px}
+  .case-add-task{flex-direction:column}.case-add-task button{min-height:42px}
+  .case-timeline li{grid-template-columns:1fr;gap:3px}
+}
