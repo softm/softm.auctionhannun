@@ -9,10 +9,10 @@ export function minimumAmount(value) {
 
 export const regionOf = item => String(item.address || "").trim().split(/\s+/)[0];
 
-export function filterAndSortCases(items, { query = "", filter = "all", region = "all", court = "all", kind = "all", sort = "date", favorites = new Set() } = {}) {
+export function filterAndSortCases(items, { query = "", filter = "all", region = "all", court = "all", kind = "all", sort = "date", favorites = new Set(), managedIds = new Set() } = {}) {
   const normalized = query.trim().toLowerCase();
   const matches = items.filter(item => {
-    const typeMatch = filter === "all" || (filter === "favorite" ? favorites.has(item.id) : filter === "registered" ? item.userAdded === true : item.type === filter);
+    const typeMatch = filter === "all" || (filter === "favorite" ? favorites.has(item.id) : filter === "managed" ? managedIds.has(item.id) : filter === "registered" ? item.userAdded === true : item.type === filter);
     const text = `${item.title} ${item.address} ${item.court} ${item.caseNumber} ${item.itemNumber || ""} ${item.category || ""} ${item.status || ""}`.toLowerCase();
     return typeMatch && (kind === "all" || (item.auctionKind || "court") === kind) && (region === "all" || regionOf(item) === region)
       && (court === "all" || item.court === court) && (!normalized || text.includes(normalized));
