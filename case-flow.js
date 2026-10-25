@@ -24,7 +24,7 @@ export const ASSET_PROFILE_OPTIONS = [
 ];
 
 const profileLabels = Object.fromEntries(ASSET_PROFILE_OPTIONS.map(x => [x.value, x.label]));
-const safeId = value => typeof value === "string" && /^[a-zA-Z0-9:_-]{1,180}$/.test(value) && !["__proto__", "constructor", "prototype"].includes(value);
+const safeId = value => typeof value === "string" && /^[\\p{L}\\p{N}:._-]{1,180}$/u.test(value) && !["__proto__", "constructor", "prototype"].includes(value);
 const iso = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value);
 const text = (value, max = 500) => String(value ?? "").trim().slice(0, max);
 const moneyText = value => {
