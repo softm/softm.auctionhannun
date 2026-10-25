@@ -12,7 +12,7 @@ export function validateWorkspace(value) {
   const ids = new Set();
   for (const item of data.cases) {
     if (!plain(item) || !safeId(item.id) || ids.has(item.id) || item.userAdded !== true || Object.keys(item).some(key => !allowedCase.includes(key)) || Object.entries(item).some(([key, v]) => key !== "userAdded" && (typeof v !== "string" || v.length > 1000))) throw new Error("직접 등록 사건 자료를 확인해 주세요.");
-    if (!["apartment", "land", "commercial", "other"].includes(item.type) || !item.address || !item.caseNumber) throw new Error("사건의 주소·번호·유형이 필요합니다.");
+    if (!["apartment", "land", "commercial", "movable", "other"].includes(item.type) || !item.address || !item.caseNumber) throw new Error("사건의 주소·번호·유형이 필요합니다.");
     ids.add(item.id);
   }
   for (const key of ["checks", "notes", "verified"]) {
