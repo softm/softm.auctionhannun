@@ -1,6 +1,6 @@
 import { validateWorkspace } from "./workspace-store.js";
 
-const types = { apartment: "주거", land: "토지·임야", commercial: "상가·업무", other: "기타" };
+const types = { apartment: "주거", land: "토지·임야", commercial: "상가·업무", movable: "차량·기계·동산", other: "기타" };
 export function editRegisteredCase(snapshot, id, values) {
   const data = validateWorkspace(snapshot);
   const item = data.cases.find(row => row.id === id && row.userAdded);
@@ -20,5 +20,6 @@ export function removeRegisteredCase(snapshot, id) {
   data.cases = data.cases.filter(row => row.id !== id);
   data.favorites = data.favorites.filter(value => value !== id);
   for (const key of ["checks", "notes", "verified"]) delete data[key][id];
+  delete data.flows[id];
   return data;
 }

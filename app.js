@@ -7,6 +7,7 @@ import { searchParcels, loadParcel } from "./parcel-api.js";
 import { workspace } from "./workspace-store.js";
 import { editRegisteredCase, removeRegisteredCase } from "./case-editor.js";
 import { cardAtReadingLine, createScrollSelection } from "./list-map-sync.js";
+import { CASE_STATUS_OPTIONS, CASE_STATUS_LABELS, ASSET_PROFILE_OPTIONS, createCaseFlow, changeCaseStatus, changeCaseProfile, setCaseTask, addCustomTask, setCaseDecision, taskTemplate, flowProgress } from "./case-flow.js";
 const storage = {
   get: (...args) => workspace.get(...args),
   subscribe: (...args) => workspace.subscribe(...args),
@@ -14,7 +15,7 @@ const storage = {
     try { workspace.set(key, value); return true; }
     catch (error) {
       const data = workspace.snapshot();
-      state.added = data.cases; state.favorites = new Set(data.favorites); state.checks = data.checks; state.notes = data.notes; state.verified = data.verified;
+      state.added = data.cases; state.favorites = new Set(data.favorites); state.checks = data.checks; state.notes = data.notes; state.verified = data.verified; state.flows = data.flows || {};
       renderCases(); if (state.selectedId) renderDetail();
       showToast(`저장하지 못했습니다: ${error.message}`); return false;
     }
@@ -31,6 +32,7 @@ const typeMeta = {
   apartment: { label: "주거", className: "" },
   land: { label: "토지·임야", className: "land" },
   commercial: { label: "상가·업무", className: "commercial" },
+  movable: { label: "차량·기계·동산", className: "movable" },
   other: { label: "기타", className: "" }
 };
 
@@ -80,6 +82,7 @@ const state = {
   checks: storage.get("checks", {}),
   notes: storage.get("notes", {}),
   verified: storage.get("verified", {}),
+  flows: storage.get("flows", {}),
   query: "",
   filter: "all",
   region: "all",
@@ -140,11 +143,17 @@ $("#mapStage").addEventListener("keydown", pauseListScrollSync);
 
 function applyWorkspace(data) {
   state.added = data.cases; state.favorites = new Set(data.favorites);
-  state.checks = data.checks; state.notes = data.notes; state.verified = data.verified;
+  state.checks = data.checks; state.notes = data.notes; state.verified = data.verified; state.flows = data.flows || {};
 }
 
 function showRegisteredCases() {
   resetFilters(); state.filter = "registered"; state.sort = "recent";
+  setView("search"); syncFilters(); renderCases();
+  $("#resultsSheet").scrollIntoView({ block: "start" });
+}
+
+function showManagedCases() {
+  resetFilters(); state.filter = "managed"; state.sort = "recent";
   setView("search"); syncFilters(); renderCases();
   $("#resultsSheet").scrollIntoView({ block: "start" });
 }
@@ -217,16 +226,18 @@ function daysUntil(date) {
 }
 
 function filteredCases() {
-  return filterAndSortCases(allCases(), state);
+  return filterAndSortCases(allCases(), { ...state, managedIds: new Set(Object.keys(state.flows)) });
 }
 
 function renderMetrics() {
   const metrics = reviewMetrics(allCases(), state.favorites, state.checks);
+  const flows = Object.values(state.flows);
+  const planned = flows.filter(flow => ["planned", "bidding"].includes(flow.status)).length;
   $("#totalCases").textContent = metrics.total.toLocaleString("ko-KR");
   $("#savedCases").textContent = metrics.saved.toLocaleString("ko-KR");
-  $("#addedCases").textContent = metrics.added.toLocaleString("ko-KR");
+  $("#addedCases").textContent = flows.length.toLocaleString("ko-KR");
   $("#registeredCount").textContent = metrics.added.toLocaleString("ko-KR");
-  $("#checkedDocuments").textContent = `${metrics.checked.toLocaleString("ko-KR")} / ${metrics.documents.toLocaleString("ko-KR")}`;
+  $("#checkedDocuments").textContent = planned.toLocaleString("ko-KR");
 }
 
 function renderFilterOptions() {
@@ -280,16 +291,18 @@ function renderCases() {
     const meta = typeMeta[item.type] || typeMeta.other;
     const selected = (state.selectedId || mapSelectedId) === item.id ? " selected" : "";
     const favorite = state.favorites.has(item.id);
+    const flow = state.flows[item.id];
+    const flowLabel = flow ? CASE_STATUS_LABELS[flow.status] || "내 경매" : "";
     const sample = !item.userAdded && (item.demo === true || state.dataset.demo !== false);
     return `<article class="case-card${selected}" data-map-case-id="${escapeHtml(item.id)}"${selected ? ' aria-current="true"' : ''} aria-label="${escapeHtml(item.title)}">
       ${propertyVisual(item, meta)}
       <div class="case-body">
-        <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="sample-tag">${item.userAdded ? "직접 등록" : item.auctionKind === "onbid" ? "온비드 공매" : sample ? "예시 물건" : "법원경매"}</span><span class="due">${daysUntil(item.saleDate)}</span></div>
+        <div class="case-card-head"><span class="type ${meta.className}">${meta.label}</span><span class="sample-tag">${item.userAdded ? "직접 등록" : item.auctionKind === "onbid" ? "온비드 공매" : sample ? "예시 물건" : "법원경매"}</span>${flow ? `<span class="case-flow-status">${escapeHtml(flowLabel)}</span>` : ""}<span class="due">${daysUntil(item.saleDate)}</span></div>
         <h3><button class="case-title" type="button" data-case-id="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button></h3>
         <p class="case-id">${escapeHtml(item.court)} · ${escapeHtml(item.caseNumber)}${item.auctionKind === "onbid" ? ` · ${escapeHtml(item.status)}` : ""}</p>
         <p class="case-address">${escapeHtml(item.address)} · ${escapeHtml(item.area || "면적 확인 필요")}</p>
         <div class="price-row"><div><span>감정가</span><b>${escapeHtml(item.appraisal || "직접 확인")}</b></div><div><span>최저매각가격</span><b>${escapeHtml(item.minimum || "직접 확인")}</b></div></div>
-        <div class="case-bottom"><span>${dateLabel(item.saleDate)} ${item.auctionKind === "onbid" ? "입찰 마감" : "매각기일"} · 제목 선택 시 지도 이동</span><button class="case-open" type="button" data-open-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">검토하기 ${icon("arrow")}</button></div>
+        <div class="case-bottom"><span>${dateLabel(item.saleDate)} ${item.auctionKind === "onbid" ? "입찰 마감" : "매각기일"} · ${flow ? `분석 준비도 ${flowProgress(flow, item).percent}%` : "후보 물건"}</span><div class="case-card-actions"><button class="case-start" type="button" data-start-case-id="${escapeHtml(item.id)}">${flow ? "작업실" : "분석 시작"}</button><button class="case-open" type="button" data-open-case-id="${escapeHtml(item.id)}" aria-label="${escapeHtml(item.title)} 상세 보기">상세 ${icon("arrow")}</button></div></div>
       </div>
       <button class="bookmark-mini${favorite ? " active" : ""}" type="button" data-favorite-id="${escapeHtml(item.id)}" aria-pressed="${favorite}" aria-label="${escapeHtml(item.title)} ${favorite ? "관심 물건에서 삭제" : "관심 물건에 추가"}">${icon("bookmark")}</button>
     </article>`;
@@ -297,7 +310,7 @@ function renderCases() {
   const after = Math.max(1, Number(window.AUCTIONHANNUN_AD_CONFIG?.placements?.infeed?.after) || 5);
   // Keep the ad and its iframe connected: moving an existing iframe resets its
   // browsing context. Only replace the cards on either side of the fixed slot.
-  $("#caseListBeforeAd").innerHTML = cases.length ? cards.slice(0, after).join("") : `<div class="empty-state">${state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
+  $("#caseListBeforeAd").innerHTML = cases.length ? cards.slice(0, after).join("") : `<div class="empty-state">${state.filter === "managed" && !Object.keys(state.flows).length ? "아직 분석을 시작한 경매물건이 없습니다.<br />후보 물건에서 ‘분석 시작’을 눌러 내 경매 Case를 만드세요." : state.filter === "registered" && !state.added.length ? "직접 등록한 사건이 없습니다.<br />상단 ‘사건 등록’에서 추가해 주세요." : state.kind === "court" && state.collection?.state === "unconfigured" ? "법원경매 자동 수집 공급원이 아직 연결되지 않았습니다.<br />직접 사건을 등록하거나 온비드 공매를 선택해 주세요." : "조건에 맞는 검토 물건이 없습니다.<br />검색어를 지우거나 사건을 직접 추가해 보세요."}</div>`;
   $("#caseListAfterAd").innerHTML = cards.slice(after).join("");
   if (infeedAd) infeedAd.hidden = visibleCases.length < after || infeedAd.dataset.state === "failed";
   document.dispatchEvent(new CustomEvent("auctionhannun:ads-updated"));
@@ -318,7 +331,7 @@ function selectCase(id) {
   ++mapOperation;
   state.selectedId = id;
   parcelRequest?.abort();
-  state.activeTab = "summary";
+  state.activeTab = state.flows[id] ? "workspace" : "summary";
   renderCases();
   renderDetail();
   $("#detailSheet").classList.add("open");
@@ -383,7 +396,7 @@ function renderDetail() {
 function renderActiveTab() {
   const item = getSelected();
   if (!item) return;
-  const renderers = { summary: renderSummary, documents: renderDocuments, rights: renderRights, notes: renderNotes, official: renderOfficial };
+  const renderers = { workspace: renderCaseWorkspace, summary: renderSummary, documents: renderDocuments, rights: renderRights, notes: renderNotes, official: renderOfficial };
   $("#detailContent").innerHTML = renderers[state.activeTab](item);
   $("#detailContent").setAttribute("role", "tabpanel");
   $("#detailContent").setAttribute("aria-labelledby", `tab-${state.activeTab}`);
@@ -437,10 +450,67 @@ function renderSimilarCases(item) {
   </section>`;
 }
 
+function formatFlowTime(value) {
+  try { return new Intl.DateTimeFormat("ko-KR", { dateStyle: "short", timeStyle: "short" }).format(new Date(value)); }
+  catch { return value || ""; }
+}
+
+function renderCaseWorkspace(item) {
+  const flow = state.flows[item.id];
+  if (!flow) return `<section class="case-workspace-onboarding">
+    <span class="eyebrow">AUCTION CASE</span>
+    <h3>이 물건을 ‘내 경매’로 관리할까요?</h3>
+    <p>관심 표시와 별개로 조사·분석·입찰판단을 시작하면 물건별 Case가 생성됩니다. 법원경매·온비드 원본은 후보 데이터로 유지하고 내 기록은 별도로 보존합니다.</p>
+    <button class="workspace-primary" type="button" data-action="start-flow">분석 시작</button>
+  </section>`;
+
+  const progress = flowProgress(flow, item);
+  const tasks = taskTemplate(item, flow.profile);
+  const timeline = [...flow.events].reverse().slice(0, 20);
+  return `<section class="case-workspace-panel">
+    <div class="case-workspace-hero">
+      <div><span class="eyebrow">MY AUCTION CASE</span><h3>물건별 경매 작업실</h3><p>공식 자료는 출처로 유지하고, 이 Case에는 내가 확인한 사실과 판단 흐름을 쌓습니다.</p></div>
+      <div class="case-progress-ring"><b>${progress.percent}%</b><span>분석 준비도</span></div>
+    </div>
+    <div class="case-workspace-controls">
+      <label>진행 상태<select data-flow-status>${CASE_STATUS_OPTIONS.map(option => `<option value="${option.value}"${option.value === flow.status ? " selected" : ""}>${option.label}</option>`).join("")}</select></label>
+      <label>분석 유형<select data-flow-profile>${ASSET_PROFILE_OPTIONS.map(option => `<option value="${option.value}"${option.value === flow.profile ? " selected" : ""}>${option.label}</option>`).join("")}</select></label>
+    </div>
+    <div class="case-workspace-summary">
+      <div><span>확인 완료</span><b>${progress.done}/${progress.total}</b></div>
+      <div><span>현재 상태</span><b>${escapeHtml(CASE_STATUS_LABELS[flow.status])}</b></div>
+      <div><span>마지막 변경</span><b>${escapeHtml(formatFlowTime(flow.updatedAt))}</b></div>
+    </div>
+  </section>
+  <section class="summary-card case-task-section">
+    ${detailSectionHead("check", "ADAPTIVE CHECKLIST", "물건별 확인 흐름", "물건 유형에 따라 기본 확인 항목이 자동으로 달라지며 필요한 항목을 직접 추가할 수 있습니다.")}
+    <div class="case-task-list">${tasks.map(task => `<label class="case-task-row"><input type="checkbox" data-flow-task="${task.id}" ${flow.tasks[task.id] ? "checked" : ""}><span><small>${escapeHtml(task.group)}</small><b>${escapeHtml(task.label)}</b></span></label>`).join("")}
+      ${flow.customTasks.map(task => `<label class="case-task-row custom"><input type="checkbox" data-flow-task="${escapeHtml(task.id)}" ${task.done ? "checked" : ""}><span><small>사용자 추가</small><b>${escapeHtml(task.label)}</b></span></label>`).join("")}
+    </div>
+    <div class="case-add-task"><input id="flowCustomTask" maxlength="80" placeholder="이 물건에만 필요한 확인 항목"><button type="button" data-action="add-flow-task">항목 추가</button></div>
+  </section>
+  <section class="summary-card case-decision-section">
+    ${detailSectionHead("shield", "DECISION", "입찰 판단", "최대입찰가와 실제 목표입찰가를 분리하고 판단 근거를 함께 남깁니다.")}
+    <div class="case-money-grid">
+      <label>최대 입찰가<input id="flowMaxBid" inputmode="numeric" maxlength="40" value="${escapeHtml(flow.decision.maxBid)}" placeholder="예: 612000000"></label>
+      <label>목표 입찰가<input id="flowTargetBid" inputmode="numeric" maxlength="40" value="${escapeHtml(flow.decision.targetBid)}" placeholder="예: 598000000"></label>
+    </div>
+    <label class="case-decision-note">판단 근거<textarea id="flowDecisionNote" maxlength="700" placeholder="시세, 권리위험, 명도·수리비, 포기 이유 등을 기록">${escapeHtml(flow.decision.note)}</textarea></label>
+    <button class="workspace-primary" type="button" data-action="save-flow-decision">판단 저장</button>
+  </section>
+  <section class="summary-card case-timeline-section">
+    ${detailSectionHead("clock", "TIMELINE", "판단 타임라인", "상태·분석유형·판단 변경이 물건별 흐름으로 남습니다.")}
+    <ol class="case-timeline">${timeline.map(row => `<li><time>${escapeHtml(formatFlowTime(row.at))}</time><span>${escapeHtml(row.label)}</span></li>`).join("")}</ol>
+    <button class="case-remove-flow" type="button" data-action="remove-flow">내 경매에서 종료·제거</button>
+  </section>`;
+}
+
 function renderSummary(item) {
   const lastVerified = state.verified[item.id];
   const notice = item.userAdded ? "직접 입력한 사건입니다. 가격·기일·진행상태는 공식 사이트 원문을 기준으로 보완하세요." : item.auctionKind === "onbid" ? "한국자산관리공사 온비드 공매 자료입니다. 법원경매가 아니며 법원 3대 서류 공시 기준을 적용하지 않습니다. 공고문·입찰 마감시각·정정 여부를 온비드 원문에서 확인하세요." : item.detailLevel === "list" ? "전국 목록 기본정보를 먼저 표시하고 있습니다. 법원 사건·물건 상세를 불러오는 중이며, 실패해도 목록 정보와 공식 원문 연결은 유지됩니다." : "수집 시점 이후 변경될 수 있습니다. 최신 진행상태와 매각조건을 공식 원문에서 다시 확인하세요.";
-  return `${renderDetailOverview(item)}
+  const flow = state.flows[item.id];
+  const caseCta = flow ? `<section class="case-cta active"><div><span>내 경매 · ${escapeHtml(CASE_STATUS_LABELS[flow.status])}</span><b>분석 준비도 ${flowProgress(flow, item).percent}%</b></div><button type="button" data-action="tab" data-tab-target="workspace">작업실 열기</button></section>` : `<section class="case-cta"><div><span>후보 물건</span><b>조사·분석·판단을 물건별 Case로 시작하세요.</b></div><button type="button" data-action="start-flow">분석 시작</button></section>`;
+  return `${caseCta}${renderDetailOverview(item)}
     <div class="demo-banner">${icon("help")}<span>${notice}</span></div>
     ${renderImageGallery(item)}
     <section class="summary-card proptech-section" id="detail-basic">
@@ -610,6 +680,34 @@ function renderOfficial(item) {
     `;
 }
 
+function persistFlow(id, next) {
+  const previous = state.flows;
+  state.flows = { ...state.flows, [id]: next };
+  if (!storage.set("flows", state.flows)) { state.flows = previous; return false; }
+  renderMetrics();
+  return true;
+}
+
+function startCaseFlow(item = getSelected()) {
+  if (!item) return false;
+  if (state.flows[item.id]) return true;
+  if (!persistFlow(item.id, createCaseFlow(item))) return false;
+  showToast("내 경매 Case를 만들었습니다. 물건별 조사·판단 흐름을 기록합니다.");
+  return true;
+}
+
+function removeCaseFlow(id = state.selectedId) {
+  if (!id || !state.flows[id]) return;
+  const previous = state.flows;
+  const next = { ...state.flows };
+  delete next[id];
+  state.flows = next;
+  if (!storage.set("flows", next)) { state.flows = previous; return; }
+  state.activeTab = "summary";
+  renderCases(); renderDetail(); renderMetrics();
+  showToast("내 경매에서 제거했습니다. 원본 물건과 관심표시는 유지됩니다.");
+}
+
 function toggleFavorite(id) {
   if (state.favorites.has(id)) state.favorites.delete(id); else state.favorites.add(id);
   if (!storage.set("favorites", [...state.favorites])) return;
@@ -658,8 +756,16 @@ function addCase(form) {
     occupancy: "현황조사서 확인",
     category: typeMeta[String(data.get("type"))]?.label || "기타"
   };
-  state.added.unshift(item);
-  if (!storage.set("cases", state.added)) return;
+  try {
+    const next = workspace.snapshot();
+    next.cases.unshift(item);
+    next.flows[item.id] = createCaseFlow(item);
+    workspace.commit(next);
+    applyWorkspace(next);
+  } catch (error) {
+    showToast(`사건을 저장하지 못했습니다: ${error.message}`);
+    return;
+  }
   form.reset();
   $("#addCaseDialog").close();
   state.filter = "all";
@@ -681,7 +787,7 @@ function openCaseEditor(edit = false) {
   const form = $("#addCaseForm"); form.reset();
   $("#caseFormError").textContent = "";
   $("#addCaseTitle").textContent = edit ? "등록 사건 정보 수정" : "검토할 사건 추가";
-  $("#caseFormIntro").textContent = edit ? "법원·사건번호·소재지·유형·기일을 수정합니다. 기존 메모·관심·체크 기록은 유지됩니다. 주소 변경 시 지도 위치와 선택 필지는 다시 확인해야 합니다." : "공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.";
+  $("#caseFormIntro").textContent = edit ? "법원·사건번호·소재지·유형·기일을 수정합니다. 기존 메모·관심·체크 기록은 유지됩니다. 주소 변경 시 지도 위치와 선택 필지는 다시 확인해야 합니다." : "공식 사이트에서 확인한 물건을 직접 등록하면 내 경매 Case가 함께 생성됩니다. 분석 유형과 확인 항목은 작업실에서 바꿀 수 있습니다.";
   $(".dialog-submit", form).textContent = edit ? "수정 내용 저장" : "검토 목록에 추가";
   if (item) for (const key of ["court", "caseNumber", "address", "type", "saleDate"]) form.elements.namedItem(key).value = item[key] || "";
   openDialog("#addCaseDialog");
@@ -738,7 +844,7 @@ function syncFilters() {
   $("#sortOrder").value = state.sort;
   const conditions = [state.region !== "all", state.court !== "all", state.kind !== "all", state.sort !== "date"].filter(Boolean).length;
   $("#filtersToggle").innerHTML = `지역·법원·정렬 조건${conditions ? ` · ${conditions}개 적용` : ""} ${icon(document.body.classList.contains("filters-open") ? "close" : "plus")}`;
-  const current = state.view === "map" ? "map" : state.filter === "favorite" ? "favorite" : "search";
+  const current = state.view === "map" ? "map" : state.filter === "managed" ? "managed" : "search";
   $$('[data-nav]').forEach(button => {
     button.classList.toggle("active", button.dataset.nav === current);
     if (button.dataset.nav === current) button.setAttribute("aria-current", "page");
@@ -775,6 +881,8 @@ function setTab(tab) {
 $("#caseList").addEventListener("click", event => {
   const favorite = event.target.closest("[data-favorite-id]");
   if (favorite) { event.stopPropagation(); toggleFavorite(favorite.dataset.favoriteId); return; }
+  const start = event.target.closest("[data-start-case-id]");
+  if (start) { event.stopPropagation(); const item = allCases().find(row => row.id === start.dataset.startCaseId); if (item) { startCaseFlow(item); selectCase(item.id); state.activeTab = "workspace"; renderDetail(); } return; }
   const detail = event.target.closest("[data-open-case-id]");
   if (detail) { selectCase(detail.dataset.openCaseId); return; }
   const card = event.target.closest("[data-map-case-id]");
@@ -839,11 +947,11 @@ $("#mapToggle").addEventListener("click", () => {
 $$('[data-nav]').forEach(button => button.addEventListener("click", () => {
   const view = button.dataset.nav;
   if (view === "help") { openDialog("#helpDialog"); return; }
-  if (view === "favorite") { state.filter = "favorite"; state.query = ""; state.region = "all"; state.court = "all"; }
+  if (view === "managed") { showManagedCases(); return; }
   if (view === "search") state.filter = "all";
   setView(view === "map" ? "map" : "search");
   renderCases();
-  $(view === "map" ? "#mapStage" : view === "favorite" ? "#resultsSheet" : ".search-panel").scrollIntoView({ block: "start" });
+  $(view === "map" ? "#mapStage" : ".search-panel").scrollIntoView({ block: "start" });
 }));
 
 $("#detailClose").addEventListener("click", closeDetail);
@@ -872,6 +980,21 @@ $("#detailTabs").addEventListener("keydown", event => {
 });
 
 $("#detailContent").addEventListener("change", event => {
+  const status = event.target.closest("[data-flow-status]");
+  if (status && state.selectedId && state.flows[state.selectedId]) {
+    if (persistFlow(state.selectedId, changeCaseStatus(state.flows[state.selectedId], status.value))) { renderActiveTab(); renderCases(); }
+    return;
+  }
+  const profile = event.target.closest("[data-flow-profile]");
+  if (profile && state.selectedId && state.flows[state.selectedId]) {
+    if (persistFlow(state.selectedId, changeCaseProfile(state.flows[state.selectedId], profile.value, getSelected()))) renderActiveTab();
+    return;
+  }
+  const flowTask = event.target.closest("[data-flow-task]");
+  if (flowTask && state.selectedId && state.flows[state.selectedId]) {
+    if (persistFlow(state.selectedId, setCaseTask(state.flows[state.selectedId], flowTask.dataset.flowTask, flowTask.checked))) { renderActiveTab(); renderCases(); }
+    return;
+  }
   const input = event.target.closest("[data-check-key]");
   if (!input || !state.selectedId) return;
   state.checks[state.selectedId] ||= {};
@@ -885,6 +1008,24 @@ $("#detailContent").addEventListener("change", event => {
 $("#detailContent").addEventListener("click", event => {
   const action = event.target.closest("[data-action]");
   if (!action) return;
+  if (action.dataset.action === "start-flow") {
+    if (startCaseFlow()) { state.activeTab = "workspace"; renderDetail(); }
+    return;
+  }
+  if (action.dataset.action === "add-flow-task") {
+    const input = $("#flowCustomTask");
+    try { if (persistFlow(state.selectedId, addCustomTask(state.flows[state.selectedId], input?.value))) renderActiveTab(); }
+    catch (error) { showToast(error.message); }
+    return;
+  }
+  if (action.dataset.action === "save-flow-decision") {
+    if (persistFlow(state.selectedId, setCaseDecision(state.flows[state.selectedId], { maxBid: $("#flowMaxBid")?.value, targetBid: $("#flowTargetBid")?.value, note: $("#flowDecisionNote")?.value }))) { renderActiveTab(); showToast("입찰 판단을 저장했습니다."); }
+    return;
+  }
+  if (action.dataset.action === "remove-flow") {
+    if (confirm("이 물건을 내 경매에서 제거할까요? 메모·관심표시와 원본 물건은 유지됩니다.")) removeCaseFlow();
+    return;
+  }
   if (action.dataset.action.startsWith("gallery-")) { setGalleryImage(action); return; }
   if (action.dataset.action === "jump-detail") {
     const target = document.getElementById(action.dataset.target);
@@ -1161,6 +1302,7 @@ storage.subscribe(({ data, locked, change }) => {
   state.checks = data.checks;
   state.notes = data.notes;
   state.verified = data.verified;
+  state.flows = data.flows || {};
   closeDetail();
   if ($("#addCaseDialog").open) $("#addCaseDialog").close();
   if ($("#deleteCaseDialog").open) $("#deleteCaseDialog").close();

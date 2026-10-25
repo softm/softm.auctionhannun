@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#17324d" />
-    <meta name="description" content="법원경매 물건을 지도에서 찾고 3대 핵심서류와 권리분석 체크리스트를 한눈에 관리하세요." />
+    <meta name="description" content="법원경매·온비드 물건을 발견하고, 물건별 조사·분석·입찰판단·결과까지 하나의 경매 Case로 관리하세요." />
     <link rel="canonical" href="https://softm.github.io/softm.auctionhannun/" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
-    <title>경매한눈 | 법원경매 검토 체크리스트</title>
-    <link rel="stylesheet" href="./styles.css?v=20261023-4" />
+    <title>경매한눈 | 경매물건 의사결정 워크스페이스</title>
+    <link rel="stylesheet" href="./styles.css?v=20261025-1" />
     <link rel="stylesheet" href="./account.css" />
   </head>
   <body>
@@ -40,9 +40,9 @@
           <span>경매<b>한눈</b><small>AUCTION WORKSPACE</small></span>
         </button>
         <nav class="desktop-nav" aria-label="주 메뉴">
-          <button class="active" type="button" data-nav="search">물건 검색</button>
+          <button class="active" type="button" data-nav="search">물건 찾기</button>
+          <button type="button" data-nav="managed">내 경매</button>
           <button type="button" data-nav="map">지도 보기</button>
-          <button type="button" data-nav="favorite">관심 물건</button>
         </nav>
         <div class="top-actions">
           <button class="primary-button" id="accountButton" type="button">로그인</button>
@@ -58,7 +58,7 @@
       <button id="closeAccount" type="button" aria-label="계정 창 닫기">닫기</button>
       <h2 id="accountIdentity">로그인하고 작업 이어가기</h2>
       <p id="accountDialogStatus" role="status" aria-live="polite"></p>
-      <p>관심 물건·직접 등록 사건·메모·서류 체크·공식 확인 기록을 계정별로 보관합니다.</p>
+      <p>관심 후보·내 경매 Case·체크리스트·판단 타임라인·메모를 계정별로 보관합니다.</p>
       <div id="accountProviders">
         <button id="googleLogin" type="button">Google로 계속하기</button>
         <button id="kakaoLogin" class="kakao-login" type="button" disabled>카카오 로그인</button>
@@ -81,7 +81,7 @@
     <div class="workspace">
       <section class="search-panel" aria-labelledby="searchTitle">
         <div class="search-heading">
-          <div><span class="eyebrow">나의 법원경매 검토 워크스페이스</span><h1 id="searchTitle">입찰 전, 꼼꼼한 확인을 한눈에.</h1><p>물건 탐색부터 서류 확인, 현장 메모까지 한곳에서 관리하세요.</p></div>
+          <div><span class="eyebrow">AUCTION DECISION WORKSPACE</span><h1 id="searchTitle">물건을 찾고, 분석하고, 결정하는 흐름을 한눈에.</h1><p>법원경매·온비드는 후보를 찾는 출처입니다. 분석을 시작하면 물건별 Case에서 조사·판단·입찰 흐름을 이어갑니다.</p></div>
           <span class="source-chip"><svg><use href="#i-shield"/></svg> 공식 원문 확인 중심</span>
         </div>
         <form class="search-box" id="searchForm" role="search">
@@ -95,15 +95,16 @@
           <button type="button" data-filter="apartment" aria-pressed="false">아파트·주거</button>
           <button type="button" data-filter="land" aria-pressed="false">토지·임야</button>
           <button type="button" data-filter="commercial" aria-pressed="false">상가·근린</button>
+          <button type="button" data-filter="movable" aria-pressed="false">차량·기계·동산</button>
           <button type="button" data-filter="other" aria-pressed="false">기타</button>
           <button type="button" data-filter="favorite" aria-pressed="false"><svg><use href="#i-bookmark"/></svg>관심 물건</button>
           <button type="button" data-filter="registered" aria-pressed="false">내 등록 사건 <span id="registeredCount">0</span></button>
         </div>
         <div class="workspace-stats" aria-label="내 검토 현황">
-          <div><span>검토 입찰건</span><strong id="totalCases">0</strong><small>수집 + 직접 추가</small></div>
-          <div><span>관심 물건</span><strong id="savedCases">0</strong><small>나의 저장 목록</small></div>
-          <div><span>직접 추가</span><strong id="addedCases">0</strong><button class="registered-shortcut" id="registeredCasesButton" type="button">내 등록 사건 보기</button></div>
-          <div><span>서류 확인</span><strong id="checkedDocuments">0/0</strong><small>개인 확인 기록</small></div>
+          <div><span>탐색 물건</span><strong id="totalCases">0</strong><small>법원 + 온비드 + 직접등록</small></div>
+          <div><span>관심 후보</span><strong id="savedCases">0</strong><small>북마크한 후보</small></div>
+          <div><span>내 경매</span><strong id="addedCases">0</strong><button class="registered-shortcut" id="registeredCasesButton" type="button">직접 등록 사건 보기</button></div>
+          <div><span>입찰예정</span><strong id="checkedDocuments">0</strong><small>입찰예정·입찰 상태</small></div>
         </div>
       </section>
 
@@ -191,6 +192,7 @@
           <button type="button" id="deleteCaseButton" class="danger-button">사건 삭제</button>
         </div>
         <nav class="detail-tabs" id="detailTabs" role="tablist" aria-label="경매 물건 상세">
+          <button type="button" role="tab" aria-selected="false" data-tab="workspace">작업실</button>
           <button class="active" type="button" role="tab" aria-selected="true" data-tab="summary">핵심</button>
           <button type="button" role="tab" aria-selected="false" data-tab="documents">3대 서류</button>
           <button type="button" role="tab" aria-selected="false" data-tab="rights">권리체크</button>
@@ -203,9 +205,9 @@
     <footer class="workspace-footer">경매한눈은 법원·정부기관과 관련 없는 독립적인 검토 도구입니다. <a href="./data-status.html">데이터 수집 현황</a> · <a href="./privacy.html">개인정보처리방침</a></footer>
     </div>
     <nav class="bottom-nav" aria-label="모바일 메뉴">
-      <button class="active" type="button" data-nav="search" aria-current="page"><svg><use href="#i-search"/></svg>물건 검색</button>
+      <button class="active" type="button" data-nav="search" aria-current="page"><svg><use href="#i-search"/></svg>물건 찾기</button>
+      <button type="button" data-nav="managed"><svg><use href="#i-file"/></svg>내 경매</button>
       <button type="button" data-nav="map"><svg><use href="#i-map"/></svg>지도</button>
-      <button type="button" data-nav="favorite"><svg><use href="#i-bookmark"/></svg>관심 물건</button>
       <button type="button" data-nav="help"><svg><use href="#i-help"/></svg>이용 안내</button>
     </nav>
 
@@ -215,12 +217,12 @@
           <div><span class="eyebrow">비로그인은 기기 저장 · 로그인은 계정 저장</span><h2 id="addCaseTitle">검토할 사건 추가</h2></div>
           <button type="button" data-close-dialog="addCaseDialog" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
         </div>
-        <p class="dialog-intro" id="caseFormIntro">공식 사이트에서 확인한 사건번호와 주소를 적어 두세요. 사건 정보나 서류를 자동으로 수집하지 않습니다.</p>
+        <p class="dialog-intro" id="caseFormIntro">공식 사이트에서 확인한 물건을 직접 등록하면 즉시 내 경매 Case가 생성됩니다. 유형은 이후 작업실에서 언제든 바꿀 수 있습니다.</p>
         <label>담당 법원<input name="court" required maxlength="1000" placeholder="예: 서울중앙지방법원" /></label>
         <label>사건번호<input name="caseNumber" required maxlength="1000" placeholder="예: 2026타경12345" /></label>
         <label>소재지<input name="address" required maxlength="1000" placeholder="지번 또는 도로명 주소" /></label>
         <div class="form-row">
-          <label>물건 유형<select name="type"><option value="apartment">아파트·주거</option><option value="land">토지·임야</option><option value="commercial">상가·업무</option><option value="other">기타</option></select></label>
+          <label>물건 유형<select name="type"><option value="apartment">아파트·주거</option><option value="land">토지·임야</option><option value="commercial">상가·업무</option><option value="movable">차량·기계·동산</option><option value="other">기타·복합</option></select></label>
           <label>매각기일<input name="saleDate" type="date" /></label>
         </div>
         <p id="caseFormError" class="form-error" role="alert"></p>
@@ -245,12 +247,12 @@
         <button type="button" data-close-dialog="helpDialog" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
       </div>
       <ol class="flow-list">
-        <li><b>물건 찾기</b><span>법원경매정보에서 사건번호와 매각기일을 확인합니다.</span></li>
-        <li><b>3대 서류 확인</b><span>매각물건명세서, 현황조사보고서, 감정평가서 원문을 읽습니다.</span></li>
-        <li><b>공부·현장 대조</b><span>등기기록과 공적 장부를 확인하고 현장 점유관계를 다시 살핍니다.</span></li>
-        <li><b>입찰 당일 재확인</b><span>취하·변경·연기 여부를 공식 사이트 또는 법원 경매계에서 확인합니다.</span></li>
+        <li><b>물건 발견</b><span>법원경매·온비드·지도에서 검토할 후보를 찾습니다.</span></li>
+        <li><b>분석 시작</b><span>후보를 내 경매 Case로 전환하면 물건유형별 체크리스트가 생성됩니다.</span></li>
+        <li><b>조사·분석</b><span>공식서류, 권리, 시세, 현장, 비용을 확인하고 필요한 항목을 직접 추가합니다.</span></li>
+        <li><b>판단·입찰</b><span>최대입찰가·목표입찰가와 판단 근거, 상태 변경 이력을 물건별로 남깁니다.</span></li>
       </ol>
-      <div class="official-note"><svg><use href="#i-clock"/></svg><p><b>서류 공시 시점</b><span>세 서류는 매각기일마다 그 1주일 전까지 법원 비치 또는 전자 공시됩니다. 기간입찰은 입찰기간 시작일을 기준으로 합니다.</span></p></div>
+      <div class="official-note"><svg><use href="#i-clock"/></svg><p><b>서류 공시 시점</b><span>법원경매의 매각물건명세서·현황조사보고서·감정평가서는 매각기일마다 그 1주일 전까지 법원 비치 또는 전자 공시됩니다. 기간입찰은 입찰기간 시작일을 기준으로 합니다.</span></p></div>
       <a class="dialog-link" href="https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&amp;cciNo=2&amp;cnpClsNo=1&amp;csmSeq=306&amp;popMenu=ov" target="_blank" rel="noopener noreferrer">찾기쉬운 생활법령 원문 보기 <svg><use href="#i-external"/></svg></a>
       <a class="dialog-link" href="./data-status.html">데이터 수집 현황 보기 <svg><use href="#i-external"/></svg></a>
       <a class="dialog-link" href="./privacy.html">개인정보처리방침 보기 <svg><use href="#i-external"/></svg></a>
@@ -271,7 +273,7 @@
     <script src="./api-config.js?v=20261024-1"></script>
     <script src="./adfit-config.js?v=20261023-4"></script>
     <script src="./adfit.js?v=20261023-4"></script>
-    <script src="./app.js?v=20261023-4" type="module"></script>
+    <script src="./app.js?v=20261025-1" type="module"></script>
     <script type="module" src="./account.js"></script>
   </body>
 </html>
