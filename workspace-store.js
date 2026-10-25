@@ -25,7 +25,7 @@ export function validateWorkspace(value) {
     }
   }
   data.flows = validateCaseFlows(data.flows || {});
-  if (new TextEncoder().encode(JSON.stringify(data)).length > 400000) throw new Error("계정 작업 정보는 400KB까지 저장할 수 있습니다. 백업 후 불필요한 기록을 정리해 주세요.");
+  if (new TextEncoder().encode(JSON.stringify(data)).length > 200000) throw new Error("계정 작업 정보는 200KB까지 저장할 수 있습니다. 백업 후 불필요한 기록을 정리해 주세요.");
   return structuredClone(data);
 }
 export function mergeGuest(remote, guest) {
