@@ -28,6 +28,7 @@ await Promise.all([
   cp("app.js", "dist/app.js"),
   cp("auction-utils.js", "dist/auction-utils.js"),
   cp("case-editor.js", "dist/case-editor.js"),
+  cp("case-flow.js", "dist/case-flow.js"),
   cp("list-map-sync.js", "dist/list-map-sync.js"),
   ...["auction-data.js", "auction-map.js", "vworld-map.js", "parcel-api.js", "parcel-utils.js", "map-config.js"].map(file => cp(file, `dist/${file}`)),
   cp("assets/app-icon.svg", "dist/assets/app-icon.svg"),

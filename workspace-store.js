@@ -71,3 +71,21 @@ export function createWorkspaceStore(storage) {
   };
 }
 export const workspace = typeof window === "undefined" ? null : createWorkspaceStore(window.localStorage);
+
+// Explicit bridge: copy between the current workspace and the common encrypted vault.
+// Existing account identities and records are never silently merged.
+if(typeof window!=='undefined') {
+  let sourceUid=null,sourceLocked=false;
+  workspace.subscribe(({uid,locked})=>{sourceUid=uid;sourceLocked=locked;});
+  window.SoftmSiteState=Object.freeze({
+    siteId:'auctionhannun',
+    scope:()=>sourceUid||'guest',
+    read(){if(sourceLocked)throw Error('기존 작업공간을 불러온 뒤 저장해 주세요.');return validateWorkspace(workspace.snapshot());},
+    validate:validateWorkspace,
+    write(value){
+      if(sourceUid)throw Error('기존 경매 계정에서 로그아웃한 뒤 기기 모드에서 복원해 주세요. 원래 계정 자료는 유지됩니다.');
+      if(sourceLocked)throw Error('작업공간을 확인한 뒤 다시 복원해 주세요.');
+      workspace.commit(validateWorkspace(value));
+    }
+  });
+}
