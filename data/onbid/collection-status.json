@@ -1,19 +1,19 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-23T13:24:42.668Z",
-  "lastSuccessAt": "2026-10-23T13:24:42.668Z",
-  "itemCount": 3643,
-  "expectedCount": 3643,
-  "completedPages": 8,
-  "photoProperties": 837,
+  "attemptedAt": "2026-10-28T00:34:09.351Z",
+  "lastSuccessAt": "2026-10-28T00:34:09.351Z",
+  "itemCount": 7050,
+  "expectedCount": 7050,
+  "completedPages": 15,
+  "photoProperties": 1065,
   "photoEnrichment": {
-    "attempted": 1,
+    "attempted": 250,
     "requested": 250,
-    "added": 0,
+    "added": 250,
     "denied": 0,
-    "rateLimited": 1,
+    "rateLimited": 0,
     "errors": 0,
-    "state": "rate-limited"
+    "state": "checked"
   },
-  "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-23~2026-10-30 / 공매조건·마감일별 입찰건"
+  "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-28~2026-11-04 / 공매조건·마감일별 입찰건"
 }
