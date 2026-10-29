@@ -1,128 +1,128 @@
 {
   "state": "ready",
-  "attemptedAt": "2026-10-23T16:40:08.714Z",
-  "lastSuccessAt": "2026-10-23T16:40:08.714Z",
-  "itemCount": 15822,
-  "rawRowCount": 26584,
-  "uniquePropertyCount": 15822,
+  "attemptedAt": "2026-10-29T23:15:51.656Z",
+  "lastSuccessAt": "2026-10-29T23:15:51.656Z",
+  "itemCount": 19746,
+  "rawRowCount": 31707,
+  "uniquePropertyCount": 19746,
   "regionCount": 19,
   "coveragePercent": 100,
-  "callsUsed": 542,
-  "coverage": "법원경매정보 전국 부동산 공고중 물건 · 19개 시·도 전 페이지 완주 · 원본 26,584행 / 고유 매물 15,822건",
+  "callsUsed": 645,
+  "coverage": "법원경매정보 전국 부동산 공고중 물건 · 19개 시·도 전 페이지 완주 · 원본 31,707행 / 고유 매물 19,746건",
   "detailStrategy": "on-demand",
   "regionStats": [
     {
       "code": "11",
       "name": "서울특별시",
-      "totalRows": 2614,
-      "pages": 53
+      "totalRows": 2910,
+      "pages": 59
     },
     {
       "code": "12",
       "name": "전남광주통합특별시",
-      "totalRows": 146,
-      "pages": 3
+      "totalRows": 243,
+      "pages": 5
     },
     {
       "code": "26",
       "name": "부산광역시",
-      "totalRows": 1702,
-      "pages": 35
+      "totalRows": 2357,
+      "pages": 48
     },
     {
       "code": "27",
       "name": "대구광역시",
-      "totalRows": 444,
-      "pages": 9
+      "totalRows": 892,
+      "pages": 18
     },
     {
       "code": "28",
       "name": "인천광역시",
-      "totalRows": 1441,
-      "pages": 29
+      "totalRows": 2297,
+      "pages": 46
     },
     {
       "code": "29",
       "name": "광주광역시",
-      "totalRows": 357,
-      "pages": 8
+      "totalRows": 638,
+      "pages": 13
     },
     {
       "code": "30",
       "name": "대전광역시",
-      "totalRows": 373,
-      "pages": 8
+      "totalRows": 314,
+      "pages": 7
     },
     {
       "code": "31",
       "name": "울산광역시",
-      "totalRows": 227,
-      "pages": 5
+      "totalRows": 366,
+      "pages": 8
     },
     {
       "code": "36",
       "name": "세종특별자치시",
-      "totalRows": 397,
+      "totalRows": 357,
       "pages": 8
     },
     {
       "code": "41",
       "name": "경기도",
-      "totalRows": 7257,
-      "pages": 146
+      "totalRows": 7171,
+      "pages": 144
     },
     {
       "code": "43",
       "name": "충청북도",
-      "totalRows": 1176,
-      "pages": 24
+      "totalRows": 501,
+      "pages": 11
     },
     {
       "code": "44",
       "name": "충청남도",
-      "totalRows": 1932,
-      "pages": 39
+      "totalRows": 2332,
+      "pages": 47
     },
     {
       "code": "45",
       "name": "전라북도",
-      "totalRows": 27,
+      "totalRows": 14,
       "pages": 1
     },
     {
       "code": "46",
       "name": "전라남도",
-      "totalRows": 1816,
-      "pages": 37
+      "totalRows": 2092,
+      "pages": 42
     },
     {
       "code": "47",
       "name": "경상북도",
-      "totalRows": 1367,
-      "pages": 28
+      "totalRows": 2288,
+      "pages": 46
     },
     {
       "code": "48",
       "name": "경상남도",
-      "totalRows": 2735,
-      "pages": 55
+      "totalRows": 4125,
+      "pages": 83
     },
     {
       "code": "50",
       "name": "제주특별자치도",
-      "totalRows": 856,
-      "pages": 18
+      "totalRows": 842,
+      "pages": 17
     },
     {
       "code": "51",
       "name": "강원특별자치도",
-      "totalRows": 1140,
-      "pages": 23
+      "totalRows": 1414,
+      "pages": 29
     },
     {
       "code": "52",
       "name": "전북특별자치도",
-      "totalRows": 577,
+      "totalRows": 554,
       "pages": 12
     }
   ]
