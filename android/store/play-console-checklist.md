@@ -5,7 +5,7 @@
 - 기본 언어: 한국어(대한민국)
 - 앱 / 무료
 - 카테고리: 도구
-- 광고 포함: 예 (현재 웹 AdFit, 다음 Android 릴리스는 AdMob 배너)
+- 광고 포함: 예 (웹 AdFit, Android AdMob 네이티브·전면·종료 MREC)
 - 개인정보처리방침: `https://auctionhannun.designboard.net/privacy.html`
 - 대상 연령: 만 18세 이상
 - 정부기관 앱: 아니요, 정부·법원 비제휴 독립 서비스
@@ -20,10 +20,10 @@
 
 ## AdMob 운영 전 필수 확인
 
-- [ ] AdMob에서 `softm.realestate.auctionhannun` 전용 앱 ID와 배너 단위를 발급
-- [ ] `android/admob.properties`에 운영 ID를 넣고 내부 테스트 빌드에서만 먼저 `enabled=true` 적용
+- [x] AdMob에서 `softm.realestate.auctionhannun` 전용 앱 ID와 네이티브·전면·종료 MREC 단위를 발급
+- [x] `android/admob.properties`에 운영 ID를 넣고 release 빌드에서 `enabled=true` 적용
 - [ ] 앱 콘텐츠의 ‘광고 포함’ 항목을 예로 유지
 - [ ] 데이터 보안 양식에 Mobile Ads SDK의 광고 식별자·기기/광고 상호작용·IP 처리 여부 반영
-- [ ] AdMob 개인정보 보호 및 메시지에서 EEA·영국·스위스용 UMP 메시지 게시
-- [ ] 스토어 개인정보처리방침 URL이 Google AdMob·UMP 내용을 포함한 최신 페이지인지 확인
+- [x] AdMob 개인정보 보호 및 메시지에서 EEA·영국·스위스용 UMP 메시지 게시
+- [x] 스토어 개인정보처리방침 URL이 Google AdMob·UMP 내용을 포함한 최신 페이지인지 확인
 - [ ] 내부 테스트에서 테스트 기기를 등록하고 노출·실패·오프라인 동작 확인
