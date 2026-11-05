@@ -29,7 +29,10 @@ test("AdMob은 UMP 동의 후 배너를 요청하고 웹 AdFit과 중복하지 �
 test("광고 계획은 웹과 앱 지면 및 전체화면 광고 제한을 문서화한다", () => {
   assert.match(plan, /카카오 AdFit/);
   assert.match(plan, /Google AdMob/);
-  assert.match(plan, /전면·앱 오픈·보상형 광고를 넣지 않는다/);
+  assert.match(plan, /최초 75초/);
+  assert.match(plan, /180초 간격/);
+  assert.match(plan, /세션 최대 3회/);
+  assert.match(plan, /앱 오픈·보상형 광고는 사용하지 않는다/);
 });
 
 test("Android 시작 주소와 내부 탐색 범위는 AdFit 승인 운영 도메인과 일치한다", async () => {
