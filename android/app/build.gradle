@@ -12,10 +12,14 @@ if (admobFile.exists()) {
     admobFile.withInputStream { admobConfig.load(it) }
 }
 def googleTestAppId = 'ca-app-pub-3940256099942544~3347511713'
-def googleTestBannerId = 'ca-app-pub-3940256099942544/6300978111'
+def googleTestNativeId = 'ca-app-pub-3940256099942544/2247696110'
+def googleTestInterstitialId = 'ca-app-pub-3940256099942544/1033173712'
+def googleTestMrecId = 'ca-app-pub-3940256099942544/6300978111'
 def releaseAdsEnabled = admobConfig.getProperty('enabled', 'false').toBoolean()
 def releaseAppId = admobConfig.getProperty('appId', googleTestAppId)
-def releaseBannerId = admobConfig.getProperty('bannerId', googleTestBannerId)
+def releaseNativeId = admobConfig.getProperty('nativeId', googleTestNativeId)
+def releaseInterstitialId = admobConfig.getProperty('interstitialId', googleTestInterstitialId)
+def releaseMrecId = admobConfig.getProperty('mrecId', googleTestMrecId)
 
 android {
     namespace 'softm.realestate.auctionhannun'
@@ -25,8 +29,8 @@ android {
         applicationId 'softm.realestate.auctionhannun'
         minSdk 24
         targetSdk 36
-        versionCode 3
-        versionName '1.0.2'
+        versionCode 6
+        versionName '1.0.3'
         manifestPlaceholders = [admobAppId: googleTestAppId]
     }
 
@@ -52,14 +56,18 @@ android {
         debug {
             manifestPlaceholders = [admobAppId: googleTestAppId]
             buildConfigField 'boolean', 'ADMOB_ENABLED', 'true'
-            buildConfigField 'String', 'ADMOB_BANNER_ID', '"' + googleTestBannerId + '"'
+            buildConfigField 'String', 'ADMOB_NATIVE_ID', '"' + googleTestNativeId + '"'
+            buildConfigField 'String', 'ADMOB_INTERSTITIAL_ID', '"' + googleTestInterstitialId + '"'
+            buildConfigField 'String', 'ADMOB_MREC_ID', '"' + googleTestMrecId + '"'
         }
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
             manifestPlaceholders = [admobAppId: releaseAppId]
             buildConfigField 'boolean', 'ADMOB_ENABLED', releaseAdsEnabled.toString()
-            buildConfigField 'String', 'ADMOB_BANNER_ID', '"' + releaseBannerId + '"'
+            buildConfigField 'String', 'ADMOB_NATIVE_ID', '"' + releaseNativeId + '"'
+            buildConfigField 'String', 'ADMOB_INTERSTITIAL_ID', '"' + releaseInterstitialId + '"'
+            buildConfigField 'String', 'ADMOB_MREC_ID', '"' + releaseMrecId + '"'
         }
     }
 }
