@@ -1,9 +1,21 @@
 name: Verify common vault integration
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
-    paths: ['index.html','docs/COMMON-VAULT.md','.github/workflows/common-vault-check.yml']
+    paths:
+      - 'account.js'
+      - 'account.css'
+      - 'cloud-workspace.js'
+      - 'firebase-config.js'
+      - 'index.html'
+      - 'workspace-store.js'
+      - 'tests/workspace-store.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'docs/COMMON-VAULT.md'
+      - '.github/workflows/common-vault-check.yml'
 permissions:
   contents: read
 jobs:
