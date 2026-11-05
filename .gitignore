@@ -1,6 +1,9 @@
 .DS_Store
 dist/
 node_modules/
+playwright-report/
+test-results/
+.serena/
 source-data/
 data/inbox.json
 *.tmp

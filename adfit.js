@@ -114,7 +114,7 @@
     state.timeout = root.setTimeout(() => {
       if (state.host.querySelector("iframe")) loaded(state);
       else fail(state);
-    }, 30000);
+    }, 8000);
   }
   function renderPending() {
     for (const state of [...pendingScripts]) {

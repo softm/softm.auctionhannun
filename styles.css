@@ -28,7 +28,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-l
 .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
 .round-button{position:relative;display:grid;place-items:center;padding:0;width:42px;height:42px;border:1px solid transparent;border-radius:6px;background:white;color:var(--ink-2)}
 .round-button:hover,.round-button[aria-pressed="true"]{background:var(--mint);color:var(--green)}
-.primary-button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 15px;border:0;border-radius:6px;background:var(--green);color:white;font-weight:650}
+.primary-button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;gap:7px;padding:0 15px;border:0;border-radius:6px;background:var(--green);color:white;font-weight:650;white-space:nowrap}
 .primary-button:hover{background:var(--green-dark)}
 .badge{position:absolute;top:0;right:-2px;display:none;min-width:17px;padding:0 4px;border-radius:10px;background:var(--green);color:white;font-size:10px}
 .badge.show{display:block}
@@ -391,6 +391,12 @@ html{scroll-padding-bottom:calc(var(--auction-ad-space,0px) + 24px)}
  .detail-title-row h2{font-size:24px}.detail-tabs{top:-18px;margin-inline:-18px;padding-inline:10px}.detail-tabs button{font-size:12px}.price-cell{padding:12px}.price-cell b{font-size:16px}
  .price-grid{grid-template-columns:1fr 1fr}.detail-quick-nav{grid-template-columns:1fr 1fr}.property-lot-list,.similar-property-grid{grid-template-columns:1fr}.detail-overview{grid-template-columns:1fr auto;padding:14px}.detail-overview-copy>strong{font-size:19px}
  .toast{bottom:calc(82px + env(safe-area-inset-bottom) + var(--auction-ad-space,0px))}
+}
+@media(max-width:480px){
+ .topbar-inner{padding-inline:12px;gap:8px}
+ .brand small{display:none}.top-actions{gap:2px}
+ #addCaseButton{width:42px;padding:0}#addCaseButton span{display:none}
+ #accountButton{padding-inline:9px}
 }
 @media(max-width:360px){
  .brand>span:last-child{font-size:18px}.brand-mark{width:28px}.topbar-inner{padding-inline:12px}.search-heading h1{font-size:21px}

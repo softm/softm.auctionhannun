@@ -3,7 +3,7 @@ import { workspace, mergeGuest, emptyWorkspace } from "./workspace-store.js";
 import { cloudWorkspace } from "./cloud-workspace.js";
 import { socialConfig } from "./social-config.js";
 const $ = id => document.getElementById(id);
-let task, current, epoch = 0, revision = 0, client, timer, saving = false, dirty = false, blocked = false;
+let task, current, epoch = 0, revision = 0, client, timer, saving = false, dirty = false, blocked = false, authInitialized = false;
 const message = text => { $("accountStatus").textContent = text; $("accountDialogStatus").textContent = text; };
 function showPending() {
   const pending = current && workspace.pending(current.uid);
@@ -34,6 +34,15 @@ async function changeAccount(user, db, sdk) {
   $("accountButton").textContent = user ? "내 계정" : "로그인";
   $("accountIdentity").textContent = user ? (user.displayName || "로그인한 사용자") : "로그인하고 작업 이어가기";
   $("accountSignedIn").hidden = !user; $("accountProviders").hidden = !!user;
+  // The guest workspace is already loaded synchronously. Re-switching to the
+  // same anonymous user when Firebase finishes its first async check emits a
+  // reset event that can close an in-progress registration dialog.
+  if (!authInitialized && !user) {
+    authInitialized = true;
+    message("비로그인 · 이 브라우저에만 저장됩니다.");
+    return;
+  }
+  authInitialized = true;
   workspace.switchUser(user?.uid || null);
   if (!user) { message("비로그인 · 이 브라우저에만 저장됩니다."); return; }
   message("계정 작업 정보를 불러오는 중…"); client = cloudWorkspace(db, sdk, user.uid);

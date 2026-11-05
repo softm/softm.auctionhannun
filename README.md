@@ -60,7 +60,7 @@ Google Stitch 디자인을 적용한 부동산 경매·공매 검토 도구입�
 - 프로젝트: `android/`
 - 패키지: `softm.realestate.auctionhannun`
 - 기기 표시명: `경매한눈`
-- 버전: `1.0.2 (3)`
+- 버전: `1.0.3 (6)`
 - SDK: minSdk 24 / targetSdk 36 / compileSdk 36
 - 개인정보처리방침: `https://softm.github.io/softm.auctionhannun/privacy.html`
 - Play 등록 문구와 데이터 보안 기준: `android/store/`
@@ -74,7 +74,7 @@ cd android
 
 산출물: `android/app/build/outputs/bundle/release/app-release.aab`
 
-앱은 운영 GitHub Pages를 표시합니다. 변경 내용을 Pages에 배포·검증하고 지도 SDK의 실제 데이터 처리를 기준으로 Play 데이터 보안 항목을 재검토해야 합니다. 기존 `auctionhannun:*` 저장 키를 유지합니다. 이 작업에서는 Play Console 제출이나 출시를 수행하지 않았습니다.
+앱은 운영 GitHub Pages를 표시합니다. Android 광고는 UMP 동의 후 하단 컴팩트 네이티브 광고를 요청하고, 실행 75초 후 첫 기회·이후 180초 간격·세션 최대 3회의 전면광고와 종료 확인창의 준비된 300×250 광고를 사용합니다. `AdMobNative/1` User-Agent로 웹 AdFit 중복 요청을 막습니다. 기존 `auctionhannun:*` 저장 키를 유지합니다.
 
 ## 실행
 

@@ -1068,10 +1068,9 @@ $("#confirmDeleteCase").addEventListener("click", deleteSelectedCase);
 $("#registeredCasesButton").addEventListener("click", showRegisteredCases);
 $("#helpButton").addEventListener("click", () => openDialog("#helpDialog"));
 $$('[data-close-dialog]').forEach(button => button.addEventListener("click", () => $(`#${button.dataset.closeDialog}`).close()));
-$$('dialog').forEach(dialog => dialog.addEventListener("click", event => {
-  const rect = dialog.getBoundingClientRect();
-  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
-}));
+// Dialogs close through their labelled close buttons or Escape. Backdrop-click
+// closing is intentionally omitted: mobile viewport/keyboard resize can retarget
+// a field interaction to the native dialog backdrop and discard entered data.
 
 $("#zoomIn").addEventListener("click", () => auctionMap.zoom(1));
 $("#zoomOut").addEventListener("click", () => auctionMap.zoom(-1));

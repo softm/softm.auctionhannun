@@ -12,6 +12,9 @@ export function loadMapSdk() {
     let settled = false;
     const finish = error => {
       if (settled) return;
+      if (!error && !window.naver?.maps?.Service) {
+        error = new Error("네이버 지도 인증에 실패했습니다. 현재 접속 주소가 지도 API에 등록됐는지 확인해 주세요.");
+      }
       settled = true;
       clearTimeout(timer);
       delete window.auctionMapReady;
@@ -98,6 +101,14 @@ export class AuctionMap {
     if (this.starting) return this.starting;
     this.starting = (async () => {
       this.maps = await loadMapSdk();
+      // NAVER can invoke its ready callback immediately and report an invalid
+      // origin a moment later. Do not replace the loading message with an
+      // empty map until the authenticated SDK has remained available.
+      await new Promise(resolve => setTimeout(resolve, 600));
+      if (!window.naver?.maps?.Map || !window.naver?.maps?.Service) {
+        throw new Error("네이버 지도 인증에 실패했습니다. 현재 접속 주소가 지도 API에 등록됐는지 확인해 주세요.");
+      }
+      this.maps = window.naver.maps;
       this.map = new this.maps.Map(this.element, { center: new this.maps.LatLng(36.3, 127.8), zoom: 7, minZoom: 6, mapTypeControl: true, mapTypeControlOptions: { position: this.maps.Position.TOP_LEFT } });
       this.geocode = createGeocoder(this.maps);
       this.observer = new ResizeObserver(() => this.resize());

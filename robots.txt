@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://softm.github.io/softm.auctionhannun/sitemap.xml
+Sitemap: https://auctionhannun.designboard.net/sitemap.xml
