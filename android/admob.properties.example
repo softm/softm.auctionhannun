@@ -2,4 +2,6 @@
 # 이 파일을 admob.properties로 복사하기 전에는 release 광고가 비활성화됩니다.
 enabled=false
 appId=ca-app-pub-0000000000000000~0000000000
-bannerId=ca-app-pub-0000000000000000/0000000000
+nativeId=ca-app-pub-0000000000000000/0000000000
+interstitialId=ca-app-pub-0000000000000000/0000000000
+mrecId=ca-app-pub-0000000000000000/0000000000
