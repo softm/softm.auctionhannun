@@ -26,7 +26,7 @@
 - 광고를 처음 요청할 때 SDK를 한 번 로드하고, 새 지면은 `adfit.render(element)`로 개별 렌더링합니다. 기존 지면을 함께 새로 고칠 수 있는 전역 `adfit()` 재호출은 하지 않습니다.
 - 각 지면에 별도의 성공·실패 콜백을 사용합니다. 제거한 광고는 `adfit.destroy(unit)`으로 SDK에서도 정리합니다. 실패한 지면은 같은 페이지에서 자동 반복 요청하지 않습니다.
 - 승인 도메인 `auctionhannun.designboard.net`의 HTTPS 페이지에서만 광고를 요청합니다. 개발·미리보기 호스트에서는 실제 광고를 호출하지 않습니다.
-- 네이티브 AdMob이 활성화된 앱이 `AdMobNative/1`을 전달하면 웹 AdFit을 숨겨 중복을 방지합니다. 현재 Android 릴리스의 AdMob은 운영 ID 설정 전 비활성입니다.
+- 네이티브 AdMob이 활성화된 앱이 `AdMobNative/1`을 전달하면 웹 AdFit을 숨겨 중복을 방지합니다. Android release 빌드는 경매한눈 전용 운영 ID를 사용합니다.
 
 ## 실제 발급·승인 확인
 
