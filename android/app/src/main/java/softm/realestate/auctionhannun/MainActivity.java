@@ -26,8 +26,11 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends Activity {
-    private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.2";
+    private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.3";
     private static final String TRUSTED_HOST = "auctionhannun.designboard.net";
     private static final String TRUSTED_PATH = "/";
 
@@ -91,7 +94,7 @@ public class MainActivity extends Activity {
         configureWebView();
         ads = new AdMobController(this, bannerHost, privacyOptions);
         ads.start();
-        if (state == null || web.restoreState(state) == null) web.loadUrl(HOME);
+        if (state == null || web.restoreState(state) == null) loadFresh(HOME);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -121,6 +124,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onPageStarted(WebView view, String url, android.graphics.Bitmap icon) {
+                if (ads != null) ads.setContentReady(false);
                 error.setVisibility(View.GONE);
                 web.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.VISIBLE);
@@ -129,7 +133,9 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 progress.setVisibility(View.GONE);
+                view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
                 if (!trusted(Uri.parse(url))) return;
+                if (ads != null) ads.setContentReady(true);
                 view.evaluateJavascript(
                     "(function(){if(navigator.share)return;" +
                     "Object.defineProperty(navigator,'share',{configurable:true,value:function(data){" +
@@ -215,6 +221,7 @@ public class MainActivity extends Activity {
     }
 
     private void showError() {
+        if (ads != null) ads.setContentReady(false);
         error.setVisibility(View.VISIBLE);
         web.setVisibility(View.GONE);
         progress.setVisibility(View.GONE);
@@ -222,13 +229,26 @@ public class MainActivity extends Activity {
 
     private void retry() {
         String url = web.getUrl();
-        web.loadUrl(url != null && trusted(Uri.parse(url)) ? url : HOME);
+        loadFresh(url != null && trusted(Uri.parse(url)) ? url : HOME);
+    }
+
+    private void loadFresh(String url) {
+        web.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Cache-Control", "no-cache");
+        web.loadUrl(url, headers);
+    }
+
+    private void handleBack() {
+        if (web.canGoBack()) web.goBack();
+        else if (ads != null) ads.showExitDialog();
+        else super.onBackPressed();
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onBackPressed() {
-        if (web.canGoBack()) web.goBack();
-        else super.onBackPressed();
+        handleBack();
     }
 
     @Override
