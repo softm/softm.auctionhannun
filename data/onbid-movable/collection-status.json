@@ -1,18 +1,6 @@
 {
-  "state": "ready",
-  "attemptedAt": "2026-10-23T13:25:03.984Z",
+  "state": "error",
+  "attemptedAt": "2026-11-06T01:39:48.867Z",
   "lastSuccessAt": "2026-10-23T13:25:03.984Z",
-  "itemCount": 4709,
-  "completedPages": 13,
-  "photoProperties": 68,
-  "detailEnrichment": {
-    "attempted": 100,
-    "requested": 100,
-    "added": 100,
-    "denied": 0,
-    "rateLimited": 0,
-    "errors": 0,
-    "state": "checked"
-  },
-  "coverage": "온비드 동산(차량 제외) 현재 입찰 중·입찰예정 물건 / 재산유형 전체 / 수의계약 대상 제외"
+  "message": "온비드 동산 수집 실패. 목록·상세 API 활용신청과 호출 조건을 확인하세요."
 }
