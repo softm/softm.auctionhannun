@@ -5,14 +5,14 @@
   "sourceType": "onbid-official-api",
   "datasetKind": "onbid-public-sale",
   "sourceUrl": "https://www.data.go.kr/data/15157207/openapi.do",
-  "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-10-23~2026-10-30 / 공매조건·마감일별 입찰건",
-  "snapshotId": "onbid-2026-10-23T13:24:42.668Z",
-  "collectedAt": "2026-10-23T13:24:42.668Z",
-  "itemCount": 3643,
-  "photoProperties": 837,
-  "contentHash": "0036b4ef6a9b4a62b133c438c9c88ee95ac9bb23e5505a4e16e41e7a9aa1c23c",
-  "distinctProperties": 3643,
+  "coverage": "전국 압류재산·매각·수의계약 불가 / 입찰기간 검색 2026-11-12~2026-11-19 / 공매조건·마감일별 입찰건",
+  "snapshotId": "onbid-2026-11-12T02:19:11.257Z",
+  "collectedAt": "2026-11-12T02:19:11.257Z",
+  "itemCount": 3036,
+  "photoProperties": 782,
+  "contentHash": "a3cc4ddcb82cc0fd8b7dc434a0a691067a4b6d5b4a10841e4099c5e96554acf7",
+  "distinctProperties": 3036,
   "status": "ready",
-  "catalogFile": "catalog/ec21e203b8377107e0b1fd85314f4e0d35d19ccdf5f441b55dcbd952f007a9b5.json.gz",
-  "catalogHash": "ec21e203b8377107e0b1fd85314f4e0d35d19ccdf5f441b55dcbd952f007a9b5"
+  "catalogFile": "catalog/171569d3f42914b56c5b3904d162bb2b6f3049ddbad2bc6102ec64e51011ba4a.json.gz",
+  "catalogHash": "171569d3f42914b56c5b3904d162bb2b6f3049ddbad2bc6102ec64e51011ba4a"
 }
