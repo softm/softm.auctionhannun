@@ -19,7 +19,11 @@ function validWorkspace(value){
     if(!value[name]||typeof value[name]!=='object'||Array.isArray(value[name]))return false;
   return true;
 }
-function b64(bytes){return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64(bytes){
+  // Chunk large workspaces: spreading >100KB of bytes can overflow the JS stack.
+  let chars='';for(let i=0;i<bytes.length;i+=8192)chars+=String.fromCharCode(...bytes.subarray(i,i+8192));
+  return btoa(chars).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'');
+}
 function unb64(value){
   if(typeof value!=='string'||!/^[A-Za-z0-9_-]+$/.test(value))throw Error('bad-ciphertext');
   const text=atob(value.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-value.length%4)%4));
