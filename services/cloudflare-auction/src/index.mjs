@@ -22,7 +22,7 @@ function validWorkspace(value){
 function b64(bytes){
   // Chunk large workspaces: spreading >100KB of bytes can overflow the JS stack.
   let chars='';for(let i=0;i<bytes.length;i+=8192)chars+=String.fromCharCode(...bytes.subarray(i,i+8192));
-  return btoa(chars).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'');
+  return btoa(chars).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 function unb64(value){
   if(typeof value!=='string'||!/^[A-Za-z0-9_-]+$/.test(value))throw Error('bad-ciphertext');
