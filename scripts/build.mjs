@@ -20,7 +20,7 @@ await mkdir("dist/assets", { recursive: true });
 await Promise.all([
   cp("index.html", "dist/index.html"),
   cp("privacy.html", "dist/privacy.html"),
-  ...["account.css", "workspace-store.js", "cloud-workspace.js", "social-config.js", "auth-callback.html", "auth-callback.js"].map(file => cp(file, `dist/${file}`)),
+  ...["account.css", "workspace-store.js", "cloud-workspace.js", "social-config.js", "auth-callback.html", "auth-callback.js", "cloudflare-auction.js", "cloudflare-auction-sdk.mjs"].map(file => cp(file, `dist/${file}`)),
   ...["firebase-config.js", "account.js", "api-config.js", "adfit-config.js", "adfit.js"].map(file => cp(file, `dist/${file}`)),
   ...["data-status.html", "data-status.css", "data-status.js"].map(file => cp(file, `dist/${file}`)),
   cp("manifest.webmanifest", "dist/manifest.webmanifest"),
