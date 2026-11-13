@@ -1,0 +1,35 @@
+name: Auction Cloudflare account checks
+
+on:
+  pull_request:
+    paths:
+      - 'cloudflare-auction*.mjs'
+      - 'cloudflare-auction*.js'
+      - 'index.html'
+      - 'account.css'
+      - 'package.json'
+      - 'scripts/build.mjs'
+      - 'services/cloudflare-auction/**'
+      - 'tests/cloudflare-auction*.test.mjs'
+      - '.github/workflows/cloudflare-auction-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: Verify Cloudflare assets are in deployment bundle
+        run: |
+          test -s dist/cloudflare-auction.js
+          test -s dist/cloudflare-auction-sdk.mjs
+          grep -q 'cloudflare-auction.js' dist/index.html
