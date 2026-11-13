@@ -13,7 +13,7 @@
     "validate:data": "node scripts/validate-data.mjs",
     "build": "node scripts/build.mjs",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
-    "check": "node scripts/check-syntax.mjs && npm run validate:data && npm test",
+    "check": "node scripts/check-syntax.mjs && node --check services/cloudflare-auction/src/index.mjs && node --test services/cloudflare-auction/tests/*.test.mjs && npm run validate:data && npm test",
     "test:e2e": "playwright test"
   },
   "overrides": {

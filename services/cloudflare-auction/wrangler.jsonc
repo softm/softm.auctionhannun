@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "auctionhannun-personal",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": true,
+  "services": [{"binding": "ACCOUNT", "service": "softm-hannun-account"}],
+  "d1_databases": [{
+    "binding": "WORKSPACE_DB",
+    "database_name": "auctionhannun-personal-db",
+    "database_id": "__AUCTION_PERSONAL_D1_ID__"
+  }]
+}

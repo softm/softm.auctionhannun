@@ -1,0 +1,47 @@
+name: Deploy isolated Cloudflare auction workspace
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auctionhannun-personal-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: cloudflare-auction
+    defaults:
+      run:
+        working-directory: services/cloudflare-auction
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      AUCTION_WORKSPACE_KEY_V1: ${{ secrets.AUCTION_WORKSPACE_KEY_V1 }}
+      AUCTION_PERSONAL_D1_ID: ${{ secrets.AUCTION_PERSONAL_D1_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - name: Verify required Cloudflare configuration
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" && test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$AUCTION_PERSONAL_D1_ID" && test -n "$AUCTION_WORKSPACE_KEY_V1"
+          node -e "const k=process.env.AUCTION_WORKSPACE_KEY_V1; if(!/^[A-Za-z0-9+/]{43}=$/.test(k)||Buffer.from(k,'base64').length!==32)process.exit(1)"
+      - name: Set provisioned D1 ID in Wrangler manifest
+        run: |
+          node -e "const fs=require('fs');const p='wrangler.jsonc';const id=process.env.AUCTION_PERSONAL_D1_ID;if(!/^[0-9a-f-]{36}$/i.test(id))process.exit(1);fs.writeFileSync(p,fs.readFileSync(p,'utf8').replace('__AUCTION_PERSONAL_D1_ID__',id))"
+      - name: Apply auction-only D1 schema
+        run: npx wrangler d1 execute auctionhannun-personal-db --remote --file=./schema.sql --yes
+      - name: Deploy dedicated Worker
+        run: npx wrangler deploy
+      - name: Set server-side workspace encryption secret
+        run: printf '%s' "$AUCTION_WORKSPACE_KEY_V1" | npx wrangler secret put AUCTION_WORKSPACE_KEY_V1 --name auctionhannun-personal
+      - name: Check Worker health
+        run: curl --fail-with-body --silent --show-error https://auctionhannun-personal.softm.workers.dev/health
