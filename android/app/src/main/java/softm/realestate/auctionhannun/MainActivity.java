@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import softm.hannun.update.HannunInAppUpdateManager;
 
 public class MainActivity extends Activity {
     private static final String HOME = "https://auctionhannun.designboard.net/?app=1.0.3";
@@ -38,10 +39,12 @@ public class MainActivity extends Activity {
     private ProgressBar progress;
     private LinearLayout error;
     private AdMobController ads;
+    private HannunInAppUpdateManager appUpdater;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+        appUpdater = new HannunInAppUpdateManager(this, null);
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -258,7 +261,14 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (appUpdater.onActivityResult(requestCode, resultCode)) return;
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onPause() {
+        appUpdater.onPause();
         if (ads != null) ads.pause();
         web.onPause();
         super.onPause();
@@ -267,12 +277,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        appUpdater.onResume();
         web.onResume();
         if (ads != null) ads.resume();
     }
 
     @Override
     protected void onDestroy() {
+        appUpdater.destroy();
         if (ads != null) ads.destroy();
         web.destroy();
         super.onDestroy();
