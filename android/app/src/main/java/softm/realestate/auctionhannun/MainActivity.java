@@ -83,19 +83,12 @@ public class MainActivity extends Activity {
         web = new WebView(this);
         root.addView(web, new LinearLayout.LayoutParams(-1, 0, 1));
 
-        Button privacyOptions = new Button(this);
-        privacyOptions.setText(R.string.privacy_options);
-        privacyOptions.setVisibility(View.GONE);
-        root.addView(privacyOptions, new LinearLayout.LayoutParams(-1, -2));
-
-        FrameLayout bannerHost = new FrameLayout(this);
-        bannerHost.setVisibility(View.GONE);
-        bannerHost.setContentDescription(getString(R.string.ad_label));
-        root.addView(bannerHost, new LinearLayout.LayoutParams(-1, -2));
+        LinearLayout adSection = new LinearLayout(this);
+        root.addView(adSection, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
 
         configureWebView();
-        ads = new AdMobController(this, bannerHost, privacyOptions);
+        ads = new AdMobController(this, adSection);
         ads.start();
         if (state == null || web.restoreState(state) == null) loadFresh(HOME);
     }
