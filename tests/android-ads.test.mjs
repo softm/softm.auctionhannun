@@ -19,9 +19,9 @@ test("Android AdMob은 운영 ID가 없으면 릴리스에서 비활성화된다
 });
 
 test("AdMob은 UMP 동의 후 배너를 요청하고 웹 AdFit과 중복하지 않는다", () => {
-  assert.match(controller, /requestConsentInfoUpdate/);
-  assert.match(controller, /canRequestAds\(\)/);
-  assert.match(controller, /ConsentInformation\.PrivacyOptionsRequirementStatus\.REQUIRED/);
+  assert.match(controller, /import softm\.hannun\.ads\.HannunAds/);
+  assert.match(controller, /new HannunAdConfig/);
+  assert.match(controller, /delegate\.start\(\)/);
   assert.match(activity, /AdMobNative\/1/);
   assert.match(privacy, /Google AdMob/);
 });
