@@ -24,6 +24,7 @@ await Promise.all([
   ...["firebase-config.js", "account.js", "api-config.js", "adfit-config.js", "adfit.js"].map(file => cp(file, `dist/${file}`)),
   ...["data-status.html", "data-status.css", "data-status.js"].map(file => cp(file, `dist/${file}`)),
   cp("manifest.webmanifest", "dist/manifest.webmanifest"),
+  ...["hannun-pwa.js","hannun-pwa.css","sw.js","icon-192.png","icon-512.png","apple-touch-icon.png"].map(file => cp(file, `dist/${file}`)),
   cp("styles.css", "dist/styles.css"),
   cp("app.js", "dist/app.js"),
   cp("auction-utils.js", "dist/auction-utils.js"),
