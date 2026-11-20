@@ -109,7 +109,7 @@ export class AuctionMap {
         throw new Error("네이버 지도 인증에 실패했습니다. 현재 접속 주소가 지도 API에 등록됐는지 확인해 주세요.");
       }
       this.maps = window.naver.maps;
-      this.map = new this.maps.Map(this.element, { center: new this.maps.LatLng(36.3, 127.8), zoom: 7, minZoom: 6, mapTypeControl: true, mapTypeControlOptions: { position: this.maps.Position.TOP_LEFT } });
+      this.map = new this.maps.Map(this.element, { center: new this.maps.LatLng(36.3, 127.8), zoom: 7, minZoom: 6, mapTypeControl: false });
       this.geocode = createGeocoder(this.maps);
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(this.element);
@@ -130,6 +130,7 @@ export class AuctionMap {
     for (const marker of this.markers.values()) { this.maps.Event.clearInstanceListeners(marker); marker.setMap(null); }
     this.markers.clear();
     const ordered = items.map((item, index) => ({ item, index })).sort((a, b) => Number(b.item.id === selectedId) - Number(a.item.id === selectedId));
+    // Keep the selected item inside the 500-marker budget even when it is late in the list.
     for (const { item, index } of ordered) {
       if (this.markers.size >= 500) break;
       const position = this.position(item);
@@ -151,6 +152,10 @@ export class AuctionMap {
       if (this.items.some(current => current.id === item.id && current.address === item.address)) this.positions.set(item.id, position);
     }
     return position;
+  }
+  selectMarker(id) {
+    this.selectedId = id;
+    this.render(this.items, id);
   }
   focus(position) { if (this.map && validCoordinate(position)) { this.clearParcel(); this.map.setCenter(new this.maps.LatLng(position.latitude, position.longitude)); this.map.setZoom(17); if (this.mode !== "normal" || this.cadastralEnabled) this.vworld.focus(position); } }
   fit() {
