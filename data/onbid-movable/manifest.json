@@ -6,21 +6,21 @@
   "datasetKind": "onbid-public-sale-movable",
   "sourceUrl": "https://www.data.go.kr/data/15157232/openapi.do",
   "coverage": "온비드 동산(차량 제외) 현재 입찰 중·입찰예정 물건 / 재산유형 전체 / 수의계약 대상 제외",
-  "snapshotId": "onbid-movable-2026-10-23T13:25:03.984Z",
-  "collectedAt": "2026-10-23T13:25:03.984Z",
-  "itemCount": 4709,
-  "photoProperties": 68,
-  "contentHash": "0bb563391ce75e22ff08c12c5b113c18111e5f92b401898789b385fa0f11d865",
-  "distinctProperties": 1184,
+  "snapshotId": "onbid-movable-2026-11-21T02:36:02.128Z",
+  "collectedAt": "2026-11-21T02:36:02.128Z",
+  "itemCount": 2492,
+  "photoProperties": 107,
+  "contentHash": "b810caba7de20e3883f1634e4c24a91fdd8d336fa597b1cd4cbb0afc01de8158",
+  "distinctProperties": 867,
   "propertyTypeTotals": {
-    "0002": 8,
-    "0003": 60,
-    "0004": 358,
-    "0005": 100,
-    "0007": 3981,
-    "0010": 202
+    "0002": 22,
+    "0003": 10,
+    "0004": 485,
+    "0005": 93,
+    "0007": 1872,
+    "0010": 10
   },
   "status": "ready",
-  "catalogFile": "catalog/4e173311b1c8f077239a4f4fa863057fa648deaa8c111d810ec0f4ba804288d7.json.gz",
-  "catalogHash": "4e173311b1c8f077239a4f4fa863057fa648deaa8c111d810ec0f4ba804288d7"
+  "catalogFile": "catalog/70bf38648a56b68162ef0c13039946089ccb7b570701ced91feaa75f37b9a54a.json.gz",
+  "catalogHash": "70bf38648a56b68162ef0c13039946089ccb7b570701ced91feaa75f37b9a54a"
 }
