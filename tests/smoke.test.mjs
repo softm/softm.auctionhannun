@@ -14,6 +14,16 @@ test("핵심 화면과 공식 출처가 포함된다", async () => {
   assert.match(html, /easylaw\.go\.kr/);
 });
 
+test("시작 화면은 외부 CSS보다 먼저 표시되고 본 화면 스타일 준비까지 유지된다", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  const startupStyle = html.indexOf('id="hannunStartupStyle"');
+  assert.notEqual(startupStyle, -1);
+  assert.ok(startupStyle < html.indexOf("<link"));
+  assert.doesNotMatch(html, /<link[^>]+rel="stylesheet"/s);
+  assert.match(html, /link\[data-hannun-style\]/);
+  assert.match(html, /setTimeout\(\(\)=>f\(true\),8000\)/);
+});
+
 test("공식 법원 연결과 브라우저 저장 기능이 선언된다", async () => {
   const app = await readFile(new URL("app.js", root), "utf8");
   assert.match(app, /https:\/\/www\.courtauction\.go\.kr\//);
