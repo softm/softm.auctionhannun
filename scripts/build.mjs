@@ -36,7 +36,8 @@ await Promise.all([
   ...["auctions.json", "manifest.json", "collection-status.json"].map(file => cp(`data/${file}`, `dist/data/${file}`)),
   cp("robots.txt", "dist/robots.txt"),
   cp("sitemap.xml", "dist/sitemap.xml"),
-  cp("google3963d25075aa9810.html", "dist/google3963d25075aa9810.html")
+  cp("google3963d25075aa9810.html", "dist/google3963d25075aa9810.html"),
+  cp("naver89a42f2d2fe24833253a694550e72d3c.html", "dist/naver89a42f2d2fe24833253a694550e72d3c.html")
 ]);
 for (const file of [manifest.catalogFile, ...catalog.items.map(item => item.detailFile).filter(Boolean)]) {
   await mkdir(dirname(`dist/data/${file}`), { recursive: true });
