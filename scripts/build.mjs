@@ -35,7 +35,8 @@ await Promise.all([
   cp("assets/app-icon.svg", "dist/assets/app-icon.svg"),
   ...["auctions.json", "manifest.json", "collection-status.json"].map(file => cp(`data/${file}`, `dist/data/${file}`)),
   cp("robots.txt", "dist/robots.txt"),
-  cp("sitemap.xml", "dist/sitemap.xml")
+  cp("sitemap.xml", "dist/sitemap.xml"),
+  cp("google3963d25075aa9810.html", "dist/google3963d25075aa9810.html")
 ]);
 for (const file of [manifest.catalogFile, ...catalog.items.map(item => item.detailFile).filter(Boolean)]) {
   await mkdir(dirname(`dist/data/${file}`), { recursive: true });
