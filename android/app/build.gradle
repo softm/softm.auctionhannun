@@ -29,8 +29,8 @@ android {
         applicationId 'softm.realestate.auctionhannun'
         minSdk 24
         targetSdk 36
-        versionCode 9
-        versionName '1.0.5'
+        versionCode 10
+        versionName '1.0.6'
         manifestPlaceholders = [admobAppId: googleTestAppId]
     }
 
@@ -74,6 +74,7 @@ android {
 
 dependencies {
     implementation 'com.github.softm:hannun-in-app-update-android:1.0.0'
+    implementation 'com.github.softm:hannun-in-app-review-android:1.0.0'
     implementation 'com.github.softm:hannun-admob-android:1.0.5'
 }
 
