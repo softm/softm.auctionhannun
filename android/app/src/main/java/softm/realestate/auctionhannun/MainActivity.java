@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import softm.hannun.review.HannunInAppReviewManager;
 import softm.hannun.update.HannunInAppUpdateManager;
 
 public class MainActivity extends Activity {
@@ -39,11 +40,13 @@ public class MainActivity extends Activity {
     private ProgressBar progress;
     private LinearLayout error;
     private AdMobController ads;
+    private HannunInAppReviewManager appReviewer;
     private HannunInAppUpdateManager appUpdater;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+        appReviewer = new HannunInAppReviewManager(this);
         appUpdater = new HannunInAppUpdateManager(this, null);
 
         LinearLayout root = new LinearLayout(this);
@@ -261,6 +264,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
+        appReviewer.onPause();
         appUpdater.onPause();
         if (ads != null) ads.pause();
         web.onPause();
@@ -270,6 +274,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        appReviewer.onResume();
         appUpdater.onResume();
         web.onResume();
         if (ads != null) ads.resume();
@@ -277,6 +282,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        appReviewer.destroy();
         appUpdater.destroy();
         if (ads != null) ads.destroy();
         web.destroy();
