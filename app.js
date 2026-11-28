@@ -102,7 +102,7 @@ function setParcelScopeNotice(text = "") {
   $("#parcelScopeNotice").textContent = text;
   $("#parcelScopeNotice").hidden = !text;
 }
-const auctionMap = new AuctionMap($("#mapCanvas"), selectCase, $("#vworldCanvas"), text => { $("#mapStatus").textContent = text; }, () => setParcelScopeNotice());
+const auctionMap = new AuctionMap($("#mapCanvas"), id => { pauseListScrollSync(); focusCaseOnMap(id); const card = [...$("#caseList [data-map-case-id]")].find(node => node.dataset.mapCaseId === id); card?.scrollIntoView({ block: "nearest", behavior: "smooth" }); }, $("#vworldCanvas"), text => { $("#mapStatus").textContent = text; }, () => setParcelScopeNotice());
 const parcelSelections = new Map();
 let parcelRequest;
 let boundaryRequest;
@@ -1108,6 +1108,7 @@ async function focusCaseOnMap(id, { fromScroll = false } = {}) {
   boundaryRequest?.abort();
   auctionMap.clearParcel();
   mapSelectedId = id;
+  auctionMap.selectMarker(id);
   if (!fromScroll) {
     if (state.selectedId) closeDetail();
     setView("map"); renderCases();
@@ -1137,7 +1138,7 @@ async function focusCaseOnMap(id, { fromScroll = false } = {}) {
     else $("#mapStatus").textContent = `${position.address || item.address} · 주소 대표 위치 (경매 경계 아님)`;
   } catch (error) {
     if (operation !== mapOperation) return;
-    $("#mapStatus").textContent = `선택 물건 위치 확인 실패: ${error.message} 기존 지도 위치를 유지합니다.`;
+    $("#mapStatus").textContent = `선택 물건의 지도 좌표를 확인할 수 없습니다: ${error.message}. 목록과 상세정보는 계속 이용할 수 있습니다.`;
     if (!fromScroll) showToast(error.message);
   }
 }
